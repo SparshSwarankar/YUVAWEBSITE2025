@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YUVA India - Photo Gallery</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/Mobile.css">
+    <link rel="stylesheet" href="/Gallary/photos.css">
+    <link rel="shortcut icon" href="/Images/YUVA logo.png" type="image/x-icon">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="/Images/YUVA logo.png" alt="YUVA Logo">
+                <h1>YUVA</h1>
+            </div>
+            <div class="page-title">Photo Gallery</div>
+        </div>
+    </header>
+
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <button class="hamburger-menu" aria-label="Toggle Menu">
+        <span class="bar"></span>
+    </button>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <h2>YUVA</h2>
+            <a href="/home.html">Home</a>
+            <div class="dropdown">
+                <a class="dropdown-btn">About ▾</a>
+                <div class="dropdown-content">
+                    <a href="/About/AboutUs.html">About Us</a>
+                    <a href="/About/whoiswho.html">Who is Who</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Our Initiatives ▾</a>
+                <div class="dropdown-content">
+                    <!-- <a href="/Our.Initiative/vimarsh2025.html">Vimarsh</a> -->
+                    <a href="/coming-soon.html">Vimarsh</a>
+                    <!-- <a href="/Our.Initiative/Bharatparv.html">Bharat Parv</a> -->
+                    <a href="/coming-soon.html">Bharat Parv</a>
+                    <!-- <a href="/Our.Initiative/ritam.html">Ritam</a> -->
+                    <a href="/coming-soon.html">Ritam</a>
+                    <!-- <a href="/Our.Initiative/ims.html">Indraprasth Media Sambad</a> -->
+                    <a href="/coming-soon.html">Indraprasth Media Sambad</a>
+                    <!-- <a href="/Our.Initiative/Samarpan.html">Samarpan</a> -->
+                    <a href="/coming-soon.html">Samarpan</a>
+                    <!-- <a href="/Our.Initiative/NatyaTarang.html">Natya Tarang</a> -->
+                    <a href="/coming-soon.html">Natya Tarang</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Our Verticals ▾</a>
+                <div class="dropdown-content">
+                    <a href="/OurVerticals/MedicoYuva.html">Medico YUVA</a>
+                    <a href="/OurVerticals/MediaManthan.html">Media Manthan</a>
+                    <a href="/OurVerticals/NitiManthan.html">Nidhi Manthan</a>
+                    <a href="/OurVerticals/TechYuva.html">Tech YUVA</a>
+                    <a href="/OurVerticals/YDL.html">YUVA Distance Learning</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Our Activities ▾</a>
+                <div class="dropdown-content">
+                    <a href="/our activity/Activities.html">Activities</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Media ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Media/DigitalMedia.html">In Digital Media</a>
+                    <a href="/Media/News.html">In the News</a>
+                    <a href="/Media/Video.html">Events Recordings</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Events ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Events/Upcoming.html">Upcoming Events</a>
+                    <a href="/Events/Past.html">Past Events</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Gallery ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Gallary/photo.html">Photo Gallery</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Blog ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Blog/CC.html">Campus Chronicles</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Get Involved ▾</a>
+                <div class="dropdown-content">
+                    <a href="/GetInvolve/Fellowship.html">Fellowship</a>
+                    <a href="/GetInvolve/internship.html">Internship</a>
+                    <a href="/GetInvolve/Volunteer.html">Volunteer</a>
+                    <a href="/GetInvolve/YuvaAlumini.html">YUVA Alumni</a>
+                    <a href="/GetInvolve/UnitRegistration.html">Unit Registration</a>
+                </div>
+            </div>
+
+            <a href="/Donate/Donate.html">Donate</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="gallery-page">
+            <section class="gallery-hero">
+                <div class="hero-background">
+                    <div class="hero-particles"></div>
+                </div>
+                <svg class="hero-chakra-bg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                    role="img">
+                    <circle cx="50" cy="50" r="46" stroke-width="2" fill="none" />
+                    <circle cx="50" cy="50" r="1.2" stroke-width="2" fill="none" />
+                    <g>
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(15 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(30 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(45 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(60 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(75 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(90 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(105 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(120 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(135 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(150 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(165 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(180 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(195 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(210 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(225 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(240 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(255 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(270 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(285 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(300 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(315 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(330 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(345 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                </svg>
+                <div class="gallery-hero-content">
+                    <span class="hero-badge">Modern Photo Experience</span>
+                    <h1 class="hero-title">
+                        <span class="hero-title-line">Photo Gallery</span>
+                        <span class="hero-title-line hero-title-accent">Curated Events & Memories</span>
+                    </h1>
+                    <p class="hero-description">Browse 4000+ photos from YUVA's landmark events with fast filters and
+                        smooth scrolling.</p>
+                    <div class="gallery-impact">
+                        <div class="gallery-impact-item">
+                            <div class="impact-icon"><i class="fas fa-images"></i></div>
+                            <div class="impact-content">
+                                <span class="donate-impact-number">4,000+</span>
+                                <span class="donate-impact-label">Photos</span>
+                            </div>
+                        </div>
+                        <div class="gallery-impact-item">
+                            <div class="impact-icon"><i class="fas fa-calendar-alt"></i></div>
+                            <div class="impact-content">
+                                <span class="donate-impact-number">10</span>
+                                <span class="donate-impact-label">Events</span>
+                            </div>
+                        </div>
+                        <div class="gallery-impact-item">
+                            <div class="impact-icon"><i class="fas fa-bolt"></i></div>
+                            <div class="impact-content">
+                                <span class="donate-impact-number">Fast</span>
+                                <span class="donate-impact-label">Lazy Loading</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <div class="content-card">
+                    <section class="filters">
+                        <div class="filters__primary" id="eventFilters" aria-label="Event filters"></div>
+                        <div class="filters__secondary" id="yearFilters" aria-label="Vimarsh year filters"></div>
+                    </section>
+
+                    <section class="meta">
+                        <div class="meta__count"><span id="shownCount">0</span> of <span id="totalCount">0</span> photos
+                        </div>
+                        <div class="meta__active" id="activeFilters"></div>
+                    </section>
+
+                    <section class="masonry" id="masonry">
+                        <!-- Cards injected by JS -->
+                    </section>
+
+                    <div id="sentinel" class="sentinel" aria-hidden="true"></div>
+                </div>
+            </section>
+
+            <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+        </div>
+    </div>
+
+    <script src="/script.js"></script>
+    <script src="/Gallary/photos.js"></script>
+</body>
+
+</html>

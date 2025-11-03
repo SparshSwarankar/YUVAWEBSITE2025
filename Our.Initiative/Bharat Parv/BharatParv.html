@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bharat Parv - A Celebration of India's Spirit</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+    
+    <link rel="stylesheet" href="Bharat.css">
+</head>
+<body>
+
+    <nav class="side-nav">
+        <ul>
+            <li><a href="#hero_experience" class="dot active"></a></li>
+            <li><a href="#bento_grid_section" class="dot"></a></li>
+            <li><a href="#cultural_kaleidoscope" class="dot"></a></li>
+            <li><a href="#digital_india_hub" class="dot"></a></li>
+            <li><a href="#event_schedule" class="dot"></a></li>
+        </ul>
+    </nav>
+
+    <div class="voice-ui-container">
+        <button id="voice-command-btn" aria-label="Activate Voice Commands">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.49 6-3.31 6-6.72h-1.7z"/></svg>
+        </button>
+    </div>
+    
+    <main>
+        <section id="hero_experience" class="full-screen content-section">
+            <video autoplay muted loop playsinline class="hero-background-video">
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-beautiful-shot-of-a-traditionally-dressed-indian-woman-39726-large.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"></div>
+            <div class="hero-content animate-on-load">
+                <h1>Bharat Parv</h1>
+                <p>A Celebration of India's Spirit</p>
+                <a href="#bento_grid_section" class="cta-button">Explore</a>
+            </div>
+        </section>
+
+        <section id="bento_grid_section" class="content-section">
+            <div class="bento-grid">
+                <div class="bento-item animate-on-scroll" id="intro_narrative">
+                    <h3>Heart of the Celebration</h3>
+                    <p>A journey where ancient traditions meet digital innovation.</p>
+                     <audio id="ambient-audio" src="https://cdn.pixabay.com/audio/2022/02/07/audio_3469850117.mp3" loop></audio>
+                </div>
+                <div class="bento-item animate-on-scroll" style="background-image: url('https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=800');">
+                    <div class="bento-overlay"><h4>Featured: Kerala</h4></div>
+                </div>
+                <div class="bento-item animate-on-scroll">
+                    <h4>Schedule Highlight</h4>
+                    <p><strong>Jan 26, 10:00 AM:</strong> Inauguration Ceremony</p>
+                    <a href="#event_schedule">Full Schedule →</a>
+                </div>
+                 <div class="bento-item animate-on-scroll" id="digital-india-bento">
+                    <h3>Digital India Hub</h3>
+                    <p>Explore India's tech future.</p>
+                    <a href="#digital_india_hub">Launch 3D Expo →</a>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="cultural_kaleidoscope" class="content-section">
+            <div class="section-header animate-on-scroll">
+                <h3>A Kaleidoscope of Cultures</h3>
+                <p>Hover over the map to discover the soul of India's states.</p>
+            </div>
+            <div class="map-container animate-on-scroll">
+                <svg viewBox="0 0 500 550" class="interactive-map">
+                    <g id="map-states">
+                        <path d="M150,50 L250,20 L350,50 L400,150 L300,250 L200,250 Z" data-state="Rajasthan"></path>
+                        <path d="M200,255 L300,255 L280,350 L220,350 Z" data-state="Kerala"></path>
+                        <path d="M355,55 L405,155 L320,200 Z" data-state="Punjab"></path>
+                        <path d="M180,260 L210,360 L150,330 Z" data-state="Goa"></path>
+                    </g>
+                </svg>
+                <div id="map-tooltip"></div>
+            </div>
+        </section>
+
+        <section id="digital_india_hub" class="content-section">
+            <div class="section-header animate-on-scroll">
+                <h3>Digital India: Powering the Future</h3>
+                <p>Interact with the model to see India's technological advancements.</p>
+            </div>
+            <model-viewer src="https://modelviewer.dev/shared-assets/models/Astronaut.glb" 
+                alt="Digital India Globe" auto-rotate camera-controls shadow-intensity="1">
+            </model-viewer>
+        </section>
+
+        <section id="culinary_journey" class="content-section">
+            <div class="section-header animate-on-scroll">
+                <h3>Flavors of India</h3>
+                <p>A panoramic view of India's culinary heritage. Drag to explore.</p>
+            </div>
+            <div id="panorama-container"></div>
+        </section>
+
+        <section id="event_schedule" class="content-section">
+             <div class="section-header animate-on-scroll">
+                <h3>What's Happening</h3>
+            </div>
+            <div class="dual-column-layout">
+                <div class="column animate-on-scroll" id="latest_updates">
+                    <h4>Latest News</h4>
+                    <div class="news-item">
+                        <h5>Republic Day Parade Tableaux</h5>
+                        <p>See the creativity of our states.</p>
+                    </div>
+                     <div class="news-item">
+                        <h5>Armed Forces Band Performances</h5>
+                        <p>Schedules for musical performances.</p>
+                    </div>
+                </div>
+                <div class="column animate-on-scroll">
+                    <h4>Event Schedule</h4>
+                    <div class="timeline-item">
+                        <span>Jan 26, 10:00 AM</span>
+                        <p>Inauguration Ceremony</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span>Jan 27, 12:00 PM</span>
+                        <p>Food Court Opens</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span>Jan 28, 11:00 AM</span>
+                        <p>Crafts Bazaar Opens</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer id="event_details_registration" class="footer-section">
+            <h3>Join Us at Bharat Parv</h3>
+            <p>Red Fort, New Delhi | January 26-31, 2026</p>
+            <a href="#" class="cta-button register-button">Register Now</a>
+        </footer>
+    </main>
+
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+    <script src="bharat.js"></script>
+</body>
+</html>

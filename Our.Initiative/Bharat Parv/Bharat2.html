@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BharatVerse 2026 | A Digital India Experience</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700;900&family=Source+Sans+Pro:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="Bharat2.css">
+</head>
+
+<body>
+
+    <div id="preloader">
+        <div class="loader-text">BHARATVERSE</div>
+        <div class="loader-bar"></div>
+    </div>
+
+    <div class="cursor"></div>
+
+    <canvas id="webgl-canvas"></canvas>
+
+    <main id="content-wrapper">
+
+        <header class="hero-section">
+            <nav class="main-nav">
+                <a href="#about">About</a>
+                <a href="#highlights">Highlights</a>
+                <a href="#schedule">Schedule</a>
+            </nav>
+            <div class="hero-title-container">
+                <h1 class="hero-title">BHARAT</h1>
+                <h1 class="hero-title indent">VERSE</h1>
+            </div>
+            <div class="hero-subtitle">
+                <p>A Digital Odyssey Through Culture & Innovation</p>
+                <p>26-31 January 2026 // Red Fort, New Delhi</p>
+            </div>
+        </header>
+
+        <section id="about" class="content-section">
+            <div class="section-title" data-scroll>
+                <h2>The Convergence</h2>
+                <div class="title-underline"></div>
+            </div>
+            <div class="about-content" data-scroll>
+                <p><strong>BharatVerse is not just an event; it's a digital dimension.</strong> A six-day immersive
+                    spectacle where India's timeless cultural heritage converges with its meteoric technological future.
+                    We invite you to step through the portal and witness a nation reimagined.</p>
+            </div>
+        </section>
+
+        <section id="highlights" class="content-section">
+            <div class="section-title" data-scroll>
+                <h2>Core Experiences</h2>
+                <div class="title-underline"></div>
+            </div>
+            <div class="highlights-grid">
+                <div class="grid-item tall" data-scroll
+                    style="background-image: url('https://images.unsplash.com/photo-1599661046261-71e330310268?q=80&w=800');">
+                    <div class="item-overlay">
+                        <h3>Cultural Holograms</h3>
+                        <p>Walk through life-sized, interactive projections of India's greatest monuments and art forms.
+                        </p>
+                    </div>
+                </div>
+                <div class="grid-item" data-scroll
+                    style="background-image: url('https://images.unsplash.com/photo-1610465299996-30f240ac2b1c?q=80&w=800');">
+                    <div class="item-overlay">
+                        <h3>Digital India Expo</h3>
+                        <p>Engage with the minds powering India's tech revolution, from AI to quantum computing.</p>
+                    </div>
+                </div>
+                <div class="grid-item" data-scroll
+                    style="background-image: url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=800');">
+                    <div class="item-overlay">
+                        <h3>Gastronomic Synthesis</h3>
+                        <p>Taste the future of Indian cuisine, where master chefs use technology to reinvent tradition.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="schedule" class="content-section">
+            <div class="section-title" data-scroll>
+                <h2>Event Matrix</h2>
+                <div class="title-underline"></div>
+            </div>
+            <div class="schedule-container" data-scroll>
+                <div class="schedule-tabs">
+                    <button class="tab-link active" onclick="openDay(event, 'Day1')">Day 01 // Jan 26</button>
+                    <button class="tab-link" onclick="openDay(event, 'Day2')">Day 02 // Jan 27</button>
+                    <button class="tab-link" onclick="openDay(event, 'Day3')">Day 03 // Jan 28</button>
+                </div>
+
+                <div id="Day1" class="tab-content active">
+                    <div class="schedule-item">
+                        <span class="time">10:00 - 12:00</span>
+                        <span class="title">Grand Opening: The Digital Dawn</span>
+                        <span class="description">Inauguration with holographic cultural performances.</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">14:00 - 16:00</span>
+                        <span class="title">Keynote: AI and India's Future</span>
+                        <span class="description">By leading minds in Artificial Intelligence.</span>
+                    </div>
+                </div>
+                <div id="Day2" class="tab-content">
+                    <div class="schedule-item">
+                        <span class="time">11:00 - 13:00</span>
+                        <span class="title">Workshop: The Future of Digital Art</span>
+                        <span class="description">Interactive sessions with VR and AR artists.</span>
+                    </div>
+                </div>
+                <div id="Day3" class="tab-content">
+                    <div class="schedule-item">
+                        <span class="time">All Day</span>
+                        <span class="title">Food Festival & Crafts Bazaar</span>
+                        <span class="description">Explore stalls from across the nation.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer-section">
+            <div class="footer-content" data-scroll>
+                <h2>Enter the BharatVerse.</h2>
+                <p>Registration is now open. Secure your place in the future.</p>
+                <a href="#" class="cta-button">Register Now</a>
+            </div>
+        </footer>
+
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+
+    <script src="Bharat2.js"></script>
+</body>
+
+</html>

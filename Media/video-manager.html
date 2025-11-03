@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YUVA Video Manager</title>
+    <link rel="stylesheet" href="media-styles.css">
+    <link rel="shortcut icon" href="/Images/YUVA logo.png" type="image/x-icon">
+    
+    <!-- Modern Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        .video-manager {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .manager-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .manager-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+        
+        .manager-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            margin-bottom: 32px;
+        }
+        
+        .manager-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 40px;
+        }
+        
+        .manager-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: 32px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .card-title i {
+            color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 8px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(85, 88, 121, 0.1);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            font-size: 16px;
+            background: var(--white);
+            cursor: pointer;
+        }
+        
+        .btn {
+            background: var(--gradient-primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--gray-200);
+        }
+        
+        /* Sync spinner */
+        @keyframes vm-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .is-syncing i {
+            animation: vm-spin 1s linear infinite;
+        }
+        .is-syncing {
+            opacity: 0.8;
+            pointer-events: none;
+        }
+        
+        .video-preview {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+            border: 2px dashed var(--gray-300);
+            text-align: center;
+        }
+        
+        .video-preview img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--radius);
+            margin-bottom: 12px;
+        }
+        
+        .video-info {
+            text-align: left;
+        }
+        
+        .video-title {
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 8px;
+        }
+        
+        .video-meta {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+        
+        .current-videos {
+            grid-column: 1 / -1;
+        }
+        
+        .video-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .video-item {
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            border: 1px solid var(--gray-200);
+        }
+        
+        .video-item-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .video-id {
+            font-family: monospace;
+            background: var(--primary);
+            color: var(--white);
+            padding: 4px 8px;
+            border-radius: var(--radius);
+            font-size: 12px;
+        }
+        
+        .video-category {
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 4px 8px;
+            border-radius: var(--radius);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .video-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+        
+        .success-message {
+            background: var(--success);
+            color: var(--white);
+            padding: 12px 16px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .error-message {
+            background: var(--error);
+            color: var(--white);
+            padding: 12px 16px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .manager-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .video-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="video-manager">
+        <div class="manager-header">
+            <h1 class="manager-title">
+                <i class="fas fa-video"></i>
+                YUVA Video Manager
+            </h1>
+            <p class="manager-subtitle">
+                Easily add and manage YouTube videos for your website
+            </p>
+            <div id="sourceBar" style="display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap;">
+                <span id="dataSourceBadge" class="video-category" style="background: var(--gray-100); color: var(--gray-800);">
+                    Source: Detecting...
+                </span>
+                <span id="videoCountBadge" class="video-category" style="background: var(--gray-100); color: var(--gray-800);">
+                    Videos: 0
+                </span>
+                
+                <!-- Data Source Toggle -->
+                <div style="display: flex; align-items: center; gap: 8px; background: var(--gray-100); padding: 8px 12px; border-radius: var(--radius-lg);">
+                    <span style="font-size: 12px; font-weight: 600; color: var(--gray-700);">Data Source:</span>
+                    <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                        <input type="checkbox" id="dataSourceToggle" style="display: none;">
+                        <div id="toggleSwitch" style="width: 50px; height: 24px; background: var(--gray-300); border-radius: 12px; position: relative; transition: all 0.3s ease;">
+                            <div id="toggleKnob" style="width: 20px; height: 20px; background: var(--white); border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: all 0.3s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"></div>
+                        </div>
+                        <span id="toggleLabel" style="font-size: 12px; font-weight: 600; color: var(--gray-700);">Config File</span>
+                    </label>
+                </div>
+                
+                <button type="button" id="syncBtn" class="btn btn-secondary btn-small">
+                    <i class="fas fa-rotate"></i>
+                    Sync
+                </button>
+                <button type="button" id="downloadConfigBtn" class="btn btn-secondary btn-small">
+                    <i class="fas fa-download"></i>
+                    Download Config
+                </button>
+            </div>
+        </div>
+
+        <!-- Flash messages will be shown here -->
+
+        <div class="manager-grid">
+            <!-- Add New Video -->
+            <div class="manager-card">
+                <h2 class="card-title">
+                    <i class="fas fa-plus-circle"></i>
+                    Add New Video
+                </h2>
+                
+                <form id="addVideoForm">
+                    <div class="form-group">
+                        <label class="form-label">YouTube URL or Video ID</label>
+                        <input type="text" id="videoUrl" class="form-input" 
+                               placeholder="https://youtu.be/8LJJqM3SptM or 8LJJqM3SptM">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select id="videoCategory" class="form-select" onchange="toggleYearFilter()">
+                            <option value="">Select Category</option>
+                            <option value="vimarsh">Vimarsh</option>
+                            <option value="bharatparv">Bharat Parv</option>
+                            <option value="seminars">Seminars</option>
+                            <option value="workshops">Workshops</option>
+                            <option value="interviews">Interviews</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" id="yearGroup" style="display: none;">
+                        <label class="form-label">Year (for Vimarsh events)</label>
+                        <select id="videoYear" class="form-select">
+                            <option value="2017">2017</option>
+                            <option value="2018">2018</option>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                        </select>
+                    </div>
+                    
+                    <button type="button" id="fetchVideoBtn" class="btn">
+                        <i class="fas fa-search"></i>
+                        Fetch Video Details
+                    </button>
+                    
+                    <div id="videoPreview" class="video-preview" style="display: none;">
+                        <div id="previewContent"></div>
+                        <button type="submit" class="btn" style="margin-top: 16px;">
+                            <i class="fas fa-plus"></i>
+                            Add to Website
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Bulk Add Videos -->
+            <div class="manager-card">
+                <h2 class="card-title">
+                    <i class="fas fa-upload"></i>
+                    Bulk Add Videos
+                </h2>
+                
+                <div class="form-group">
+                    <label class="form-label">Paste multiple YouTube URLs (one per line)</label>
+                    <textarea id="bulkUrls" class="form-input" rows="6" 
+                              placeholder="https://youtu.be/8LJJqM3SptM&#10;https://youtu.be/Sx9AQFfnXhQ&#10;https://youtu.be/Q1wnbrhcBs4"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Default Category</label>
+                    <select id="bulkCategory" class="form-select" onchange="toggleBulkYearFilter()">
+                        <option value="">Select Category</option>
+                        <option value="vimarsh">Vimarsh</option>
+                        <option value="bharatparv">Bharat Parv</option>
+                        <option value="seminars">Seminars</option>
+                        <option value="workshops">Workshops</option>
+                        <option value="interviews">Interviews</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="bulkYearGroup" style="display: none;">
+                    <label class="form-label">Default Year (for Vimarsh events)</label>
+                    <select id="bulkYear" class="form-select">
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                    </select>
+                </div>
+                
+                <button type="button" id="bulkAddBtn" class="btn">
+                    <i class="fas fa-upload"></i>
+                    Add All Videos
+                </button>
+            </div>
+
+            <!-- Current Videos -->
+            <div class="manager-card current-videos">
+                <h2 class="card-title">
+                    <i class="fas fa-list"></i>
+                    Current Videos
+                </h2>
+                
+                <div id="currentVideosList" class="video-list">
+                    <!-- Videos will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flash Notification Container -->
+    <div id="flash-container" class="flash-container"></div>
+
+    <script src="video-config.js"></script>
+    <script src="media-script.js"></script>
+    <script>
+        // Video Manager JavaScript
+        let currentVideos = [];
+        // Data source is managed globally in media-script.js
+        function getDataSourceLocal() { return (window.getDataSource ? window.getDataSource() : 'config'); }
+        function setDataSourceLocal(src) { if (window.setDataSource) { window.setDataSource(src); } }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            setupDataSourceToggle();
+            
+            // Load initial data based on toggle state
+            loadDataFromSource();
+            
+            // Initialize year filters based on default selections
+            toggleYearFilter();
+            toggleBulkYearFilter();
+        });
+        
+        function setupEventListeners() {
+            document.getElementById('fetchVideoBtn').addEventListener('click', fetchVideoDetails);
+            document.getElementById('addVideoForm').addEventListener('submit', addVideo);
+            document.getElementById('bulkAddBtn').addEventListener('click', bulkAddVideos);
+            document.getElementById('downloadConfigBtn').addEventListener('click', downloadVideoConfig);
+            document.getElementById('syncBtn').addEventListener('click', syncData);
+        }
+        
+        function setupDataSourceToggle() {
+            const toggle = document.getElementById('dataSourceToggle');
+            const toggleSwitch = document.getElementById('toggleSwitch');
+            const toggleKnob = document.getElementById('toggleKnob');
+            const toggleLabel = document.getElementById('toggleLabel');
+            // Initialize from current global data source (persisted)
+            const initialIsSheets = getDataSourceLocal() === 'sheets';
+            toggle.checked = initialIsSheets;
+            if (initialIsSheets) {
+                toggleSwitch.style.background = 'var(--primary)';
+                toggleKnob.style.left = '26px';
+                toggleLabel.textContent = 'Google Sheets';
+            }
+            
+            toggle.addEventListener('change', function() {
+                const newSource = this.checked ? 'sheets' : 'config';
+                
+                // Update toggle visual state
+                if (this.checked) {
+                    toggleSwitch.style.background = 'var(--primary)';
+                    toggleKnob.style.left = '26px';
+                    toggleLabel.textContent = 'Google Sheets';
+                } else {
+                    toggleSwitch.style.background = 'var(--gray-300)';
+                    toggleKnob.style.left = '2px';
+                    toggleLabel.textContent = 'Config File';
+                }
+                
+                // Sync data source with video page and persist
+                setDataSourceLocal(newSource);
+                
+                // Load data from new source
+                loadDataFromSource();
+                // Feedback
+                showFlashMessage('info', 'Data Source', `Now using ${newSource === 'sheets' ? 'Google Sheets' : 'Config File'}`);
+            });
+        }
+        
+        async function loadDataFromSource() {
+            if (getDataSourceLocal() === 'sheets') {
+                await loadVideosFromGoogleSheets();
+            } else {
+                loadVideosFromConfig();
+            }
+        }
+        
+        function loadVideosFromConfig() {
+            currentVideos = [...VIDEO_CONFIG];
+            loadCurrentVideos();
+            loadVideoDetails(); // Fetch YouTube data
+            updateSourceBar('Config File', currentVideos.length);
+        }
+        
+        async function syncData() {
+            const btn = document.getElementById('syncBtn');
+            const originalHtml = btn.innerHTML;
+            btn.classList.add('is-syncing');
+            btn.innerHTML = '<i class="fas fa-rotate"></i> Syncing...';
+            
+            try {
+                const source = getDataSourceLocal();
+                if (source === 'sheets') {
+                    await loadVideosFromGoogleSheets();
+                } else {
+                    loadVideosFromConfig();
+                }
+                // Notify video page to refresh (both tabs/windows)
+                try { localStorage.setItem('media_sync_trigger', String(Date.now())); } catch (e) {}
+                showFlashMessage('success', 'Synced', 'Video page notified to refresh videos.');
+            } finally {
+                btn.classList.remove('is-syncing');
+                btn.innerHTML = originalHtml;
+            }
+        }
+
+        // Normalize Google Sheets wrapped responses
+        function normalizeSheetsData(data) {
+            if (!data) return { success: false };
+            const inner = data.data && data.data.videos !== undefined ? data.data
+                : (data.data && data.data.data ? data.data.data : null);
+            if (inner && Array.isArray(inner.videos)) {
+                return { success: true, videos: inner.videos, count: inner.count || inner.videoCount || inner.videos.length };
+            }
+            return { success: false };
+        }
+        
+        // Toggle year filter for single video
+        function toggleYearFilter() {
+            const category = document.getElementById('videoCategory').value;
+            const yearGroup = document.getElementById('yearGroup');
+            
+            if (category === 'vimarsh') {
+                yearGroup.style.display = 'block';
+            } else {
+                yearGroup.style.display = 'none';
+            }
+        }
+        
+        // Toggle year filter for bulk videos
+        function toggleBulkYearFilter() {
+            const category = document.getElementById('bulkCategory').value;
+            const yearGroup = document.getElementById('bulkYearGroup');
+            
+            if (category === 'vimarsh') {
+                yearGroup.style.display = 'block';
+            } else {
+                yearGroup.style.display = 'none';
+            }
+        }
+        
+        // Make toggleYearFilter globally accessible for HTML onchange
+        window.toggleYearFilter = toggleYearFilter;
+        window.toggleBulkYearFilter = toggleBulkYearFilter;
+        
+        // Load video details from YouTube API
+        async function loadVideoDetails() {
+            if (!YOUTUBE_CONFIG || !YOUTUBE_CONFIG.API_KEY) {
+                console.error('YouTube API key not configured');
+                return;
+            }
+            
+            const videoIds = currentVideos.map(video => video.id).join(',');
+            if (!videoIds) return;
+            
+            try {
+                const response = await fetch(
+                    `${YOUTUBE_CONFIG.API_URL}?part=snippet,statistics,contentDetails&id=${videoIds}&key=${YOUTUBE_CONFIG.API_KEY}`
+                );
+                
+                if (!response.ok) {
+                    throw new Error(`YouTube API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.items && data.items.length > 0) {
+                    // Update current videos with fetched data (do not auto-set year)
+                    data.items.forEach(apiVideo => {
+                        const videoIndex = currentVideos.findIndex(v => v.id === apiVideo.id);
+                        if (videoIndex !== -1) {
+                            currentVideos[videoIndex] = {
+                                ...currentVideos[videoIndex],
+                                title: apiVideo.snippet.title,
+                                description: apiVideo.snippet.description,
+                                publishedAt: apiVideo.snippet.publishedAt,
+                                viewCount: apiVideo.statistics?.viewCount || 'N/A',
+                                duration: apiVideo.contentDetails?.duration || 'N/A',
+                                thumbnail: apiVideo.snippet.thumbnails.medium?.url || apiVideo.snippet.thumbnails.default?.url
+                            };
+                        }
+                    });
+                    
+                    // Update the video config file
+                    updateVideoConfigFile();
+                    
+                    // Reload the display
+                    loadCurrentVideos();
+                }
+                
+            } catch (error) {
+                console.error('Error loading video details:', error);
+                showError('Failed to load video details from YouTube API');
+            }
+        }
+        
+        async function fetchVideoDetails() {
+            const videoUrl = document.getElementById('videoUrl').value.trim();
+            const category = document.getElementById('videoCategory').value;
+            
+            if (!videoUrl) {
+                showError('Please enter a YouTube URL or Video ID');
+                return;
+            }
+            
+            if (!category) {
+                showError('Please select a category');
+                return;
+            }
+            
+            const videoId = extractVideoId(videoUrl);
+            if (!videoId) {
+                showError('Invalid YouTube URL format');
+                return;
+            }
+            
+            try {
+                const response = await fetch(
+                    `${YOUTUBE_CONFIG.API_URL}?part=snippet,statistics,contentDetails&id=${videoId}&key=${YOUTUBE_CONFIG.API_KEY}`
+                );
+                
+                if (!response.ok) {
+                    throw new Error(`YouTube API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.items && data.items.length > 0) {
+                    const video = data.items[0];
+                    
+                    // For Vimarsh videos, show year selection (do not auto-set)
+                    if (category === 'vimarsh') {
+                        document.getElementById('yearGroup').style.display = 'block';
+                    }
+                    
+                    showVideoPreview(video, category);
+                } else {
+                    showError('Video not found or not accessible');
+                }
+                
+            } catch (error) {
+                console.error('Error fetching video:', error);
+                showError('Failed to fetch video details. Please check your API key.');
+            }
+        }
+        
+        function extractVideoId(url) {
+            const patterns = [
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+                /^([a-zA-Z0-9_-]{11})$/
+            ];
+            
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match) return match[1];
+            }
+            
+            return null;
+        }
+        
+        function showVideoPreview(video, category) {
+            const preview = document.getElementById('videoPreview');
+            const content = document.getElementById('previewContent');
+            
+            const thumbnail = video.snippet.thumbnails.medium?.url || video.snippet.thumbnails.default?.url;
+            const publishedDate = new Date(video.snippet.publishedAt).toLocaleDateString();
+            const viewCount = formatNumber(video.statistics.viewCount);
+            const duration = formatDuration(video.contentDetails.duration);
+            
+            content.innerHTML = `
+                <img src="${thumbnail}" alt="${video.snippet.title}">
+                <div class="video-info">
+                    <div class="video-title">${video.snippet.title}</div>
+                    <div class="video-meta">
+                        <div><strong>Category:</strong> ${category}</div>
+                        <div><strong>Views:</strong> ${viewCount}</div>
+                        <div><strong>Duration:</strong> ${duration}</div>
+                        <div><strong>Published:</strong> ${publishedDate}</div>
+                    </div>
+                </div>
+            `;
+            
+            preview.style.display = 'block';
+        }
+        
+        async function addVideo(e) {
+            e.preventDefault();
+            
+            const videoUrl = document.getElementById('videoUrl').value.trim();
+            const category = document.getElementById('videoCategory').value;
+            const year = document.getElementById('videoYear').value;
+            
+            if (!category) {
+                showError('Please select a category');
+                return;
+            }
+            
+            const videoId = extractVideoId(videoUrl);
+            if (!videoId) {
+                showError('Invalid video ID');
+                return;
+            }
+            
+            // Check if video already exists
+            if (currentVideos.find(v => v.id === videoId)) {
+                showError('This video is already in the list');
+                return;
+            }
+            
+            // Add to current videos (local only when source is config)
+            const newVideo = {
+                id: videoId,
+                category: category,
+                title: 'Loading...', // Will be fetched by the main script
+                description: 'Loading...',
+                publishedAt: new Date().toISOString()
+            };
+            
+            // Add year if it's a Vimarsh video (auto-fetched or manually selected)
+            if (category === 'vimarsh' && year) {
+                newVideo.year = year;
+            }
+            
+            // Save to the selected data source
+            if (getDataSourceLocal() === 'sheets') {
+                const savedToSheets = await saveVideoToGoogleSheets(newVideo);
+                if (savedToSheets) {
+                    showSuccess('Video added to Google Sheets!');
+                    // Reload from Sheets to avoid mixing with config
+                    await loadVideosFromGoogleSheets();
+                } else {
+                    showError('Failed to save to Google Sheets. Video saved locally only.');
+                }
+            } else {
+                // Update config file
+                currentVideos.push(newVideo);
+                window.VIDEO_CONFIG = [...currentVideos];
+                showSuccess('Video added to Config File! It will appear on your video page immediately.');
+                // Fetch details for local display
+                loadVideoDetails();
+            }
+            
+            // Reset form
+            document.getElementById('addVideoForm').reset();
+            document.getElementById('videoPreview').style.display = 'none';
+            document.getElementById('yearGroup').style.display = 'none';
+        }
+        
+        async function bulkAddVideos() {
+            const urls = document.getElementById('bulkUrls').value.trim().split('\n');
+            const category = document.getElementById('bulkCategory').value;
+            const year = document.getElementById('bulkYear').value;
+            
+            if (!category) {
+                showError('Please select a category');
+                return;
+            }
+            
+            if (urls.length === 0 || (urls.length === 1 && urls[0] === '')) {
+                showError('Please enter at least one YouTube URL');
+                return;
+            }
+            
+            // Show progress UI
+            const bulkBtn = document.getElementById('bulkAddBtn');
+            const originalBtnText = bulkBtn.innerHTML;
+            bulkBtn.disabled = true;
+            bulkBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            
+            let processedCount = 0;
+            let addedCount = 0;
+            let errorCount = 0;
+            let duplicateCount = 0;
+            const videoIds = [];
+            const errors = [];
+            
+            try {
+                // Step 1: Validate URLs and collect video IDs
+                showFlashMessage('info', 'Processing', 'Validating URLs and checking for duplicates...', 2000);
+                
+                for (const url of urls) {
+                    const trimmedUrl = url.trim();
+                    if (!trimmedUrl) continue;
+                    
+                    processedCount++;
+                    const videoId = extractVideoId(trimmedUrl);
+                    if (!videoId) {
+                        errorCount++;
+                        errors.push(`Invalid URL: ${trimmedUrl}`);
+                        continue;
+                    }
+                    
+                    // Check if video already exists
+                    if (currentVideos.find(v => v.id === videoId)) {
+                        duplicateCount++;
+                        errors.push(`Duplicate video: ${videoId}`);
+                        continue;
+                    }
+                    
+                    videoIds.push(videoId);
+                }
+                
+                // Step 2: Fetch video details from YouTube API
+                if (videoIds.length > 0) {
+                    showFlashMessage('info', 'Processing', `Fetching details for ${videoIds.length} videos from YouTube...`, 2000);
+                    
+                    try {
+                        const response = await fetch(
+                            `${YOUTUBE_CONFIG.API_URL}?part=snippet,statistics,contentDetails&id=${videoIds.join(',')}&key=${YOUTUBE_CONFIG.API_KEY}`
+                        );
+                        
+                        if (response.ok) {
+                            const data = await response.json();
+                            
+                            if (data.items && data.items.length > 0) {
+                                data.items.forEach(apiVideo => {
+                                    const newVideo = {
+                                        id: apiVideo.id,
+                                        category: category,
+                                        title: apiVideo.snippet.title,
+                                        description: apiVideo.snippet.description,
+                                        publishedAt: apiVideo.snippet.publishedAt,
+                                        viewCount: apiVideo.statistics?.viewCount || 'N/A',
+                                        duration: apiVideo.contentDetails?.duration || 'N/A',
+                                        thumbnail: apiVideo.snippet.thumbnails.medium?.url || apiVideo.snippet.thumbnails.default?.url
+                                    };
+                                    
+                                // Year handling: use selected year for Vimarsh, do not auto from publish date
+                                if (category === 'vimarsh' && year) {
+                                    newVideo.year = year;
+                                }
+                                    
+                                    currentVideos.push(newVideo);
+                                    addedCount++;
+                                });
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error fetching bulk video details:', error);
+                        // Fallback: add videos without details
+                        videoIds.forEach(videoId => {
+                            const newVideo = {
+                                id: videoId,
+                                category: category,
+                                title: 'Loading...',
+                                description: 'Loading...',
+                                publishedAt: new Date().toISOString()
+                            };
+                            
+                            if (category === 'vimarsh' && year) {
+                                newVideo.year = year;
+                            }
+                            
+                            currentVideos.push(newVideo);
+                            addedCount++;
+                        });
+                    }
+                }
+                
+                // Step 3: Save to selected data source
+                if (addedCount > 0) {
+                    if (getDataSourceLocal() === 'sheets') {
+                        showFlashMessage('info', 'Processing', `Saving ${addedCount} videos to Google Sheets...`, 2000);
+                        
+                        let savedToSheets = 0;
+                        let saveErrors = 0;
+                        
+                        // Save each video individually with progress feedback
+                        for (let i = currentVideos.length - addedCount; i < currentVideos.length; i++) {
+                            const video = currentVideos[i];
+                            try {
+                                const saved = await saveVideoToGoogleSheets(video);
+                                if (saved) {
+                                    savedToSheets++;
+                                } else {
+                                    saveErrors++;
+                                    errors.push(`Failed to save: ${video.title}`);
+                                }
+                            } catch (error) {
+                                saveErrors++;
+                                errors.push(`Error saving ${video.title}: ${error.message}`);
+                            }
+                        }
+                        
+                        // Show detailed results
+                        if (savedToSheets === addedCount) {
+                            showSuccess(`✅ All ${addedCount} videos saved to Google Sheets!`);
+                        } else if (savedToSheets > 0) {
+                            showFlashMessage('warning', 'Partial Success', 
+                                `✅ ${savedToSheets}/${addedCount} videos saved to Google Sheets. ${saveErrors} failed. Check backend configuration.`, 5000);
+                        } else {
+                            showError(`❌ No videos saved to Google Sheets. Check your backend configuration.`);
+                        }
+                        
+                        // Reload from Sheets to keep view clean
+                        await loadVideosFromGoogleSheets();
+                    } else {
+                        // Update config file
+                        window.VIDEO_CONFIG = [...currentVideos];
+                        showSuccess(`✅ All ${addedCount} videos added to Config File!`);
+                        // Populate details after bulk add
+                        loadVideoDetails();
+                    }
+                } else {
+                    showError('❌ No valid videos were added');
+                }
+                
+                // Show summary of all issues
+                if (errors.length > 0) {
+                    const errorSummary = errors.slice(0, 5).join('\n');
+                    const moreErrors = errors.length > 5 ? `\n... and ${errors.length - 5} more errors` : '';
+                    showFlashMessage('warning', 'Issues Found', 
+                        `Processed ${processedCount} URLs:\n• ${addedCount} added\n• ${duplicateCount} duplicates\n• ${errorCount} invalid URLs\n\nDetails:\n${errorSummary}${moreErrors}`, 8000);
+                }
+                
+            } finally {
+                // Reset button
+                bulkBtn.disabled = false;
+                bulkBtn.innerHTML = originalBtnText;
+                
+                // Reset form
+                document.getElementById('bulkUrls').value = '';
+                document.getElementById('bulkYearGroup').style.display = 'none';
+            }
+        }
+        
+        function loadCurrentVideos() {
+            const container = document.getElementById('currentVideosList');
+            container.innerHTML = '';
+            
+            currentVideos.forEach((video, index) => {
+                const videoItem = document.createElement('div');
+                videoItem.className = 'video-item';
+                
+                // Format view count and duration
+                const viewCount = video.viewCount ? formatNumber(video.viewCount) : 'N/A';
+                const duration = video.duration ? formatDuration(video.duration) : 'N/A';
+                const publishedDate = video.publishedAt ? new Date(video.publishedAt).toLocaleDateString() : 'N/A';
+                const yearInfo = video.year ? ` | Year: ${video.year}` : '';
+                
+                videoItem.innerHTML = `
+                    <div class="video-item-header">
+                        <span class="video-id">${video.id}</span>
+                        <span class="video-category">${video.category.toUpperCase()}${video.year ? ` ${video.year}` : ''}</span>
+                    </div>
+                    <div class="video-title">${video.title}</div>
+                    <div class="video-meta">
+                        <div><strong>Category:</strong> ${video.category}${yearInfo}</div>
+                        <div><strong>Views:</strong> ${viewCount}</div>
+                        <div><strong>Duration:</strong> ${duration}</div>
+                        <div><strong>Published:</strong> ${publishedDate}</div>
+                    </div>
+                    <div class="video-actions">
+                        <button class="btn btn-small btn-secondary" onclick="removeVideo(${index})">
+                            <i class="fas fa-trash"></i>
+                            Remove
+                        </button>
+                        <button class="btn btn-small" onclick="copyVideoId('${video.id}')">
+                            <i class="fas fa-copy"></i>
+                            Copy ID
+                        </button>
+                    </div>
+                `;
+                container.appendChild(videoItem);
+            });
+        }
+        
+        async function removeVideo(index) {
+            if (confirm('Are you sure you want to remove this video?')) {
+                const videoToRemove = currentVideos[index];
+                currentVideos.splice(index, 1);
+                
+                // Try to delete from Google Sheets
+                const deletedFromSheets = await deleteVideoFromGoogleSheets(videoToRemove.id);
+                
+                if (deletedFromSheets) {
+                    showSuccess('Video removed from Google Sheets!');
+                } else {
+                    // Fallback: just update local memory
+                    window.VIDEO_CONFIG = [...currentVideos];
+                    showSuccess('Video removed successfully!');
+                }
+                
+                loadCurrentVideos();
+            }
+        }
+        
+        function copyVideoId(videoId) {
+            navigator.clipboard.writeText(videoId).then(() => {
+                showSuccess('Video ID copied to clipboard!');
+            });
+        }
+        
+        function updateVideoConfig() {
+            // This would typically update the actual config file
+            // For now, we'll just update the in-memory config
+            window.VIDEO_CONFIG = [...currentVideos];
+            console.log('Updated video config:', currentVideos);
+        }
+        
+        // Update the actual video-config.js file automatically
+        function updateVideoConfigFile() {
+            // Update the in-memory config
+            window.VIDEO_CONFIG = [...currentVideos];
+            
+            // Only sync with Google Sheets if Sheets is the active source
+            if (typeof getDataSourceLocal === 'function' && getDataSourceLocal() === 'sheets') {
+                updateConfigFileOnServer();
+            }
+            
+            console.log('Video config updated automatically');
+            // Don't change source here - keep current source
+        }
+        
+        // WEB_APP_URL is already declared in media-script.js
+        
+        // JSONP helper to avoid CORS while getting a readable response
+        function jsonpRequest(url, params = {}) {
+            return new Promise((resolve, reject) => {
+                const callbackName = `jsonp_cb_${Date.now()}_${Math.floor(Math.random()*10000)}`;
+                params.callback = callbackName;
+                const qs = new URLSearchParams(params).toString();
+                const script = document.createElement('script');
+                script.src = `${url}?${qs}`;
+                script.async = true;
+                
+                window[callbackName] = (data) => {
+                    resolve(data);
+                    delete window[callbackName];
+                    script.remove();
+                };
+                
+                script.onerror = () => {
+                    reject(new Error('JSONP request failed'));
+                    delete window[callbackName];
+                    script.remove();
+                };
+                
+                document.body.appendChild(script);
+            });
+        }
+
+        // Update source/status badges in header
+        function updateSourceBar(source, count) {
+            const sourceEl = document.getElementById('dataSourceBadge');
+            const countEl = document.getElementById('videoCountBadge');
+            if (sourceEl) sourceEl.textContent = `Source: ${source}`;
+            if (countEl) countEl.textContent = `Videos: ${count}`;
+        }
+
+        // Generate and download video-config.js reflecting current state
+        function downloadVideoConfig() {
+            const configObject = {
+                YOUTUBE_CONFIG: {
+                    API_KEY: YOUTUBE_CONFIG.API_KEY,
+                    API_URL: YOUTUBE_CONFIG.API_URL,
+                    CHANNEL_ID: YOUTUBE_CONFIG.CHANNEL_ID
+                },
+                VIDEO_CONFIG: currentVideos.map(v => ({
+                    id: v.id,
+                    category: v.category,
+                    year: v.year || undefined,
+                    title: v.title || '',
+                    description: v.description || '',
+                    publishedAt: v.publishedAt || new Date().toISOString()
+                }))
+            };
+            const fileJs = `/* ===== YOUTUBE VIDEO CONFIGURATION ===== */\n\nconst YOUTUBE_CONFIG = ${JSON.stringify(configObject.YOUTUBE_CONFIG, null, 4)};\n\nconst VIDEO_CONFIG = ${JSON.stringify(configObject.VIDEO_CONFIG, null, 4)};\n\nwindow.YOUTUBE_CONFIG = YOUTUBE_CONFIG;\nwindow.VIDEO_CONFIG = VIDEO_CONFIG;\n`;
+            const blob = new Blob([fileJs], { type: 'application/javascript;charset=utf-8' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'video-config.js';
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+                URL.revokeObjectURL(a.href);
+                a.remove();
+            }, 0);
+            showSuccess('Downloaded video-config.js reflecting current videos.');
+        }
+
+        // Manually trigger a sync - works with current data source
+        async function syncVideoPage() {
+            const badgeText = document.getElementById('dataSourceBadge').textContent;
+            const currentSource = (badgeText.includes('GOOGLE SHEETS') || badgeText.includes('Google Sheets')) ? 'Google Sheets' : 'Config File';
+            
+            if (currentSource === 'Google Sheets') {
+                showSuccess('Syncing video page from Google Sheets...');
+                try {
+                    const raw = await jsonpRequest(WEB_APP_URL, { action: 'getVideos' });
+                    const normalized = normalizeSheetsData(raw);
+                    if (normalized.success) {
+                        currentVideos = normalized.videos || [];
+                        loadCurrentVideos();
+                        updateSourceBar('Google Sheets', normalized.count || currentVideos.length);
+                        showSuccess(`Synced ${normalized.count || currentVideos.length} videos from Google Sheets.`);
+                    } else {
+                        showError('Could not fetch from Sheets. Using config as fallback.');
+                        updateSourceBar('Config File', currentVideos.length);
+                    }
+                } catch (e) {
+                    showError('Sheets sync failed. Using config as fallback.');
+                    updateSourceBar('Config File', currentVideos.length);
+                }
+            } else {
+                showSuccess('Syncing video page from Config File...');
+                // Reload from config and fetch YouTube data
+                currentVideos = [...VIDEO_CONFIG];
+                loadCurrentVideos();
+                loadVideoDetails();
+                updateSourceBar('Config File', currentVideos.length);
+                showSuccess(`Synced ${currentVideos.length} videos from Config File.`);
+            }
+        }
+
+        // Load videos from Google Sheets via JSONP
+        async function loadVideosFromGoogleSheets() {
+            if (WEB_APP_URL === 'YOUR_GOOGLE_WEB_APP_URL_HERE') {
+                console.log('Google Sheets not configured yet');
+                updateSourceBar('Config File', currentVideos.length);
+                return;
+            }
+            
+            try {
+                const raw = await jsonpRequest(WEB_APP_URL, { action: 'getVideos' });
+                const normalized = normalizeSheetsData(raw);
+                if (normalized.success && normalized.videos && normalized.videos.length > 0) {
+                    currentVideos = normalized.videos;
+                    loadCurrentVideos();
+                    console.log('Videos loaded from Google Sheets:', normalized.count || currentVideos.length);
+                    updateSourceBar('Google Sheets', normalized.count || currentVideos.length);
+                } else {
+                    console.log('No videos in Google Sheets or invalid response:', raw);
+                    updateSourceBar('Google Sheets', 0);
+                    showFlashMessage('warning', 'No Videos', 'No videos found in Google Sheets. Please add videos or switch to Config File.');
+                }
+                
+            } catch (error) {
+                console.log('Could not load from Google Sheets:', error);
+                updateSourceBar('Google Sheets', 0);
+                showFlashMessage('error', 'Connection Error', 'Google Sheets not accessible. Please check your backend setup or switch to Config File.');
+            }
+        }
+        
+        // Save video to Google Sheets
+        async function saveVideoToGoogleSheets(videoData) {
+            // Treat placeholder or sample URL as not configured
+            if (!WEB_APP_URL || WEB_APP_URL.includes('YOUR_GOOGLE_WEB_APP_URL_HERE')) {
+                console.log('Google Sheets not configured, using local storage');
+                return false;
+            }
+            
+            try {
+                // Send MINIMAL payload to avoid URL length issues; backend enriches via YouTube API
+                const minimalPayload = {
+                    id: videoData.id,
+                    category: videoData.category,
+                    year: videoData.year || ''
+                };
+                
+                const data = await jsonpRequest(WEB_APP_URL, { action: 'addVideo', videoData: JSON.stringify(minimalPayload) });
+                if (data && data.success && data.data && data.data.success) {
+                    console.log('Video saved to Google Sheets');
+                    return true;
+                }
+                console.log('Add video failed - Google Sheets backend issue:', data);
+                showFlashMessage('warning', 'Warning', 'Could not save to Google Sheets. Check your backend configuration.');
+                return false;
+                
+            } catch (error) {
+                console.log('Could not save to Google Sheets:', error);
+                showFlashMessage('warning', 'Warning', 'Google Sheets not accessible. Video saved locally only.');
+            }
+            
+            return false;
+        }
+        
+        // Delete video from Google Sheets
+        async function deleteVideoFromGoogleSheets(videoId) {
+            if (!WEB_APP_URL || WEB_APP_URL.includes('YOUR_GOOGLE_WEB_APP_URL_HERE')) {
+                console.log('Google Sheets not configured, using local storage');
+                return false;
+            }
+            
+            try {
+                const data = await jsonpRequest(WEB_APP_URL, { action: 'deleteVideo', videoId: videoId });
+                if (data && data.success && data.data && data.data.success) {
+                    console.log('Video deleted from Google Sheets');
+                    return true;
+                }
+                console.log('Delete video failed', data);
+                return false;
+                
+            } catch (error) {
+                console.log('Could not delete from Google Sheets:', error);
+            }
+            
+            return false;
+        }
+        
+        // Function to sync with Google Sheets
+        async function updateConfigFileOnServer() {
+            const syncText = document.getElementById('syncText');
+            const syncStatus = document.getElementById('syncStatus');
+            
+            // Show loading state only if elements exist
+            if (syncText) {
+                syncText.textContent = 'Syncing...';
+            }
+            
+            try {
+                const data = await jsonpRequest(WEB_APP_URL, { action: 'getConfig' });
+                console.log('Sync response from Google Sheets', data);
+                
+                // Determine if Sheets actually has videos
+                const normalized = normalizeSheetsData(data);
+                const sheetHasVideos = !!(normalized && normalized.success && (normalized.count > 0));
+
+                // Update UI feedback only if elements exist
+                if (syncText) {
+                    syncText.textContent = 'Sync with Video Page';
+                }
+                if (syncStatus) {
+                    syncStatus.style.display = 'block';
+                    syncStatus.innerHTML = sheetHasVideos
+                        ? '<i class="fas fa-check-circle" style="color: var(--success);"></i> <span>Synced with Google Sheets</span>'
+                        : '<i class="fas fa-info-circle" style="color: var(--gray-600);"></i> <span>No videos in Google Sheets. Using Config File</span>';
+                    setTimeout(() => { syncStatus.style.display = 'none'; }, 3000);
+                }
+
+                if (sheetHasVideos) {
+                    showSuccess('Video config synced with Google Sheets! Videos will appear on your video page immediately.');
+                    updateSourceBar('Google Sheets', normalized.count || currentVideos.length);
+                } else {
+                    // Keep current source as Config File when Sheets has no data
+                    showFlashMessage('info', 'Info', 'No videos found in Google Sheets. Keeping Config File as source.');
+                    updateSourceBar('Config File', currentVideos.length);
+                }
+                
+            } catch (error) {
+                console.log('Google Sheets sync not available:', error);
+                if (syncText) {
+                    syncText.textContent = 'Sync with Video Page';
+                }
+                // No fallback download - just log the error
+                console.log('Sync failed, but videos are still saved locally');
+                // Don't change source on error - keep current source
+            }
+        }
+        
+        
+        function showSuccess(message) {
+            showFlashMessage('success', 'Success', message, 3000);
+        }
+        
+        function showError(message) {
+            showFlashMessage('error', 'Error', message, 5000);
+        }
+        
+        function formatNumber(num) {
+            return new Intl.NumberFormat('en-US', {
+                notation: 'compact',
+                maximumFractionDigits: 1
+            }).format(parseInt(num));
+        }
+        
+        function formatDuration(duration) {
+            const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+            if (!match) return 'N/A';
+            
+            const hours = parseInt(match[1] || 0);
+            const minutes = parseInt(match[2] || 0);
+            const seconds = parseInt(match[3] || 0);
+            
+            if (hours > 0) {
+                return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            } else {
+                return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+    </script>
+</body>
+
+</html>

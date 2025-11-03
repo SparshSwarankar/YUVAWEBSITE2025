@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Registration | YUVA India</title>
+    <link rel="stylesheet" href="/GetInvolve/Unitstyle.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="shortcut icon" href="/Images/YUVA logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        /* Scoped styles for the registration page layout */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: var(--bg-base);
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .register-card {
+            background-color: var(--bg-elevated);
+            padding: 28px 32px;
+            border-radius: var(--radius-xl);
+            width: 100%;
+            max-width: 520px;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+            top: 40px;
+        }
+
+        .site-header {
+            right: calc(-10px + var(--space-md) * 2) !important;
+        }
+
+        /* Style to hide college fields by default */
+        .college-fields {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="/Images/YUVA logo.png" alt="YUVA Logo">
+                <h1>YUVA</h1>
+            </div>
+            <div class="page-title">Admin Registration</div>
+            <div class="header-actions">
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="register-card">
+            <h2>Register Admin Account</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-name">Full Name:</label>
+                    <input type="text" id="register-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email:</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password:</label>
+                    <input type="password" id="register-password" minlength="6" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-role">Role:</label>
+                    <select id="register-role" required>
+                        <option value="super_admin">Super Admin</option>
+                        <option value="zone_convener">Zone Convener</option>
+                        <option value="mentor">Mentor</option>
+                    </select>
+                </div>
+                <div class="form-group" id="zone-selector-group">
+                    <label for="register-zone">Zone:</label>
+                    <select id="register-zone">
+                        <option value="">Select Zone</option>
+                    </select>
+                </div>
+
+                <div class="college-fields" id="college-fields-group">
+                    <div class="form-group">
+                        <label for="register-college-code">College Code:</label>
+                        <input type="text" id="register-college-code" placeholder="E.g., RCSZ001">
+                        <small id="college-loader" style="display:none; color: var(--color-info);">Verifying
+                            code...</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-college-name">College Name (Auto-filled):</label>
+                        <input type="text" id="register-college-name" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-zone-name">Zone Name (Auto-filled):</label>
+                        <input type="text" id="register-zone-name" disabled>
+                    </div>
+                    <input type="hidden" id="register-college-id">
+                </div>
+
+                <button type="submit" class="btn primary" style="width: 100%;">Register</button>
+            </form>
+            <div class="auth-divider">
+                <span>or</span>
+            </div>
+            <button id="google-register-btn" class="btn google-btn">
+                <i class="fab fa-google"></i> Register with Google
+            </button>
+        </div>
+    </div>
+
+    <script src="/GetInvolve/unit.js"></script>
+
+</body>
+
+</html>

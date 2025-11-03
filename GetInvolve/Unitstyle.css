@@ -1,0 +1,2782 @@
+/* ===== YUVA DELHI UNIT REGISTRATION ADMIN SYSTEM - MODERN STYLES (REVISED YUVA 2025 THEME) ===== */
+
+/* =================================================================== */
+/* ===== MODERN HOME PAGE STYLES - YUVA 2025 (REVISED) ===== */
+/* =================================================================== */
+
+/* ===== Root Variables (Aligned with New Design System) ===== */
+:root {
+    /* India Theme Color Palette */
+    --saffron-primary: #FF9933;
+    --saffron-light: #FFB366;
+    --saffron-dark: #E67300;
+    --saffron-pale: #FFE5CC;
+    --white-primary: #FFFFFF;
+    --white-warm: #FAFAF9;
+    --white-cream: #F5F5F4;
+    --green-primary: #138808;
+    --green-light: #22C55E;
+    --green-dark: #0F6606;
+    --green-pale: #D1FAE5;
+    --navy-chakra: #000080;
+    --navy-dark: #00005C;
+
+    /* Semantic Colors */
+    --color-primary: var(--navy-chakra);
+    --color-secondary: var(--green-primary);
+    --color-accent: var(--saffron-primary);
+    --color-error: #ef4444;
+    --color-error-pale: #fef2f2;
+    --color-info: #3b82f6;
+    --color-info-pale: #EBF4FF;
+    --color-success: var(--green-primary);
+    --color-warning: var(--saffron-primary);
+
+
+    /* Text & Background */
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    --text-on-dark: var(--white-primary);
+    --text-on-accent: var(--white-primary);
+    --bg-base: var(--white-warm);
+    --bg-elevated: var(--white-primary);
+    --bg-subtle: var(--white-cream);
+    --bg-muted: #F1F5F9;
+    --border-light: #E2E8F0;
+    --border-medium: #CBD5E1;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, var(--saffron-light) 0%, var(--white-primary) 50%, var(--green-light) 100%);
+    --gradient-saffron: linear-gradient(135deg, var(--saffron-primary) 0%, var(--saffron-dark) 100%);
+    --gradient-green: linear-gradient(135deg, var(--green-light) 0%, var(--green-primary) 100%);
+    --gradient-navy: linear-gradient(135deg, var(--navy-chakra) 0%, var(--navy-dark) 100%);
+
+    /* Shadows & Radii */
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.5rem;
+    --radius-full: 9999px;
+
+    /* Transitions */
+    --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+
+/* ===== FLASH NOTIFICATION SYSTEM ===== */
+.flash-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 30000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: none;
+}
+
+.flash-notification {
+    background: var(--bg-elevated);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    padding: 16px 20px;
+    min-width: 320px;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: var(--transition-bounce);
+    pointer-events: auto;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+}
+
+.flash-notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.flash-notification.success {
+    border-left: 4px solid var(--green-primary);
+    background: var(--green-pale);
+}
+
+.flash-notification.error {
+    border-left: 4px solid var(--color-error);
+    background: var(--color-error-pale);
+}
+
+.flash-notification.warning {
+    border-left: 4px solid var(--saffron-primary);
+    background: var(--saffron-pale);
+}
+
+.flash-notification.info {
+    border-left: 4px solid var(--navy-chakra);
+    background: var(--color-info-pale);
+}
+
+.flash-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+    color: var(--white-primary);
+}
+
+.flash-notification.success .flash-icon {
+    background: var(--green-primary);
+}
+
+.flash-notification.error .flash-icon {
+    background: var(--color-error);
+}
+
+.flash-notification.warning .flash-icon {
+    background: var(--saffron-primary);
+}
+
+.flash-notification.info .flash-icon {
+    background: var(--navy-chakra);
+}
+
+.flash-content {
+    flex: 1;
+}
+
+.flash-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text-primary);
+    margin: 0 0 4px 0;
+}
+
+.flash-message {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.flash-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+
+.flash-close:hover {
+    background: var(--bg-muted);
+    color: var(--text-primary);
+}
+
+/* ===== MODAL STYLES ===== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 20000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(3px);
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: var(--bg-elevated);
+    margin: 5% auto;
+    padding: 28px 32px;
+    border-radius: var(--radius-xl);
+    width: min(92vw, 520px);
+    max-width: 520px;
+    box-shadow: var(--shadow-xl);
+    position: relative;
+    z-index: 20001;
+    animation: modalSlideIn 0.3s ease-out;
+    max-height: calc(100vh - 160px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    word-break: break-word;
+    scrollbar-gutter: stable both-edges;
+    padding-right: 24px;
+    /* give gutter so scrollbar feels inside card */
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.close {
+    color: var(--text-muted);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    transition: var(--transition-base);
+}
+
+.modal-content.large {
+    max-width: 640px;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+/* Modern, subtle scrollbars for modal content */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: transparent;
+    /* remove rectangle track */
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: var(--border-medium);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+    /* slightly darker on hover */
+}
+
+.modal-content {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-medium) transparent;
+}
+
+.close:hover {
+    color: var(--text-primary);
+}
+
+@media (max-width: 480px) {
+
+    /* Define the new slide-up animation */
+    @keyframes modalSlideUp {
+        from {
+            opacity: 0;
+            transform: translateY(100%);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .close {
+        top: 16px;
+        right: 16px;
+    }
+}
+
+/* ===== FORM STYLES ===== */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    font-size: 16px;
+    transition: var(--transition-base);
+    background: var(--bg-elevated);
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 0, 128, 0.15);
+}
+
+.auth-divider {
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+}
+
+.auth-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--border-light);
+}
+
+.auth-divider span {
+    background: var(--bg-elevated);
+    padding: 0 16px;
+    color: var(--text-muted);
+    font-size: 14px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== BUTTON STYLES ===== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--radius-full);
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition-base);
+    text-align: center;
+    justify-content: center;
+    border: 2px solid transparent;
+}
+
+.btn.primary {
+    background: var(--green-light);
+    color: var(--text-on-accent);
+}
+
+.btn.primary:hover {
+    background: var(--green-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn.secondary {
+    background: transparent;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn.secondary:hover {
+    background: var(--color-primary);
+    color: var(--text-on-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn.google-btn {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    border: 2px solid var(--border-light);
+    width: 100%;
+    position: relative;
+    padding-left: 52px;
+}
+
+.btn.google-btn:hover {
+    background: var(--bg-subtle);
+    border-color: var(--border-medium);
+}
+
+.btn.google-btn::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    width: 24px;
+    height: 24px;
+    background: url('https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg') no-repeat center/contain;
+}
+
+.btn.export-btn {
+    background: var(--color-accent);
+    color: var(--text-on-dark);
+}
+
+.btn.export-btn:hover {
+    background: var(--saffron-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Report modal tweaks */
+#report-modal .modal-content {
+    max-width: 520px;
+}
+
+
+/* ===== MODERN HEADER ACTION BUTTONS (REVISED) ===== */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    /* 12px gap between buttons */
+}
+
+.header-actions .header-btn {
+    padding: 0.5rem 1.25rem;
+    /* 8px 20px */
+    font-size: 0.9rem;
+    /* 14.4px */
+    font-weight: 700;
+    border-radius: var(--radius-full);
+    border: 2px solid transparent;
+    transition: var(--transition-base);
+    cursor: pointer;
+    line-height: 1.5;
+    text-decoration: none;
+    /* Ensure links styled as buttons don't have underlines */
+}
+
+/* Style for the outline button (Login) */
+.header-actions .header-btn-outline {
+    background: transparent;
+    border-color: var(--color-primary);
+    /* Navy border */
+    color: var(--color-primary);
+    /* Navy text */
+    box-shadow: none;
+}
+
+.header-actions .header-btn-outline:hover {
+    background: var(--color-primary);
+    /* Fills with navy on hover */
+    color: var(--text-on-dark);
+    /* Text becomes white on hover */
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+/* Style for a solid primary button (e.g., for a future "Register" button) */
+.header-actions .header-btn-primary {
+    background: var(--color-primary);
+    color: var(--text-on-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.header-actions .header-btn-primary:hover {
+    background: var(--navy-dark);
+    /* Use a darker navy for hover */
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+/* ===== PAGE LOADER ===== */
+.page-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: 40px 20px;
+    margin-top: 80px;
+    color: var(--text-secondary);
+}
+
+/* Make sure main content is hidden by default */
+#access-denied,
+#zone-section {
+    display: none;
+}
+
+/* ===== ACCESS DENIED STYLES ===== */
+.access-denied {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: 40px 20px;
+    margin-top: 80px;
+}
+
+.access-denied-content {
+    text-align: center;
+    background: var(--bg-elevated);
+    padding: 48px;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-xl);
+}
+
+.access-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--color-error) 0%, #dc2626 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 32px;
+    color: var(--white-primary);
+}
+
+.access-denied h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0 0 16px 0;
+}
+
+.access-denied p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin: 0 0 32px 0;
+    line-height: 1.6;
+}
+
+.admin-features {
+    text-align: left;
+    background: var(--bg-subtle);
+    padding: 24px;
+    border-radius: var(--radius-xl);
+    border-left: 4px solid var(--color-primary);
+}
+
+.admin-features h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 16px 0;
+}
+
+.admin-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-features li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.admin-features li i {
+    color: var(--color-success);
+    font-size: 16px;
+}
+
+/* =================================================================== */
+/* ===== ENHANCED: SHEET CONFIGURATION (RESPONSIVE) ===== */
+/* =================================================================== */
+
+/* --- Base styles for the new panel (for consistency) --- */
+.sheet-config {
+    background: var(--bg-subtle, #F1F5F9);
+    border: 1px solid var(--border-light, #E2E8F0);
+    border-radius: var(--radius-xl, 1rem);
+    padding: var(--space-lg, 1.5rem);
+    margin-bottom: var(--space-xl, 2rem);
+    box-shadow: var(--shadow-md);
+}
+
+.sheet-config h4 {
+    margin: 0 0 var(--space-md, 1rem) 0;
+    color: var(--text-primary, #0F172A);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.sheet-config .super-admin-badge {
+    background: var(--color-error, #ef4444);
+    color: var(--white-primary, #FFFFFF);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full, 9999px);
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-left: var(--space-sm, 0.75rem);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.sheet-config p {
+    margin: 0 0 var(--space-lg, 1.5rem) 0;
+    color: var(--text-secondary, #475569);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.sheet-config .config-controls {
+    display: flex;
+    gap: var(--space-md, 1rem);
+    align-items: center;
+}
+
+/* This is the key part that solves the overflow */
+.sheet-config #sheet-id-input {
+    flex-grow: 1;
+    /* Allows the input to grow and take available space */
+    min-width: 0;
+    /* CRITICAL: Allows the input to shrink below its default size */
+    padding: 10px 14px;
+    border: 1px solid var(--border-medium, #CBD5E1);
+    border-radius: var(--radius-lg, 0.75rem);
+    font-size: 15px;
+    transition: all var(--transition-base);
+    background: var(--bg-elevated);
+}
+
+.sheet-config #sheet-id-input:focus {
+    outline: none;
+    border-color: var(--color-primary, #000080);
+    box-shadow: 0 0 0 3px rgba(0, 0, 128, 0.15);
+}
+
+/* Styles for the buttons within the panel */
+.sheet-config .btn {
+    padding: 10px 16px;
+    /* A consistent padding */
+    flex-shrink: 0;
+    /* Prevent buttons from shrinking */
+}
+
+#sheet-status {
+    margin-top: var(--space-md, 1rem);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* ===== ADMIN SECTION STYLES ===== */
+.admin-section {
+    padding: 32px;
+    /* CHANGE THIS LINE */
+    background: var(--gradient-hero);
+    min-height: 100vh;
+    top: calc(60px + 1rem * 2);
+    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ===== Embedded College Dashboard (scoped) ===== */
+#college-dashboard .cd-zone-stats {
+    margin-top: 14px;
+    background: var(--bg-elevated);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    padding: 16px;
+}
+
+/* ===== EVENTS SECTION ===== */
+#college-dashboard .cd-events {
+    background: var(--bg-elevated);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    padding: 16px;
+    margin-top: 14px;
+}
+
+#college-dashboard .cd-events-wrap {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+}
+
+#college-dashboard .cd-events-group h4 {
+    margin: 0 0 8px 0;
+    color: var(--text-primary);
+}
+
+#college-dashboard .cd-events-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+#college-dashboard .cd-event-card {
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 12px 14px;
+    background: var(--bg-subtle);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: start;
+    transition: var(--transition-base);
+}
+
+#college-dashboard .cd-event-card.upcoming {
+    border-left: 4px solid var(--color-info);
+}
+
+#college-dashboard .cd-event-card.past {
+    border-left: 4px solid var(--border-medium);
+    opacity: .92;
+}
+
+#college-dashboard .cd-ev-title {
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+#college-dashboard .cd-ev-meta {
+    color: var(--text-secondary);
+    font-size: .9rem;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+#college-dashboard .cd-ev-desc {
+    color: var(--text-secondary);
+    font-size: .9rem;
+    margin-top: 6px;
+}
+
+#college-dashboard .cd-ev-loc {
+    color: var(--text-secondary);
+}
+
+#college-dashboard .cd-ev-actions {
+    display: flex;
+    gap: 6px;
+}
+
+/* ===== NEW/MODIFIED: Red Delete Button for Events ===== */
+#college-dashboard .cd-ev-actions .cd-ev-delete {
+    border-color: var(--color-error);
+    color: var(--color-error);
+}
+
+#college-dashboard .cd-ev-actions .cd-ev-delete:hover {
+    background: var(--color-error);
+    color: var(--white-primary);
+}
+
+
+#college-dashboard .cd-empty {
+    color: var(--text-muted);
+    font-size: .9rem;
+    padding: 8px 0;
+}
+
+
+
+#college-dashboard .cd-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+#college-dashboard .cd-stat-card {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    padding: 14px;
+}
+
+#college-dashboard .cd-stat-number {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--color-primary);
+}
+
+#college-dashboard .cd-stat-label {
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-top: 2px;
+    font-size: .9rem;
+}
+
+#college-dashboard .cd-members {
+    background: var(--bg-elevated);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    padding: 16px;
+    margin-top: 14px;
+}
+
+#college-dashboard .cd-members-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+#college-dashboard .cd-leads {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+#college-dashboard .cd-leads .cd-member-card {
+    min-width: 280px;
+    max-width: 320px;
+}
+
+#college-dashboard .cd-team {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+}
+
+#college-dashboard .cd-member-card {
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 12px 14px;
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: center;
+    background: var(--bg-subtle);
+    transition: var(--transition-base);
+    min-height: 72px;
+}
+
+#college-dashboard .cd-member-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--bg-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+#college-dashboard .cd-member-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+#college-dashboard .cd-member-avatar.placeholder {
+    background: var(--bg-muted);
+    border: 2px dashed var(--border-medium);
+    color: var(--color-primary);
+}
+
+#college-dashboard .cd-member-avatar .cd-ph {
+    font-size: 0.95rem;
+    letter-spacing: .5px;
+}
+
+#college-dashboard .cd-member-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-primary);
+    background: var(--white-warm);
+}
+
+#college-dashboard .cd-member-card.featured {
+    border-color: var(--color-primary);
+    background: linear-gradient(180deg, var(--white-primary) 0%, #fbfcff 100%);
+}
+
+#college-dashboard .cd-member-card.approved {
+    border-color: var(--color-success);
+    background: var(--green-pale);
+}
+
+#college-dashboard .cd-member-card.rejected {
+    border-color: var(--color-error);
+    background: var(--color-error-pale);
+}
+
+
+
+#college-dashboard .cd-member-info h4 {
+    margin: 0 0 2px 0;
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+#college-dashboard .cd-member-info p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+#college-dashboard .cd-skeleton {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-muted);
+    border-radius: 10px;
+}
+
+#college-dashboard .cd-skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .6), transparent);
+    animation: cd-shimmer 1.4s infinite;
+}
+
+@keyframes cd-shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+#college-dashboard .cd-rect {
+    height: 42px;
+    border-radius: var(--radius-lg);
+}
+
+#college-dashboard .cd-skel-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 12px;
+    background: var(--bg-subtle);
+}
+
+#college-dashboard .cd-skeleton.cd-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+#college-dashboard .cd-skeleton.cd-line {
+    flex: 1;
+    height: 16px;
+    border-radius: var(--radius-lg);
+}
+
+#college-dashboard .cd-member-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+#college-dashboard .cd-member-card:hover .cd-member-actions {
+    opacity: 1;
+}
+
+#college-dashboard .cd-action-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid var(--border-light);
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+    font-size: 12px;
+}
+
+#college-dashboard .cd-action-btn:hover {
+    background: var(--bg-muted);
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+}
+
+/* ===== NEW: Styles for College Card Actions and Status Indicator ===== */
+.college-card-actions {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* Space between indicator and delete button */
+}
+
+.college-status-indicator {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--white-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    cursor: help;
+    /* Indicates the user can hover for a title */
+}
+
+.college-status-indicator.active {
+    background-color: var(--color-success);
+}
+
+.college-status-indicator.inactive {
+    background-color: var(--color-error);
+}
+
+/* ===== NEW/MODIFIED: Red Delete Button for Members ===== */
+#college-dashboard .cd-action-btn.cd-delete {
+    color: var(--color-error);
+}
+
+#college-dashboard .cd-action-btn.cd-edit:hover {
+    background: var(--color-info);
+    color: var(--white-primary);
+    border-color: var(--color-info);
+}
+
+#college-dashboard .cd-action-btn.cd-delete:hover {
+    background: var(--color-error);
+    color: var(--white-primary);
+    border-color: var(--color-error);
+}
+
+#college-dashboard .cd-action-btn.cd-approve:hover {
+    background: var(--color-success);
+    color: var(--white-primary);
+    border-color: var(--color-success);
+}
+
+#college-dashboard .cd-action-btn.cd-reject:hover {
+    background: var(--color-warning);
+    color: var(--white-primary);
+    border-color: var(--color-warning);
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-elevated);
+    padding: 24px 32px;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 32px;
+}
+
+.admin-info h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin: 0 0 8px 0;
+}
+
+.admin-info p {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 1rem;
+}
+
+.admin-info span {
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+/* ===== ZONE HEADER STYLES ===== */
+.zone-header {
+    background: var(--bg-elevated);
+    padding: 32px;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 32px;
+}
+
+.zone-header h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 8px 0;
+}
+
+.zone-header p {
+    color: var(--text-secondary);
+    margin: 0 0 24px 0;
+}
+
+.export-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.sync-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--bg-muted);
+    border-radius: var(--radius-lg);
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-success);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(19, 136, 8, 0.4);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(19, 136, 8, 0);
+    }
+}
+
+/* ===== ZONE BUTTONS ===== */
+.zone-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.zone-buttons button {
+    padding: 20px 24px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition-bounce);
+    text-align: center;
+}
+
+.zone-buttons button:hover {
+    border-color: var(--color-primary);
+    background: var(--navy-dark);
+    color: var(--white-primary);
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: var(--shadow-lg);
+}
+
+.zone-buttons button.active {
+    background: var(--color-primary);
+    color: var(--white-primary);
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ===== ZONE STATISTICS ===== */
+.zone-stats {
+    background: var(--bg-elevated);
+    padding: 32px;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 32px;
+}
+
+.zs-skeleton {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-muted);
+    border-radius: 10px;
+}
+
+.zs-skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .6), transparent);
+    animation: zs-shimmer 1.2s infinite;
+}
+
+@keyframes zs-shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.zs-rect {
+    height: 40px;
+    border-radius: var(--radius-lg);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+}
+
+.stat-card {
+    text-align: center;
+    padding: 24px;
+    background: var(--bg-subtle);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-light);
+    transition: var(--transition-bounce);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+/* ===== COLLEGE GRID ===== */
+.college-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.college-card {
+    background: var(--bg-elevated);
+    padding: 24px;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-light);
+    transition: var(--transition-bounce);
+    cursor: pointer;
+    position: relative;
+}
+
+.college-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--color-primary);
+    background: var(--white-warm);
+}
+
+/* ===== MODIFIED: Red Delete Button for College Cards ===== */
+.college-delete-btn {
+    position: relative;
+    /* Changed from 'absolute' */
+    top: auto;
+    /* Removed '10px' */
+    right: auto;
+    /* Removed '10px' */
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light);
+    background: var(--bg-elevated);
+    color: var(--color-error);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.college-delete-btn:hover {
+    background: var(--color-error);
+    border-color: var(--color-error);
+    color: var(--white-primary);
+}
+
+.college-card:active {
+    transform: translateY(-2px) scale(.995);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--color-primary);
+    background: var(--white-warm);
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(16px) scale(.985);
+    filter: blur(4px);
+    will-change: transform, opacity, filter;
+}
+
+.reveal.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+    animation: cardFocus .5s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+@keyframes cardFocus {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(.985);
+        filter: blur(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 0;
+        transform: none;
+        filter: none;
+    }
+
+    .reveal.show {
+        opacity: 1;
+        animation: none;
+    }
+}
+
+.college-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 8px 0;
+}
+
+.college-card .college-code {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.college-members,
+.college-units {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.college-members i,
+.college-units i {
+    color: var(--color-primary);
+}
+
+/* ===== LOADING OVERLAY ===== */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(4px);
+}
+
+.loading-spinner {
+    background: var(--bg-elevated);
+    padding: 32px;
+    border-radius: var(--radius-2xl);
+    text-align: center;
+    box-shadow: var(--shadow-xl);
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--border-light);
+    border-top: 4px solid var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 16px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+
+    .flash-container {
+        top: auto;
+        /* Ensure no top positioning */
+        bottom: 20px;
+        /* Position from the bottom */
+        left: 50%;
+        /* Start from the middle */
+        transform: translateX(-50%);
+        /* Shift back by half its width to truly center */
+        right: auto;
+        /* Remove right constraint */
+        width: auto;
+        /* Allow it to be flexible */
+
+        /* Ensure it's a flex container for potential multiple notifications, but centering is handled by transform */
+        display: flex;
+        flex-direction: column;
+        /* Keep notifications stacked if more than one */
+        align-items: center;
+        /* Center individual notifications if they are smaller than max-width */
+    }
+
+    /* --- 2. Style the individual notification card --- */
+    .flash-notification {
+        min-width: 0;
+        /* Allow flexible width */
+        max-width: 500px;
+        /* Set a max-width for tablets to prevent stretching too wide */
+        width: calc(100vw - 40px);
+        /* Fill screen width minus side margins (20px each side) */
+
+        /* Ensure border-radius and box-shadow are consistent */
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-xl);
+        /* Or your preferred shadow for mobile */
+
+        /* Animation to slide up from the bottom */
+        transform: translateY(150%);
+        opacity: 0;
+        transition: var(--transition-bounce);
+        /* Use your existing transition variable */
+    }
+
+    .flash-notification.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    /* Adjust padding and gaps for better mobile fit */
+    .flash-notification {
+        padding: 14px 18px;
+        /* Slightly more generous padding */
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* --- 1. Position the container with left and right margins --- */
+    .flash-container {
+        top: auto;
+        /* Unset any top position */
+        bottom: 12px;
+        /* Distance from the bottom */
+
+        /* This creates the space on the sides for the "floating" look */
+        left: 24px;
+        right: 24px;
+
+        /* Clean up any previous centering styles like transform */
+        transform: none;
+        width: auto;
+    }
+
+    /* --- 2. Make the notification fill its container --- */
+    .flash-notification {
+        width: 100%;
+        /* This now fills the container that has margins */
+
+        /* Animation remains the same (slide up from bottom) */
+        transform: translateY(150%);
+        opacity: 0;
+    }
+
+    .flash-notification.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    /* --- 3. Refine spacing (this part remains the same) --- */
+    .flash-notification {
+        padding: 12px 16px;
+        gap: 12px;
+    }
+
+    .flash-title {
+        font-size: 14px;
+    }
+
+    .flash-message {
+        font-size: 13px;
+    }
+}
+
+/* ===== NEW: Search Bar Styles ===== */
+.search-container {
+    position: relative;
+    margin-bottom: 32px;
+    display: none;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-elevated);
+    border-radius: var(--radius-xl);
+    padding: 8px 8px 8px 24px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-light);
+    transition: all 0.3s ease;
+}
+
+.search-bar:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 0, 128, 0.15);
+}
+
+#college-search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    color: var(--text-primary);
+    padding: 8px 0;
+    outline: none;
+}
+
+#college-search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.search-icon-btn {
+    width: 42px;
+    height: 42px;
+    border: none;
+    background: var(--color-primary);
+    color: var(--white-primary);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.search-icon-btn:hover {
+    background: var(--navy-dark);
+}
+
+.search-suggestions {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: var(--bg-elevated);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    /* Hidden by default */
+}
+
+.suggestion-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover {
+    background-color: var(--bg-subtle);
+    color: var(--text-primary);
+}
+
+.no-results-message {
+    text-align: center;
+    margin-top: 16px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+@keyframes highlight-fade {
+    0% {
+        background-color: var(--bg-elevated);
+        box-shadow: var(--shadow-lg);
+    }
+
+    30% {
+        background-color: var(--color-info-pale);
+        /* Gentle light blue background */
+        box-shadow: var(--shadow-xl);
+    }
+
+    70% {
+        background-color: var(--color-info-pale);
+        box-shadow: var(--shadow-xl);
+    }
+
+    100% {
+        background-color: var(--bg-elevated);
+        box-shadow: var(--shadow-lg);
+    }
+}
+
+.college-card.highlight {
+    animation: highlight-fade 2s ease-out;
+}
+
+/* ===== SUPER ADMIN PANEL STYLES ===== */
+.content-grid {
+    display: grid;
+    gap: 24px;
+}
+
+.data-card {
+    background: var(--bg-elevated);
+    border-radius: var(--radius-xl);
+    padding: 24px;
+    box-shadow: var(--shadow-lg);
+}
+
+.card-header h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 8px 0;
+}
+
+/* User Management Table */
+.user-management-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+}
+
+.user-management-table th,
+.user-management-table td {
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 14px;
+}
+
+.user-management-table th {
+    font-weight: 600;
+    color: var(--text-secondary);
+    background-color: var(--bg-subtle);
+}
+
+.user-management-table td select {
+    padding: 6px 8px;
+    font-size: 13px;
+    border-radius: var(--radius-lg);
+}
+
+.user-management-table .btn-save,
+.user-management-table .btn-delete {
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: var(--radius-lg);
+}
+
+.btn-save {
+    background: var(--color-info);
+    color: white;
+}
+
+.btn-save:hover {
+    background: #3b82f6;
+}
+
+.btn-delete {
+    background: var(--color-error);
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #ef4444;
+}
+
+
+/* Activity Log Styles */
+.activity-log-item {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.activity-log-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg-subtle);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.activity-content p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.activity-content p strong {
+    font-weight: 600;
+}
+
+.activity-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* ================================================================ */
+/* ===== UNIT REGISTRATION PAGE MOBILE RESPONSIVE - 480px & 768px ===== */
+/* ================================================================ */
+
+/* ===== TABLET - 768px and below ===== */
+@media (max-width: 768px) {
+
+    /* Header */
+    .site-header {
+        padding: 12px 16px;
+    }
+
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .logo {
+        flex-direction: row;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .logo img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .logo h1 {
+        font-size: 1.1rem;
+    }
+
+    .header-main-actions {
+        width: 100%;
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+
+    .page-title {
+        font-size: 1rem;
+        text-align: left;
+    }
+
+    .header-actions {
+        width: 100%;
+    }
+
+    .header-actions .header-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Main Container */
+    .main {
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Admin Section */
+    .admin-section {
+        padding: 20px 16px;
+        top: calc(60px + 0.5rem);
+    }
+
+    /* Admin Header */
+    .admin-header {
+        flex-direction: column;
+        padding: 20px;
+        gap: 16px;
+        text-align: center;
+    }
+
+    .admin-info h2 {
+        font-size: 1.5rem;
+    }
+
+    .admin-info p {
+        font-size: 0.9rem;
+    }
+
+    .admin-actions {
+        width: 100%;
+    }
+
+    .admin-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Sheet Configuration */
+    .sheet-config {
+        padding: 20px 16px;
+        margin-bottom: 24px;
+    }
+
+    .sheet-config h4 {
+        font-size: 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .sheet-config .super-admin-badge {
+        margin-left: 0;
+        margin-top: 8px;
+    }
+
+    .config-controls {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .config-controls input {
+        width: 100%;
+    }
+
+    .config-controls .btn {
+        width: 100%;
+    }
+
+    /* Zone Header */
+    .zone-header {
+        padding: 20px;
+    }
+
+    .zone-header h3 {
+        font-size: 1.3rem;
+    }
+
+    .zone-header p {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+
+    .export-controls {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+
+    .export-controls .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .sync-status {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Zone Buttons */
+    .zone-buttons {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .zone-buttons button {
+        padding: 16px 20px;
+        font-size: 15px;
+    }
+
+    /* Zone Stats */
+    .zone-stats {
+        padding: 20px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .stat-card {
+        padding: 20px 16px;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+    }
+
+    /* Search Container */
+    .search-container {
+        margin-bottom: 24px;
+    }
+
+    .search-bar {
+        padding: 8px 8px 8px 16px;
+    }
+
+    #college-search-input {
+        font-size: 15px;
+    }
+
+    .search-icon-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    /* College Grid */
+    .college-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .college-card {
+        padding: 20px;
+    }
+
+    .college-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .college-card .college-code {
+        font-size: 13px;
+    }
+
+    .college-members,
+    .college-units {
+        font-size: 13px;
+    }
+
+    /* College Dashboard */
+    #college-dashboard .admin-header {
+        padding: 20px;
+    }
+
+    #college-dashboard .cd-zone-stats {
+        padding: 16px;
+    }
+
+    #college-dashboard .cd-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    #college-dashboard .cd-stat-card {
+        padding: 14px 12px;
+    }
+
+    #college-dashboard .cd-stat-number {
+        font-size: 1.4rem;
+    }
+
+    #college-dashboard .cd-stat-label {
+        font-size: 0.85rem;
+    }
+
+    /* Members Section */
+    #college-dashboard .cd-members {
+        padding: 16px;
+    }
+
+    #college-dashboard .cd-leads {
+        gap: 12px;
+    }
+
+    #college-dashboard .cd-team {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    #college-dashboard .cd-member-card {
+        padding: 12px;
+        grid-template-columns: 40px minmax(0, 1fr) auto;
+        gap: 10px;
+    }
+
+    #college-dashboard .cd-member-avatar {
+        width: 40px;
+        height: 40px;
+    }
+
+    #college-dashboard .cd-member-info h4 {
+        font-size: 0.95rem;
+    }
+
+    #college-dashboard .cd-member-info p {
+        font-size: 0.8rem;
+    }
+
+    /* Events Section */
+    #college-dashboard .cd-events {
+        padding: 16px;
+    }
+
+    #college-dashboard .cd-events-wrap {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    #college-dashboard .cd-event-card {
+        padding: 12px;
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    #college-dashboard .cd-ev-title {
+        font-size: 0.95rem;
+    }
+
+    #college-dashboard .cd-ev-meta {
+        font-size: 0.85rem;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    #college-dashboard .cd-ev-desc {
+        font-size: 0.85rem;
+    }
+
+    #college-dashboard .cd-ev-actions {
+        justify-content: flex-start;
+    }
+
+    /* This is the header for the Events section shown in your image */
+    #college-dashboard .cd-events-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        /* Allows stacking on small screens */
+    }
+
+    #college-dashboard .cd-events-title h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin: 0 0 4px 0;
+    }
+
+    #college-dashboard .cd-events-title p {
+        font-size: 0.9rem;
+        color: #666;
+        margin: 0;
+        max-width: 250px;
+    }
+
+    /* This holds the 'Refresh' and 'Add Event' buttons */
+    #college-dashboard .cd-events-actions {
+        display: flex;
+        gap: 12px;
+        flex-shrink: 0;
+        /* Prevents buttons from shrinking too much */
+    }
+
+    /* Access Denied */
+    .access-denied {
+        padding: 40px 16px;
+        margin-top: 60px;
+    }
+
+    .access-denied-content {
+        padding: 32px 24px;
+    }
+
+    .access-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .access-denied h2 {
+        font-size: 1.5rem;
+    }
+
+    .access-denied p {
+        font-size: 1rem;
+    }
+
+    .admin-features {
+        padding: 20px;
+    }
+
+    .admin-features h3 {
+        font-size: 1.1rem;
+    }
+
+    .admin-features li {
+        font-size: 0.9rem;
+    }
+
+    /* Page Loader */
+    .page-loader {
+        padding: 40px 16px;
+        margin-top: 60px;
+    }
+}
+
+/* ===== MOBILE - 480px and below ===== */
+@media (max-width: 480px) {
+
+    /* Header */
+    .site-header {
+        padding: 10px 12px;
+    }
+
+    .header-content {
+        gap: 10px;
+    }
+
+    .logo img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .logo h1 {
+        font-size: 0.95rem;
+    }
+
+    .page-title {
+        font-size: 0.9rem;
+    }
+
+    .header-actions .header-btn {
+        padding: 10px 20px;
+        font-size: 0.85rem;
+    }
+
+    /* Admin Section */
+    .admin-section {
+        padding: 16px 12px;
+        top: calc(60px + 0.25rem);
+    }
+
+    /* Admin Header */
+    .admin-header {
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .admin-info h2 {
+        font-size: 1.3rem;
+        margin-bottom: 6px;
+    }
+
+    .admin-info p {
+        font-size: 0.85rem;
+    }
+
+    /* Sheet Configuration */
+    .sheet-config {
+        padding: 16px 12px;
+        margin-bottom: 20px;
+    }
+
+    .sheet-config h4 {
+        font-size: 0.95rem;
+    }
+
+    .sheet-config p {
+        font-size: 13px;
+    }
+
+    .config-controls {
+        gap: 10px;
+    }
+
+    .config-controls input {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    .config-controls .btn {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+    }
+
+    /* Zone Header */
+    .zone-header {
+        padding: 16px;
+    }
+
+    .zone-header h3 {
+        font-size: 1.2rem;
+        margin-bottom: 6px;
+    }
+
+    .zone-header p {
+        font-size: 0.85rem;
+        margin-bottom: 16px;
+    }
+
+    .export-controls {
+        gap: 10px;
+    }
+
+    .export-controls .btn {
+        padding: 10px 20px;
+        font-size: 0.85rem;
+    }
+
+    .sync-status {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    /* Zone Buttons */
+    .zone-buttons {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .zone-buttons button {
+        padding: 14px 18px;
+        font-size: 14px;
+    }
+
+    /* Zone Stats */
+    .zone-stats {
+        padding: 16px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .stat-card {
+        padding: 18px 14px;
+    }
+
+    .stat-number {
+        font-size: 1.8rem;
+        margin-bottom: 6px;
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+    }
+
+    /* Search Container */
+    .search-container {
+        margin-bottom: 20px;
+    }
+
+    .search-bar {
+        padding: 6px 6px 6px 12px;
+    }
+
+    #college-search-input {
+        font-size: 14px;
+        padding: 8px 0;
+    }
+
+    .search-icon-btn {
+        width: 38px;
+        height: 38px;
+    }
+
+    .search-suggestions {
+        max-height: 200px;
+    }
+
+    .suggestion-item {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+
+    /* College Grid */
+    .college-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .college-card {
+        padding: 18px 16px;
+    }
+
+    .college-card h3 {
+        font-size: 1.1rem;
+        margin-bottom: 6px;
+    }
+
+    .college-card .college-code {
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+
+    .college-members,
+    .college-units {
+        font-size: 12px;
+        margin-top: 6px;
+    }
+
+    .college-card-actions {
+        top: 12px;
+        right: 12px;
+        gap: 8px;
+    }
+
+    .college-status-indicator {
+        width: 12px;
+        height: 12px;
+    }
+
+    .college-delete-btn {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* College Dashboard */
+    #college-dashboard .admin-header {
+        padding: 16px;
+    }
+
+    #college-dashboard .admin-info h2 {
+        font-size: 1.2rem;
+    }
+
+    #college-dashboard .admin-info p {
+        font-size: 0.85rem;
+    }
+
+    #college-dashboard .cd-zone-stats {
+        padding: 12px;
+        margin-top: 12px;
+    }
+
+    #college-dashboard .cd-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    #college-dashboard .cd-stat-card {
+        padding: 12px 10px;
+    }
+
+    #college-dashboard .cd-stat-number {
+        font-size: 1.3rem;
+    }
+
+    #college-dashboard .cd-stat-label {
+        font-size: 0.8rem;
+    }
+
+    /* Members Section */
+    #college-dashboard .cd-members {
+        padding: 12px;
+        margin-top: 12px;
+    }
+
+    #college-dashboard .cd-members h3 {
+        font-size: 1.1rem;
+    }
+
+    #college-dashboard .cd-sub {
+        font-size: 0.85rem;
+    }
+
+    #college-dashboard .cd-leads {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #college-dashboard .cd-leads .cd-member-card {
+        min-width: auto;
+        max-width: 100%;
+    }
+
+    #college-dashboard .cd-team {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    #college-dashboard .cd-member-card {
+        padding: 10px;
+        grid-template-columns: 36px minmax(0, 1fr) auto;
+        gap: 8px;
+        min-height: auto;
+    }
+
+    #college-dashboard .cd-member-avatar {
+        width: 36px;
+        height: 36px;
+    }
+
+    #college-dashboard .cd-member-avatar .cd-ph {
+        font-size: 0.85rem;
+    }
+
+    #college-dashboard .cd-member-info h4 {
+        font-size: 0.9rem;
+        margin-bottom: 2px;
+    }
+
+    #college-dashboard .cd-member-info p {
+        font-size: 0.75rem;
+        line-height: 1.4;
+    }
+
+    #college-dashboard .cd-action-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 11px;
+    }
+
+    /* Events Section */
+    #college-dashboard .cd-events {
+        padding: 16px 12px;
+        /* Increased padding */
+        margin-top: 16px;
+        /* Increased margin */
+    }
+
+    #college-dashboard .cd-events h3 {
+        font-size: 1.2rem;
+        /* Larger title */
+    }
+
+    #college-dashboard .cd-events-wrap {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        /* Increased gap */
+        margin-top: 16px;
+        /* Increased margin */
+    }
+
+    #college-dashboard .cd-events-group h4 {
+        font-size: 1rem;
+        /* Larger 'Upcoming' / 'Past' titles */
+        margin-bottom: 12px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 8px;
+    }
+
+    #college-dashboard .cd-event-card {
+        padding: 12px 14px;
+        /* Increased padding */
+        grid-template-columns: 1fr;
+        gap: 12px;
+        border-radius: 8px;
+        /* Softer corners */
+        background-color: #fcfcfc;
+        /* Slight background */
+    }
+
+    #college-dashboard .cd-ev-title {
+        font-size: 1rem;
+        /* Larger title */
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+
+    #college-dashboard .cd-ev-meta {
+        font-size: 0.85rem;
+        /* Larger meta text */
+        flex-direction: column;
+        gap: 6px;
+        color: #555;
+    }
+
+    #college-dashboard .cd-ev-desc {
+        font-size: 0.85rem;
+        margin-top: 8px;
+        line-height: 1.5;
+    }
+
+    #college-dashboard .cd-ev-actions {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        margin-top: 8px;
+    }
+
+    #college-dashboard .cd-ev-actions .btn {
+        padding: 8px 14px;
+        font-size: 0.8rem;
+    }
+
+    #college-dashboard .cd-empty {
+        font-size: 0.9rem;
+        /* Larger 'No events' text */
+        padding: 12px 8px;
+        color: #777;
+        font-style: italic;
+    }
+
+    #college-dashboard .cd-events-header {
+        flex-direction: column;
+        /* Stack title and buttons vertically */
+        gap: 16px;
+    }
+
+    #college-dashboard .cd-events-title p {
+        max-width: 100%;
+    }
+
+    #college-dashboard .cd-events-actions {
+        width: 100%;
+    }
+
+    #college-dashboard .cd-events-actions .btn {
+        flex-grow: 1;
+        /* Make buttons share width */
+        justify-content: center;
+        width: 50%;
+        /* Each button takes half the space */
+    }
+
+    /* Access Denied */
+    .access-denied {
+        padding: 30px 12px;
+        margin-top: 40px;
+    }
+
+    .access-denied-content {
+        padding: 24px 16px;
+    }
+
+    .access-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+        margin-bottom: 16px;
+    }
+
+    .access-denied h2 {
+        font-size: 1.3rem;
+        margin-bottom: 12px;
+    }
+
+    .access-denied p {
+        font-size: 0.9rem;
+        margin-bottom: 24px;
+    }
+
+    .admin-features {
+        padding: 16px;
+    }
+
+    .admin-features h3 {
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+
+    .admin-features li {
+        font-size: 0.85rem;
+        padding: 6px 0;
+        gap: 10px;
+    }
+
+    .admin-features li i {
+        font-size: 14px;
+    }
+
+    /* Page Loader */
+    .page-loader {
+        padding: 30px 12px;
+        margin-top: 40px;
+    }
+
+    .loading-spinner {
+        padding: 24px;
+    }
+
+    .spinner {
+        width: 36px;
+        height: 36px;
+        margin-bottom: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.85rem;
+        gap: 6px;
+    }
+
+    .btn i {
+        font-size: 0.85rem;
+    }
+}
+
+/* ===== EXTRA SMALL MOBILE - 375px and below ===== */
+@media (max-width: 375px) {
+
+    /* Header */
+    .logo h1 {
+        font-size: 0.85rem;
+    }
+
+    .page-title {
+        font-size: 0.8rem;
+    }
+
+    /* Admin Section */
+    .admin-section {
+        padding: 12px 10px;
+    }
+
+    /* Admin Header */
+    .admin-header {
+        padding: 14px;
+    }
+
+    .admin-info h2 {
+        font-size: 1.2rem;
+    }
+
+    .admin-info p {
+        font-size: 0.8rem;
+    }
+
+    /* Sheet Config */
+    .sheet-config {
+        padding: 14px 10px;
+    }
+
+    /* Zone Header */
+    .zone-header {
+        padding: 14px;
+    }
+
+    .zone-header h3 {
+        font-size: 1.1rem;
+    }
+
+    /* College Cards */
+    .college-card {
+        padding: 16px 14px;
+    }
+
+    .college-card h3 {
+        font-size: 1.05rem;
+    }
+
+    /* Dashboard */
+    #college-dashboard .cd-member-card {
+        padding: 8px;
+    }
+
+    #college-dashboard .cd-member-avatar {
+        width: 32px;
+        height: 32px;
+    }
+
+    #college-dashboard .cd-member-info h4 {
+        font-size: 0.85rem;
+    }
+
+    #college-dashboard .cd-member-info p {
+        font-size: 0.7rem;
+    }
+
+    /* Event Cards */
+    #college-dashboard .cd-event-card {
+        padding: 8px;
+    }
+
+    #college-dashboard .cd-ev-title {
+        font-size: 0.85rem;
+    }
+
+    #college-dashboard .cd-ev-meta {
+        font-size: 0.75rem;
+    }
+
+    /* Stats */
+    .stat-number {
+        font-size: 1.6rem;
+    }
+
+    #college-dashboard .cd-stat-number {
+        font-size: 1.2rem;
+    }
+
+    /* Access Denied */
+    .access-denied h2 {
+        font-size: 1.2rem;
+    }
+
+    .access-denied p {
+        font-size: 0.85rem;
+    }
+}

@@ -1,0 +1,434 @@
+:root {
+    /* New "Royal India" Color Palette */
+    --primary: #0A2463;
+    /* Deep Royal Blue */
+    --secondary: #D8315B;
+    /* Vibrant Magenta */
+    --accent: #FFC43D;
+    /* Rich Gold */
+    --background-dark: #0D1321;
+    /* Dark Navy */
+    --text-on-dark: #F0F0F0;
+    /* Soft Off-White */
+
+    --font-hero: 'Montserrat', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --hero-title-size: clamp(3.5rem, 10vw, 8rem);
+    --section-title-size: clamp(2.5rem, 7vw, 4rem);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--background-dark);
+    color: var(--text-on-dark);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: var(--font-hero);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+/* --- Side Navigation --- */
+.side-nav {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    z-index: 1000;
+}
+
+.side-nav ul {
+    list-style: none;
+}
+
+.side-nav li {
+    margin: 15px 0;
+}
+
+.side-nav .dot {
+    display: block;
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.side-nav .dot:hover {
+    background-color: var(--accent);
+    transform: scale(1.2);
+}
+
+.side-nav .dot.active {
+    background-color: var(--accent);
+    transform: scale(1.5);
+}
+
+
+/* --- General Section Styling --- */
+.content-section {
+    padding: 6rem 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    min-height: 50vh;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-header h3 {
+    font-size: var(--section-title-size);
+    color: var(--text-on-dark);
+}
+
+.section-header p {
+    font-size: 1.2rem;
+    color: #aaa;
+}
+
+
+/* --- Hero Section --- */
+.full-screen {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0;
+    max-width: none;
+}
+
+.hero-background-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+    z-index: -2;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(13, 19, 33, 0.7);
+    z-index: -1;
+}
+
+.hero-content h1 {
+    font-size: var(--hero-title-size);
+    color: var(--text-on-dark);
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    color: var(--accent);
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    margin-top: 2rem;
+    background-color: var(--secondary);
+    color: var(--text-on-dark);
+    font-family: var(--font-hero);
+    font-weight: bold;
+    border-radius: 50px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    border: none;
+}
+
+.cta-button:hover {
+    transform: translateY(-5px);
+    background-color: #e84a6f;
+}
+
+/* --- Bento Grid Section --- */
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 200px);
+    gap: 1rem;
+}
+
+.bento-item {
+    background-color: #1a2436;
+    border-radius: 15px;
+    padding: 1.5rem;
+    transition: transform 0.3s ease;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.bento-item:hover {
+    transform: translateY(-5px);
+}
+
+.bento-item h3 {
+    color: var(--accent);
+    font-size: 1.8rem;
+}
+
+.bento-item h4 {
+    color: var(--text-on-dark);
+    font-size: 1.4rem;
+}
+
+.bento-item p {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+}
+
+.bento-item a {
+    font-weight: bold;
+    position: absolute;
+    bottom: 1.5rem;
+}
+
+.bento-item:nth-child(1) {
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+}
+
+.bento-item:nth-child(2) {
+    grid-column: 3 / 5;
+    grid-row: 1 / 2;
+}
+
+.bento-item:nth-child(3) {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+
+.bento-item:nth-child(4) {
+    grid-column: 2 / 5;
+    grid-row: 2 / 3;
+    background-color: var(--primary);
+}
+
+.bento-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 50%);
+    display: flex;
+    align-items: flex-end;
+    padding: 1.5rem;
+}
+
+.bento-overlay h4 {
+    color: white;
+    font-size: 1.8rem;
+}
+
+
+/* --- Interactive Map --- */
+.map-container {
+    position: relative;
+    max-width: 500px;
+    margin: auto;
+}
+
+.interactive-map path {
+    fill: var(--primary);
+    stroke: var(--accent);
+    stroke-width: 2;
+    transition: fill 0.3s ease;
+}
+
+.interactive-map path:hover {
+    fill: var(--secondary);
+    cursor: pointer;
+}
+
+#map-tooltip {
+    position: absolute;
+    background: var(--background-dark);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: 1px solid var(--accent);
+    display: none;
+    pointer-events: none;
+    font-family: var(--font-hero);
+}
+
+/* --- 3D Model & Panorama --- */
+model-viewer,
+#panorama-container {
+    width: 100%;
+    height: 500px;
+    border-radius: 10px;
+    background-color: #1a2436;
+}
+
+/* --- Dual Column Layout (Schedule & News) --- */
+.dual-column-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
+
+.column h4 {
+    font-size: 1.8rem;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 0.5rem;
+}
+
+.news-item,
+.timeline-item {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: #1a2436;
+    border-radius: 8px;
+}
+
+.news-item h5 {
+    font-size: 1.2rem;
+}
+
+.timeline-item span {
+    font-weight: bold;
+    color: var(--secondary);
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+/* --- Footer --- */
+.footer-section {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: #080d15;
+}
+
+.footer-section h3 {
+    font-size: 2.5rem;
+    color: var(--text-on-dark);
+}
+
+.footer-section p {
+    font-size: 1.2rem;
+    color: #aaa;
+    margin: 1rem 0 2rem;
+}
+
+.register-button {
+    animation: pulse 2s infinite;
+}
+
+/* --- Animations & Responsive --- */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(216, 49, 91, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 15px rgba(216, 49, 91, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(216, 49, 91, 0);
+    }
+}
+
+@media (max-width: 768px) {
+    .bento-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .bento-item:nth-child(n) {
+        grid-column: auto;
+        grid-row: auto;
+        min-height: 200px;
+    }
+
+    .dual-column-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .side-nav {
+        display: none;
+    }
+}
+
+/* Voice UI Button - Unchanged */
+.voice-ui-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000
+}
+
+#voice-command-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--text-on-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: transform .2s ease, box-shadow .2s ease
+}
+
+#voice-command-btn:hover {
+    transform: scale(1.1)
+}
+
+#voice-command-btn.listening {
+    animation: pulse 1.5s infinite
+}

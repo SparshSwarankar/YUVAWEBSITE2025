@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon | My Website</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* If your main "style.css" file is NOT linked above, 
+          you must paste all your :root {...} variables here.
+        */
+        :root {
+            /* India Theme Color Palette */
+            --saffron-primary: #FF9933;
+            --saffron-light: #FFB366;
+            --saffron-dark: #E67300;
+            --saffron-pale: #FFE5CC;
+            --white-primary: #FFFFFF;
+            --white-warm: #FAFAF9;
+            --white-cream: #F5F5F4;
+            --green-primary: #138808;
+            --green-light: #22C55E;
+            --green-dark: #0F6606;
+            --green-pale: #D1FAE5;
+            --navy-chakra: #000080;
+            --navy-dark: #00005C;
+
+            /* Semantic Colors */
+            --color-primary: var(--navy-chakra);
+            --color-secondary: var(--green-primary);
+            --color-accent: var(--saffron-primary);
+            --color-error: #ef4444;
+            --color-error-pale: #fef2f2;
+            --color-info-pale: #EBF4FF;
+
+            /* Text & Background */
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #64748B;
+            --text-on-dark: var(--white-primary);
+            --text-on-accent: var(--white-primary);
+            --bg-base: var(--white-warm);
+            --bg-elevated: var(--white-primary);
+            --bg-subtle: var(--white-cream);
+            --bg-muted: #F1F5F9;
+            --border-light: #E2E8F0;
+            --border-medium: #CBD5E1;
+
+            /* Gradients */
+            --gradient-hero: linear-gradient(135deg, var(--saffron-light) 0%, var(--white-primary) 50%, var(--green-light) 100%);
+            --gradient-saffron: linear-gradient(135deg, var(--saffron-primary) 0%, var(--saffron-dark) 100%);
+            --gradient-green: linear-gradient(135deg, var(--green-light) 0%, var(--green-primary) 100%);
+            --gradient-navy: linear-gradient(135deg, var(--navy-chakra) 0%, var(--navy-dark) 100%);
+
+            /* Shadows & Radii */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+            /* Border Radius */
+            --radius-sm: 0.375rem;
+            --radius: 0.5rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --radius-full: 9999px;
+
+            /* Transitions */
+            --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        body {
+            /* Use the base background color from your theme */
+            background-color: var(--bg-base, #FAFAF9);
+
+            /* Center all content on the page */
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            margin: 0;
+
+            /* A good default font stack */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .card {
+            /* Use the elevated background, shadow, and radius */
+            background-color: var(--bg-elevated, #FFFFFF);
+            border-radius: var(--radius-xl, 1rem);
+            box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+
+            padding: 2.5rem 3rem;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+
+            /* Add a subtle border */
+            border: 1px solid var(--border-light, #E2E8F0);
+        }
+
+        .card-icon {
+            /* Use the Saffron accent color */
+            color: var(--color-accent, #FF9933);
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h1 {
+            /* Use the primary text color */
+            color: var(--text-primary, #0F172A);
+            font-size: 2.25rem;
+            /* 36px */
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .card p {
+            /* Use the softer, secondary text color */
+            color: var(--text-secondary, #475569);
+            font-size: 1.125rem;
+            /* 18px */
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .home-button {
+            /* Style the link like a button using theme colors */
+            display: inline-block;
+            background-color: var(--color-primary, #000080);
+            /* Navy */
+            color: var(--text-on-dark, #FFFFFF);
+            /* White */
+
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius, 0.5rem);
+            box-shadow: var(--shadow, 0 1px 3px 0 rgb(0 0 0 / 0.1));
+
+            text-decoration: none;
+            font-weight: 600;
+
+            /* Use your theme's transition */
+            transition: all var(--transition-base, 300ms);
+        }
+
+        .home-button:hover {
+            /* Add a simple hover effect */
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+            filter: brightness(110%);
+        }
+
+        /* ============================================
+         ⬇️  MOBILE MEDIA QUERY ⬇️
+         ============================================
+         This CSS will apply ONLY on screens 600px wide or less.
+        */
+        @media (max-width: 600px) {
+            body {
+                /* Reduce padding on mobile for more space */
+                padding: 1rem;
+            }
+
+            .card {
+                /* Reduce padding inside the card on mobile */
+                padding: 2rem 1.5rem;
+            }
+
+            .card h1 {
+                /* Make the title smaller on small screens */
+                font-size: 1.75rem;
+                /* 28px */
+            }
+
+            .card p {
+                /* Make the text smaller on small screens */
+                font-size: 1rem;
+                /* 16px */
+            }
+
+            .home-button {
+                /* Make the button slightly smaller */
+                padding: 0.65rem 1.25rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="card">
+        <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.83-5.83M11.42 15.17l.02.02M11.42 15.17l-1.17-1.17M11.42 15.17l-4.24-4.24a2.652 2.652 0 010-3.75l5.83-5.83a2.652 2.652 0 013.75 0l4.24 4.24M11.42 15.17L5.5 21M16 11l-1 1M5.5 21L3 18.5m-2.5 0L5.5 21m0 0l2.5 2.5M15 11l-1-1m-5.005-5.005l-1.17 1.17M7.83 7.83l-1.17-1.17m-1.655 1.655l1.17 1.17m1.17-1.17l1.17 1.17" />
+        </svg>
+
+        <h1>Coming Soon!</h1>
+
+        <p>
+            This page is currently under construction. We are working
+            hard to bring you a new experience.
+        </p>
+
+        <a href="home.html" class="home-button">
+            Go Back Home
+        </a>
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Registration | YUVA India</title>
+    <link rel="stylesheet" href="/GetInvolve/Unitstyle.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="shortcut icon" href="/Images/YUVA logo.png" type="image/x-icon">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        .site-header .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            /* This pushes the logo left and actions right */
+            width: 100%;
+        }
+
+        .header-main-actions {
+            display: flex;
+            align-items: center;
+            gap: 32rem;
+            /* 24px space between "Unit Registrations" and the "Login" button */
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="/Images/YUVA logo.png" alt="YUVA Logo">
+                <h1>YUVA</h1>
+            </div>
+
+            <div class="header-main-actions">
+                <div class="page-title">Unit Registrations</div>
+                <div class="header-actions">
+                    <button class="header-btn header-btn-outline" id="login-btn">Login</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <button class="hamburger-menu" aria-label="Toggle Menu">
+        <span class="bar"></span>
+    </button>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <h2>YUVA</h2>
+            <a href="/home.html">Home</a>
+            <div class="dropdown">
+                <a class="dropdown-btn">About ▾</a>
+                <div class="dropdown-content">
+                    <a href="/About/AboutUs.html">About Us</a>
+                    <a href="/About/whoiswho.html">Who is Who</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Our Initiatives ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Our.Initiative/vimarsh2025.html">Vimarsh</a>
+                    <a href="/Our.Initiative/Bharatparv.html">Bharat Parv</a>
+                    <a href="/Our.Initiative/ritam.html">Ritam</a>
+                    <a href="/Our.Initiative/ims.html">Indraprasth Media Sambad</a>
+                    <a href="/Our.Initiative/Samarpan.html">Samarpan</a>
+                    <a href="/Our.Initiative/NatyaTarang.html">Natya Tarang</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Our Verticals ▾</a>
+                <div class="dropdown-content">
+                    <a href="/OurVerticals/MedicoYuva.html">Medico YUVA</a>
+                    <a href="/OurVerticals/MediaManthan.html">Media Manthan</a>
+                    <a href="/OurVerticals/NitiManthan.html">Nidhi Manthan</a>
+                    <a href="/OurVerticals/TechYuva.html">Tech YUVA</a>
+                    <a href="/OurVerticals/YDL.html">YUVA Distance Learning</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Our Activities ▾</a>
+                <div class="dropdown-content">
+                    <a href="/our activity/Activities.html">Activities</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Media ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Media/DigitalMedia.html">In Digital Media</a>
+                    <a href="/Media/News.html">In the News</a>
+                    <a href="/Media/Video.html">Events Recordings</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Events ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Events/Upcoming.html">Upcoming Events</a>
+                    <a href="/Events/Past.html">Past Events</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Gallery ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Gallary/photo.html">Photo Gallery</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Blog ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Blog/CC.html">Campus Chronicles</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Get Involved ▾</a>
+                <div class="dropdown-content">
+                    <a href="/GetInvolve/Fellowship.html">Fellowship</a>
+                    <a href="/GetInvolve/internship.html">Internship</a>
+                    <a href="/GetInvolve/Volunteer.html">Volunteer</a>
+                    <a href="/GetInvolve/YuvaAlumini.html">YUVA Alumni</a>
+                    <a href="/GetInvolve/UnitRegistration.html">Unit Registration</a>
+                </div>
+            </div>
+
+            <a href="/Donate/Donate.html">Donate</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div id="page-loader" class="page-loader">
+            <div class="spinner"></div>
+            <p>Verifying session...</p>
+        </div>
+
+        <!-- Login Modal -->
+        <div id="login-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('login-modal')">&times;</span>
+                <h2>Login</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email:</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password:</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn primary">Login</button>
+                </form>
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+                <button id="google-login-btn" class="btn google-btn">
+                    <i class="fab fa-google"></i> Login with Google
+                </button>
+            </div>
+        </div>
+
+        <!-- Access Denied Message (shown when not logged in) -->
+        <div id="access-denied" class="access-denied" style="display: block;">
+            <div class="access-denied-content">
+                <div class="access-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h2>Admin Access Required</h2>
+                <p>This page is for admin view only. Please login or register as an admin to access the unit
+                    registration system.</p>
+                <div class="admin-features">
+                    <h3>Admin Features:</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Manage college registrations across Delhi zones</li>
+                        <li><i class="fas fa-check"></i> Add and edit college member details</li>
+                        <li><i class="fas fa-check"></i> Export data to Google Sheets automatically</li>
+                        <li><i class="fas fa-check"></i> Generate comprehensive reports</li>
+                        <li><i class="fas fa-check"></i> Track member statistics and analytics</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Zone Section (shown after login) -->
+        <section id="zone-section" class="admin-section" style="display: none;">
+            <div class="admin-header">
+                <div class="admin-info">
+                    <h2>YUVA Delhi Admin Dashboard</h2>
+                    <p>Welcome, <span id="admin-name">Admin</span> | Role: <span id="admin-role">Super Admin</span></p>
+                </div>
+                <div class="admin-actions">
+                    <button class="btn secondary" id="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+
+            <!-- <section id="super-admin-panel" style="display: none; margin-top: -16px; margin-bottom: 32px;">
+                <div class="zone-header" style="padding-top: 24px;">
+                    <h3>Zone Performance Overview</h3>
+                    <p>High-level statistics for each operational zone.</p>
+                    <div id="zone-performance-grid" class="stats-grid">
+                        <div class="stat-card">
+                            <div class="zs-skeleton zs-rect" style="height: 60px;"></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="zs-skeleton zs-rect" style="height: 60px;"></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="zs-skeleton zs-rect" style="height: 60px;"></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="zs-skeleton zs-rect" style="height: 60px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid" style="grid-template-columns: 1.5fr 1fr; gap: 24px; margin-top: 32px;">
+                    <div class="data-card" style="padding: 24px;">
+                        <div class="card-header">
+                            <h3 style="margin: 0;">User Role Management</h3>
+                        </div>
+                        <p style="font-size: 14px; color: var(--text-secondary); margin: 4px 0 16px 0;">Assign roles to
+                            Zone Conveners and Mentors.</p>
+                        <div id="user-management-table-container" style="max-height: 400px; overflow-y: auto;">
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 24px;">
+                        <div class="data-card" style="padding: 24px;">
+                            <div class="card-header">
+                                <h3 style="margin: 0;">Send Notice</h3>
+                            </div>
+                            <form id="send-notice-form">
+                                <div class="form-group" style="margin-bottom: 12px;">
+                                    <label for="notice-recipient" style="font-size: 14px;">Recipient</label>
+                                    <select id="notice-recipient">
+                                        <option value="all_conveners">All Zone Conveners</option>
+                                        <option value="all_mentors">All Mentors</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 12px;">
+                                    <label for="notice-subject" style="font-size: 14px;">Subject</label>
+                                    <input type="text" id="notice-subject" required>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 16px;">
+                                    <label for="notice-message" style="font-size: 14px;">Message</label>
+                                    <textarea id="notice-message" rows="3" required></textarea>
+                                </div>
+                                <button type="submit" class="btn primary" style="width: 100%;">Broadcast
+                                    Message</button>
+                            </form>
+                        </div>
+
+                        <div class="data-card" style="padding: 24px;">
+                            <div class="card-header">
+                                <h3 style="margin: 0;">Data Management</h3>
+                            </div>
+                            <p style="font-size: 14px; color: var(--text-secondary); margin: 4px 0 16px 0;">Export
+                                specific data sets to an Excel-compatible format.</p>
+                            <div style="display: grid; gap: 10px;">
+                                <button class="btn secondary" id="export-members-btn"><i class="fas fa-users"></i>
+                                    Export Members</button>
+                                <button class="btn secondary" id="export-colleges-btn"><i class="fas fa-school"></i>
+                                    Export College Updates</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="data-card" style="margin-top: 32px; padding: 24px;">
+                    <div class="card-header">
+                        <h3 style="margin: 0;">User Activity Monitor</h3>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin: 4px 0 16px 0;">Recent actions
+                        performed by admins.</p>
+                    <div id="activity-log-container" style="max-height: 400px; overflow-y: auto;">
+                    </div>
+                </div>
+            </section> -->
+
+            <!-- Sheet Configuration (Super Admin Only) -->
+            <div class="sheet-config">
+                <h4>
+                    <i class="fas fa-cog"></i> Google Sheets Configuration
+                    <span class="super-admin-badge">
+                        <i class="fas fa-shield-alt"></i> Super Admin Only
+                    </span>
+                </h4>
+                <p>
+                    Configure your Google Sheet ID for automatic data export. Get the ID from your Google Sheet URL.
+                </p>
+                <div class="config-controls">
+                    <input type="text" id="sheet-id-input" placeholder="Enter your Google Sheet ID (e.g., 1ABC123...)">
+                    <button class="btn secondary" id="save-sheet-id">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                    <button class="btn secondary" id="test-sheet-id">
+                        <i class="fas fa-flask"></i> Test
+                    </button>
+                </div>
+                <div id="sheet-status"></div>
+            </div>
+
+            <div class="zone-header">
+                <h3>Delhi Zones Management</h3>
+                <p>Select a zone to view and manage college registrations</p>
+
+                <!-- Export Controls -->
+                <div class="export-controls">
+                    <button class="btn export-btn" id="export-all-btn"
+                        data-sheet-id="1uEGAMh4_UDQ_DlmQLQjUOV8cQT0C_DkizHooI37CsJs">
+                        <i class="fas fa-download"></i> Export All to Sheets
+                    </button>
+                    <button class="btn export-btn" id="generate-report-btn">
+                        <i class="fas fa-chart-bar"></i> Generate Report
+                    </button>
+                    <button class="btn primary" id="add-college-btn-global">
+                        <i class="fas fa-plus"></i> Add College
+                    </button>
+                    <button class="btn secondary" id="notify-admin-btn" style="display: none;">
+                        <i class="fas fa-paper-plane"></i> Notify Admin to Add College
+                    </button>
+                    <button class="btn primary" id="add-member-btn-global">
+                        <i class="fas fa-user-plus"></i> Add Member
+                    </button>
+                    <div class="sync-status" id="sync-status">
+                        <span class="status-indicator" id="status-indicator">●</span>
+                        <span id="sync-text">Ready to sync</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="zone-buttons"></div>
+
+            <div id="zone-select-message" class="zone-select-message">
+                Select a zone to view college details and manage registrations.
+            </div>
+
+            <!-- Zone Statistics -->
+            <div id="zone-stats" class="zone-stats" style="display: none;">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-colleges">0</div>
+                        <div class="stat-label">Total Colleges</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-members">0</div>
+                        <div class="stat-label">Total Members</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="active-units">0</div>
+                        <div class="stat-label">Active Units</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="last-sync">Never</div>
+                        <div class="stat-label">Last Sync</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- College Search List -->
+            <div id="search-container" class="search-container">
+                <div class="search-bar">
+                    <input type="text" id="college-search-input" placeholder="Search by college name or code...">
+                    <button class="search-icon-btn" id="college-search-btn" title="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div id="search-suggestions" class="search-suggestions"></div>
+                <div id="no-results-message" class="no-results-message" style="display: none;">
+                    No colleges found.
+                </div>
+            </div>
+
+            <div id="college-container" style="display: block;">
+                <div class="college-grid" id="college-grid"></div>
+            </div>
+
+            <!-- College card -->
+            <div id="college-container" style="display: block;">
+                <div class="college-grid" id="college-grid"></div>
+            </div>
+        </section>
+
+        <!-- Embedded College Dashboard -->
+        <section id="college-dashboard" class="admin-section" style="display: none;">
+            <div class="admin-header">
+                <div class="admin-info">
+                    <h2 id="cd-name">College</h2>
+                    <p>Code: <span id="cd-code">-</span> • Zone: <span id="cd-zone">-</span></p>
+                </div>
+                <div class="admin-actions">
+                    <button class="btn secondary" id="cd-back-btn">Back</button>
+                    <button class="btn secondary" id="cd-export-btn"><i class="fas fa-download"></i> Export
+                        College</button>
+                </div>
+            </div>
+
+            <section class="cd-zone-stats">
+                <div class="cd-stats-grid">
+                    <div class="cd-stat-card">
+                        <div class="cd-stat-number" id="cd-members-count">
+                            <div class="cd-skeleton cd-rect"></div>
+                        </div>
+                        <div class="cd-stat-label">Members</div>
+                    </div>
+                    <div class="cd-stat-card">
+                        <div class="cd-stat-number" id="cd-units-count">
+                            <div class="cd-skeleton cd-rect"></div>
+                        </div>
+                        <div class="cd-stat-label">Units</div>
+                    </div>
+                    <div class="cd-stat-card">
+                        <div class="cd-stat-number" id="cd-last-updated">
+                            <div class="cd-skeleton cd-rect"></div>
+                        </div>
+                        <div class="cd-stat-label">Last Updated</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="cd-members">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+                    <div>
+                        <h3>Members</h3>
+                        <p class="cd-sub">List of members associated with this college</p>
+                    </div>
+                    <div style="display:flex;gap:8px;">
+                        <button class="btn secondary" id="cd-load-members"><i class="fas fa-users"></i> Load
+                            Members</button>
+                        <button class="btn primary" id="cd-add-member"><i class="fas fa-user-plus"></i> Add
+                            Member</button>
+                    </div>
+                </div>
+                <div id="cd-members-list" class="cd-members-list"></div>
+            </section>
+
+            <!-- Events Section -->
+            <section class="cd-events">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px; margin-top:24px;">
+                    <div>
+                        <h3>Events</h3>
+                        <p class="cd-sub">Upcoming and past events for this college</p>
+                    </div>
+                    <div style="display:flex;gap:8px;">
+                        <button class="btn secondary" id="cd-refresh-events"><i class="fas fa-rotate"></i>
+                            Refresh</button>
+                        <button class="btn primary" id="cd-add-event"><i class="fas fa-calendar-plus"></i> Add
+                            Event</button>
+                    </div>
+                </div>
+                <div class="cd-events-wrap">
+                    <div class="cd-events-group">
+                        <h4>Upcoming</h4>
+                        <div id="cd-upcoming-events" class="cd-events-grid"></div>
+                    </div>
+                    <div class="cd-events-group">
+                        <h4>Past</h4>
+                        <div id="cd-past-events" class="cd-events-grid"></div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- College Detail Modal -->
+        <div id="college-modal" class="modal" style="display: none;">
+            <div class="modal-content large">
+                <span class="close" onclick="closeCollegeModal()">&times;</span>
+                <div id="college-detail-content"></div>
+            </div>
+        </div>
+
+        <!-- Member Modal (Create/Update) -->
+        <div id="member-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close"
+                    onclick="document.getElementById('member-modal').style.display='none';document.body.classList.remove('modal-open');">&times;</span>
+                <h2 id="member-modal-title">Add Member</h2>
+                <form id="member-form">
+                    <input type="hidden" id="member-id">
+                    <input type="hidden" id="member-college-id">
+                    <input type="hidden" id="member-zone-id">
+                    <div class="form-group">
+                        <label>College</label>
+                        <input type="text" id="member-college-display" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Zone</label>
+                        <input type="text" id="member-zone-display" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="member-name">Full Name</label>
+                        <input type="text" id="member-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="member-email">Email</label>
+                        <input type="email" id="member-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="member-phone">Phone</label>
+                        <input type="text" id="member-phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="member-role">Applying For</label>
+                        <select id="member-role" required>
+                            <option value="mentor">Mentor</option>
+                            <option value="co-mentor">Co-mentor</option>
+                            <option value="convener">Convener</option>
+                            <option value="co-convener">Co-convener</option>
+                            <option value="member">Member</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="member-unit">Unit Name</label>
+                        <input type="text" id="member-unit" required>
+                    </div>
+                    <button type="submit" class="btn primary" id="member-save-btn">Save</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- College Modal (Create) -->
+        <div id="college-modal-add" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close"
+                    onclick="document.getElementById('college-modal-add').style.display='none';document.body.classList.remove('modal-open');">&times;</span>
+                <h2 id="college-modal-title">Add College</h2>
+                <form id="college-form">
+                    <div class="form-group">
+                        <label for="college-name-input">College Name</label>
+                        <input type="text" id="college-name-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="college-code-input">College Code</label>
+                        <input type="text" id="college-code-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="college-zone-input">Zone</label>
+                        <select id="college-zone-input" required></select>
+                    </div>
+                    <button type="submit" class="btn primary" id="college-save-btn">Save</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Report Modal -->
+        <div id="report-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close"
+                    onclick="document.getElementById('report-modal').style.display='none';document.body.classList.remove('modal-open');">&times;</span>
+                <h2 style="margin-top:0">Generate Report</h2>
+                <div class="form-group">
+                    <label for="report-range">Date Range</label>
+                    <select id="report-range">
+                        <option value="7d">Last 7 days</option>
+                        <option value="14d">Last 14 days</option>
+                        <option value="30d" selected>Last 30 days</option>
+                        <option value="90d">Last 90 days</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="report-zone">Zone (optional)</label>
+                    <select id="report-zone">
+                        <option value="">All Zones</option>
+                    </select>
+                </div>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <button class="btn primary" id="report-run">Generate PDF</button>
+                    <a id="report-link" href="#" target="_blank" style="display:none;" class="btn secondary">Open
+                        PDF</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p id="loading-text">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Flash Notification Container -->
+    <div id="flash-container" class="flash-container"></div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="/script.js"></script>
+    <script src="/GetInvolve/unit.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,571 @@
+/* =================================================================== */
+/* ===== YUVA VERTICALS - REVISED STYLES (YUVA 2025) ===== */
+/* =================================================================== */
+
+/* ===== Root Variables (Aligned with New Design System) ===== */
+:root {
+    /* India Theme Color Palette */
+    --saffron-primary: #FF9933;
+    --saffron-light: #FFB366;
+    --saffron-dark: #E67300;
+    --saffron-pale: #FFE5CC;
+    --white-primary: #FFFFFF;
+    --white-warm: #FAFAF9;
+    --white-cream: #F5F5F4;
+    --green-primary: #138808;
+    --green-light: #22C55E;
+    --green-dark: #0F6606;
+    --green-pale: #D1FAE5;
+    --navy-chakra: #000080;
+    --navy-dark: #00005C;
+
+    /* Semantic Colors */
+    --color-primary: var(--navy-chakra);
+    --color-secondary: var(--green-primary);
+    --color-accent: var(--saffron-primary);
+    --color-error: #ef4444;
+    --color-error-pale: #fef2f2;
+    --color-info-pale: #EBF4FF;
+
+    /* Text & Background */
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    --text-on-dark: var(--white-primary);
+    --text-on-accent: var(--white-primary);
+    --bg-base: var(--white-warm);
+    --bg-elevated: var(--white-primary);
+    --bg-subtle: var(--white-cream);
+    --bg-muted: #F1F5F9;
+    --border-light: #E2E8F0;
+    --border-medium: #CBD5E1;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, var(--saffron-light) 0%, var(--white-primary) 50%, var(--green-light) 100%);
+    --gradient-saffron: linear-gradient(135deg, var(--saffron-primary) 0%, var(--saffron-dark) 100%);
+    --gradient-green: linear-gradient(135deg, var(--green-light) 0%, var(--green-primary) 100%);
+    --gradient-navy: linear-gradient(135deg, var(--navy-chakra) 0%, var(--navy-dark) 100%);
+
+    /* Shadows & Radii */
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.5rem;
+    --radius-full: 9999px;
+
+    /* Transitions */
+    --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* ===== FLASH NOTIFICATION SYSTEM (Consistent across site) ===== */
+.flash-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: none;
+}
+
+.flash-notification {
+    background: var(--bg-elevated);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    padding: 16px 20px;
+    min-width: 320px;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: var(--transition-bounce);
+    pointer-events: auto;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+}
+
+.flash-notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.flash-notification.success {
+    border-left: 4px solid var(--green-primary);
+    background: var(--green-pale);
+}
+
+.flash-notification.error {
+    border-left: 4px solid var(--color-error);
+    background: var(--color-error-pale);
+}
+
+.flash-notification.warning {
+    border-left: 4px solid var(--saffron-primary);
+    background: var(--saffron-pale);
+}
+
+.flash-notification.info {
+    border-left: 4px solid var(--navy-chakra);
+    background: var(--color-info-pale);
+}
+
+.flash-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+    color: var(--white-primary);
+}
+
+.flash-notification.success .flash-icon {
+    background: var(--green-primary);
+}
+
+.flash-notification.error .flash-icon {
+    background: var(--color-error);
+}
+
+.flash-notification.warning .flash-icon {
+    background: var(--saffron-primary);
+}
+
+.flash-notification.info .flash-icon {
+    background: var(--navy-chakra);
+}
+
+.flash-content {
+    flex: 1;
+}
+
+.flash-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text-primary);
+    margin: 0 0 4px 0;
+}
+
+.flash-message {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.flash-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+}
+
+.flash-close:hover {
+    background: var(--bg-muted);
+    color: var(--text-primary);
+}
+
+/* ===== VERTICAL PAGE GENERAL LAYOUT ===== */
+/* ======================================= */
+/* ===== NEW PAGE BACKGROUND STYLE ===== */
+/* ======================================= */
+
+.vertical-page {
+    /* A soft off-white base color for contrast */
+    background-color: var(--bg-subtle);
+
+    /* Layered radial gradients for a modern, soft glow effect */
+    background-image:
+        /* Saffron glow from top-right corner */
+        radial-gradient(at 0% 1000%, var(--saffron-pale) 0px, transparent 50%),
+        /* Green glow from bottom-left corner */
+        radial-gradient(at 100% 0%, var(--green-pale) 0px, transparent 50%);
+
+    position: relative;
+    top: calc(60px + 1rem * 2);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    overflow: hidden;
+}
+
+/* ===== HERO SECTION ===== */
+.vertical-hero {
+    position: relative;
+    padding: 100px 20px;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-hero);
+    color: var(--text-primary);
+    /* Changed for better readability on light gradient */
+    text-align: center;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.hero-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(circle at 20% 20%, rgba(0, 0, 128, 0.05) 1px, transparent 1px),
+        radial-gradient(circle at 80% 80%, rgba(0, 0, 128, 0.05) 1px, transparent 1px);
+    background-size: 100px 100px, 150px 150px;
+    animation: none;
+    /* Keep simple for verticals page */
+    z-index: 2;
+}
+
+.vertical-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--saffron-pale);
+    border: 1px solid var(--saffron-light);
+    border-radius: var(--radius-full);
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--saffron-dark);
+    margin-bottom: 24px;
+    animation: pulse 2.5s infinite;
+}
+
+/* ================================== */
+/* ===== NEW HERO TITLE STYLE ===== */
+/* ================================== */
+
+.hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--saffron-primary);
+
+    /* Adds a subtle shadow for depth and readability */
+    text-shadow: 2px 2px 8px rgba(46, 50, 74, 0.2);
+
+    position: relative;
+    /* Required for the underline pseudo-element */
+    padding-bottom: 16px;
+    /* Creates space for the underline */
+    margin: 0 0 24px 0;
+    /* Adjust margin to account for padding */
+}
+
+/* This creates the decorative gradient underline */
+.hero-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    /* The width of the underline */
+    height: 5px;
+    /* The thickness of the underline */
+    background: var(--green-dark);
+    /* Uses your brand's saffron gradient! */
+    border-radius: var(--radius-full);
+    /* Makes the ends rounded */
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+    color: var(--text-secondary);
+}
+
+/* Replaces old .yuva-accent-text */
+.hero-title-accent {
+    background: var(--gradient-saffron);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ===== CONTENT WRAPPER ===== */
+.vertical-content-wrapper {
+    max-width: 1000px;
+    margin: -80px auto 0;
+    padding: 40px 20px 80px;
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* General Content Section Card */
+.content-section {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-lg);
+    padding: 40px;
+    animation: fadeInUp 0.6s ease-out both;
+}
+
+.content-section h2 {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 24px 0;
+}
+
+.content-section h2 .icon {
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-navy);
+    border-radius: 50%;
+    color: var(--text-on-dark);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.content-section p,
+.content-section li {
+    color: var(--text-secondary);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.content-section ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 20px;
+}
+
+.content-section ul li {
+    padding-left: 28px;
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.content-section ul li::before {
+    content: '\f058';
+    /* Font Awesome check-circle */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: var(--color-primary);
+    position: absolute;
+    left: 0;
+    top: 4px;
+}
+
+/* ===== DUAL COLUMN SECTION ===== */
+.dual-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.dual-section .info-block h3 {
+    font-size: 22px;
+    color: var(--navy-dark);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border-light);
+}
+
+/* ===== GALLERY SECTION ===== */
+.gallery-section h2 {
+    margin-bottom: 24px;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.photo-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.photo-item img:hover {
+    transform: scale(1.05) translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+/* ===== ANIMATION KEYFRAMES ===== */
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 153, 51, 0.4);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(255, 153, 51, 0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =================================================================== */
+/* ===== ADVANCED RESPONSIVE STYLES FOR VERTICALS PAGE ===== */
+/* =================================================================== */
+
+/* For Laptops & Large Tablets (Screens up to 1024px) */
+@media (max-width: 1024px) {
+    .vertical-content-wrapper {
+        /* Slightly reduce the overlap of the card on the hero section */
+        margin-top: -60px;
+        max-width: 90%;
+        /* Allow content to use more screen width */
+    }
+
+    .content-section h2 {
+        font-size: 26px;
+        /* Slightly smaller heading for better fit */
+    }
+}
+
+
+/* For Tablets (Screens up to 768px) */
+@media (max-width: 768px) {
+    .vertical-hero {
+        padding: 80px 20px;
+        /* Reduce vertical padding in the hero section */
+    }
+
+    .hero-title {
+        font-size: clamp(2.2rem, 8vw, 3rem);
+        /* Adjust the fluid font size for mid-range screens */
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        /* Make the subtitle slightly smaller */
+    }
+
+    .vertical-content-wrapper {
+        padding: 32px 16px 60px;
+        /* Reduce padding on the main content wrapper */
+        gap: 32px;
+    }
+
+    .content-section {
+        padding: 32px;
+        /* Reduce padding inside the content cards */
+    }
+
+    .dual-section {
+        grid-template-columns: 1fr;
+        /* Stack the two columns on top of each other */
+    }
+
+    /* Flash notification adjustments for mobile that were already present */
+    .flash-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        width: auto;
+    }
+
+    .flash-notification {
+        min-width: auto;
+        max-width: none;
+    }
+}
+
+
+/* For Mobile Phones (Screens up to 480px) */
+@media (max-width: 480px) {
+    .vertical-hero {
+        min-height: auto;
+        /* Allow the hero section to shrink based on its content */
+        padding: 60px 16px;
+    }
+
+    .vertical-content-wrapper {
+        margin-top: -40px;
+        /* Further reduce the card overlap for small screens */
+        padding: 24px 16px 40px;
+        max-width: 100%;
+    }
+
+    .content-section {
+        padding: 24px 20px;
+        /* Tighter padding for mobile phones */
+        border-radius: var(--radius-xl);
+        /* Slightly smaller corner radius */
+    }
+
+    .content-section h2 {
+        font-size: 22px;
+        /* Make headings more compact */
+        gap: 12px;
+    }
+
+    .content-section h2 .icon {
+        width: 40px;
+        /* Scale down the icon size */
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .dual-section {
+        gap: 24px;
+        /* Reduce the gap between stacked items */
+    }
+
+    .photo-grid {
+        gap: 12px;
+        /* Reduce the gap between photos */
+    }
+}

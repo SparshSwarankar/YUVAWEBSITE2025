@@ -1,0 +1,1247 @@
+/* ===== MODERN ACTIVITIES PAGE STYLES (Corrected and Themed to match home.css) ===== */
+
+/* CSS Custom Properties (Copied from home.css for consistency) */
+:root {
+    /* India Theme Color Palette */
+    --saffron-primary: #FF9933;
+    --saffron-light: #FFB366;
+    --saffron-dark: #E67300;
+    --saffron-pale: #FFE5CC;
+    --white-primary: #FFFFFF;
+    --white-warm: #FAFAF9;
+    --white-cream: #F5F5F4;
+    --green-primary: #138808;
+    --green-light: #22C55E;
+    --green-dark: #0F6606;
+    --green-pale: #D1FAE5;
+    --navy-chakra: #000080;
+    --navy-dark: #00005C;
+
+    /* Semantic Colors */
+    --color-primary: var(--navy-chakra);
+    --color-secondary: var(--green-primary);
+    --color-accent: var(--saffron-primary);
+    --color-error: #ef4444;
+    --color-error-pale: #fef2f2;
+    --color-info-pale: #EBF4FF;
+
+    /* Text & Background */
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    --text-on-dark: var(--white-primary);
+    --text-on-accent: var(--white-primary);
+    --bg-base: var(--white-warm);
+    --bg-elevated: var(--white-primary);
+    --bg-subtle: var(--white-cream);
+    --bg-muted: #F1F5F9;
+    --border-light: #E2E8F0;
+    --border-medium: #CBD5E1;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, var(--saffron-light) 0%, var(--white-primary) 50%, var(--green-light) 100%);
+    --gradient-saffron: linear-gradient(135deg, var(--saffron-primary) 0%, var(--saffron-dark) 100%);
+    --gradient-green: linear-gradient(135deg, var(--green-light) 0%, var(--green-primary) 100%);
+    --gradient-navy: linear-gradient(135deg, var(--navy-chakra) 0%, var(--navy-dark) 100%);
+
+    /* Shadows & Radii */
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.5rem;
+    --radius-full: 9999px;
+
+    /* Transitions */
+    --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* ===== FLASH NOTIFICATION SYSTEM (Updated with new variables) ===== */
+.flash-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: none;
+}
+
+.flash-notification {
+    background: var(--bg-elevated);
+    border-radius: var(--radius-xl);
+    /* Mapped from old --radius-lg */
+    box-shadow: var(--shadow-xl);
+    padding: 16px 20px;
+    min-width: 320px;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: var(--transition-bounce);
+    pointer-events: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.flash-notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.flash-notification.success {
+    border-left: 4px solid var(--green-primary);
+    background: var(--green-pale);
+}
+
+.flash-notification.error {
+    border-left: 4px solid var(--color-error);
+    background: var(--color-error-pale);
+}
+
+.flash-notification.warning {
+    border-left: 4px solid var(--saffron-primary);
+    background: var(--saffron-pale);
+}
+
+.flash-notification.info {
+    border-left: 4px solid var(--navy-chakra);
+    background: var(--color-info-pale);
+}
+
+.flash-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.flash-notification.success .flash-icon {
+    background: var(--green-primary);
+    color: var(--white-primary);
+}
+
+.flash-notification.error .flash-icon {
+    background: var(--color-error);
+    color: var(--white-primary);
+}
+
+.flash-notification.warning .flash-icon {
+    background: var(--saffron-primary);
+    color: var(--white-primary);
+}
+
+.flash-notification.info .flash-icon {
+    background: var(--navy-chakra);
+    color: var(--white-primary);
+}
+
+.flash-content {
+    flex: 1;
+}
+
+.flash-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-primary);
+    margin: 0 0 4px 0;
+}
+
+.flash-message {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.flash-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    /* Mapped from old --radius */
+    transition: all 0.2s ease;
+}
+
+.flash-close:hover {
+    background: var(--bg-muted);
+    color: var(--text-secondary);
+}
+
+
+/* ===== ACTIVITIES PAGE LAYOUT ===== */
+.activities-page {
+    min-height: 100vh;
+    background: var(--bg-base);
+    /* Changed from gradient to base bg */
+    position: relative;
+    overflow: hidden;
+    top: calc(60px + 1rem * 2);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    /* Matched to home-page */
+}
+
+/* Hero Section (Matches home.css) */
+.activities-hero {
+    position: relative;
+    /* padding: 80px 20px 120px; */
+    /* UPDATED: Changed from flex to grid */
+    display: grid;
+    place-items: center;
+    min-height: 90vh;
+    overflow: hidden;
+    background: var(--gradient-hero);
+    /* New Saffron/White/Green gradient */
+    color: var(--text-primary);
+    /* Text color changed to dark for light bg */
+    text-align: center;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+/* * ===== SECTION REMOVED =====
+ * The .hero-particles rule was here.
+ * I have removed it to allow the .hero-chakra-bg to be visible.
+ */
+
+/* ===== NEW: Added from home.css ===== */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ===== NEW: Added from home.css ===== */
+.hero-chakra-bg {
+    /* This places it in the grid cell */
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    width: 500px;
+    height: 500px;
+    z-index: 1;
+    color: var(--navy-chakra);
+    opacity: 0.08;
+    stroke: currentColor;
+    fill: currentColor;
+    animation: spin 60s linear infinite;
+    pointer-events: none;
+}
+
+
+.activities-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    animation: fadeInUp 0.8s ease-out;
+    /* UPDATED: This makes it stack in the grid */
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--saffron-pale);
+    /* Matched to home.css */
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--saffron-light);
+    /* Matched to home.css */
+    border-radius: var(--radius-full);
+    /* Matched to home.css */
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    /* Matched to home.css */
+    margin-bottom: 24px;
+    animation: pulse 2s infinite;
+    color: var(--saffron-dark);
+    /* Matched to home.css */
+}
+
+.hero-badge i {
+    color: var(--saffron-dark);
+    /* Matched to home.css */
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 24px 0;
+    color: var(--text-primary);
+    /* Explicitly set */
+}
+
+.hero-title-line {
+    display: block;
+}
+
+.hero-title-accent {
+    background: var(--gradient-saffron);
+    /* Matched to home.css */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-description {
+    font-size: 18px;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    color: var(--text-secondary);
+    /* Changed from opacity */
+}
+
+.activities-impact {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.activities-impact-item {
+    background: var(--bg-elevated);
+    /* Matched to home.css */
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-light);
+    /* Matched to home.css */
+    border-radius: var(--radius-2xl);
+    /* Mapped from old --radius-xl (1.5rem) */
+    box-shadow: var(--shadow-md);
+    /* Added shadow */
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.2s ease-in-out;
+}
+
+.activities-impact-item:hover {
+    transform: translateY(-4px);
+    background: var(--white-primary);
+    box-shadow: var(--shadow-lg);
+    /* Matched to home.css */
+}
+
+.impact-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--gradient-green);
+    /* Matched to home.css */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    color: var(--white-primary);
+    /* Added color */
+}
+
+.impact-content {
+    text-align: left;
+}
+
+.activities-impact-number {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+    /* Explicitly set */
+}
+
+.activities-impact-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    /* Changed from opacity */
+    font-weight: 500;
+}
+
+/* Activities Container & Cards */
+.activities-container {
+    max-width: 1000px;
+    margin: -100px auto 0;
+    padding: 0 20px 80px;
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.activity-card {
+    background: var(--bg-elevated);
+    border-radius: var(--radius-2xl);
+    /* Mapped from old --radius-2xl (2rem) to new (1.5rem) */
+    box-shadow: var(--shadow-xl);
+    /* Mapped from old --shadow-2xl */
+    padding: 40px;
+    border-top: 4px solid var(--color-primary);
+    animation: fadeInUp 0.6s ease-out both;
+}
+
+.activity-card:nth-of-type(1) {
+    animation-delay: 0.2s;
+}
+
+.activity-card:nth-of-type(2) {
+    animation-delay: 0.3s;
+}
+
+.activity-card:nth-of-type(3) {
+    animation-delay: 0.4s;
+}
+
+.activity-card:nth-of-type(4) {
+    animation-delay: 0.5s;
+}
+
+.activity-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.activity-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--gradient-navy);
+    /* Mapped from --gradient-primary */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: var(--white-primary);
+    flex-shrink: 0;
+}
+
+.activity-title h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 4px 0;
+}
+
+.activity-title p {
+    color: var(--text-secondary);
+    font-size: 16px;
+    margin: 0;
+    font-weight: 500;
+}
+
+.activity-content {
+    color: var(--text-primary);
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.activity-content p {
+    margin-bottom: 1.2em;
+}
+
+.activity-content h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--navy-dark);
+    /* Mapped from --primary-dark */
+    margin-top: 24px;
+    margin-bottom: 12px;
+    border-bottom: 2px solid var(--border-light);
+    /* Mapped from --gray-200 */
+    padding-bottom: 8px;
+}
+
+.activity-content ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.activity-content ul li {
+    padding-left: 24px;
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.activity-content ul li::before {
+    content: '\f058';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: var(--color-primary);
+    position: absolute;
+    left: 0;
+    top: 2px;
+}
+
+/* Keyframe Animations */
+@keyframes float {
+    from {
+        transform: translateY(0px);
+    }
+
+    to {
+        transform: translateY(-100px);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== MOBILE MEDIA QUERIES FOR ACTIVITIES PAGE ===== */
+
+/* ===== Tablets and Small Laptops (768px - 1024px) ===== */
+@media screen and (max-width: 1024px) {
+    .activities-hero {
+        padding: 60px 20px 100px;
+        min-height: 80vh;
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .activities-container {
+        margin-top: -80px;
+        padding: 0 16px 60px;
+    }
+
+    .activity-card {
+        padding: 32px 24px;
+    }
+}
+
+/* ===== Large Mobile / Small Tablets (768px and below) ===== */
+@media screen and (max-width: 768px) {
+    /* Flash Notifications */
+    .flash-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: 100%;
+    }
+
+    .flash-notification {
+        min-width: auto;
+        max-width: 100%;
+        padding: 14px 16px;
+    }
+
+    .flash-title {
+        font-size: 13px;
+    }
+
+    .flash-message {
+        font-size: 12px;
+    }
+
+    /* Activities Page Layout */
+    .activities-page {
+        top: calc(60px + 0.5rem*4);
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    }
+
+    /* Hero Section */
+    .activities-hero {
+        padding: 50px 16px 80px;
+        min-height: 75vh;
+    }
+
+    .hero-chakra-bg {
+        width: 350px;
+        height: 350px;
+        opacity: 0.06;
+    }
+
+    .activities-hero-content {
+        max-width: 100%;
+    }
+
+    .hero-badge {
+        font-size: 13px;
+        padding: 6px 14px;
+        margin-bottom: 20px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.75rem, 6vw, 2.5rem);
+        margin-bottom: 20px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+        line-height: 1.5;
+        margin-bottom: 32px;
+        padding: 0 8px;
+    }
+
+    /* Impact Stats */
+    .activities-impact {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        max-width: 100%;
+    }
+
+    .activities-impact-item {
+        padding: 20px;
+        border-radius: var(--radius-xl);
+    }
+
+    .impact-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+    }
+
+    .activities-impact-number {
+        font-size: 22px;
+    }
+
+    .activities-impact-label {
+        font-size: 13px;
+    }
+
+    /* Activities Container */
+    .activities-container {
+        margin-top: -60px;
+        padding: 0 16px 50px;
+        gap: 32px;
+    }
+
+    /* Activity Cards */
+    .activity-card {
+        padding: 28px 20px;
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .activity-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .activity-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+
+    .activity-title h2 {
+        font-size: 24px;
+    }
+
+    .activity-title p {
+        font-size: 15px;
+    }
+
+    .activity-content {
+        font-size: 15px;
+        line-height: 1.65;
+    }
+
+    .activity-content h3 {
+        font-size: 17px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .activity-content ul li {
+        padding-left: 22px;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .activity-content p {
+        margin-bottom: 1em;
+    }
+}
+
+/* ===== Medium Mobile (480px - 600px) ===== */
+@media screen and (max-width: 600px) {
+    .activities-hero {
+        padding: 40px 12px 70px;
+        min-height: 70vh;
+    }
+
+    .hero-chakra-bg {
+        width: 300px;
+        height: 300px;
+        opacity: 0.05;
+    }
+
+    .hero-badge {
+        font-size: 12px;
+        padding: 6px 12px;
+        gap: 6px;
+        margin-bottom: 16px;
+    }
+
+    .hero-badge i {
+        font-size: 12px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.5rem, 5.5vw, 2rem);
+        margin-bottom: 16px;
+    }
+
+    .hero-description {
+        font-size: 15px;
+        line-height: 1.5;
+        margin-bottom: 28px;
+        padding: 0 4px;
+    }
+
+    .activities-impact-item {
+        padding: 18px 16px;
+        gap: 14px;
+    }
+
+    .impact-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .activities-impact-number {
+        font-size: 20px;
+    }
+
+    .activities-impact-label {
+        font-size: 12px;
+    }
+
+    .activities-container {
+        margin-top: -50px;
+        padding: 0 12px 40px;
+        gap: 28px;
+    }
+
+    .activity-card {
+        padding: 24px 18px;
+    }
+
+    .activity-header {
+        gap: 14px;
+        margin-bottom: 20px;
+    }
+
+    .activity-icon {
+        width: 56px;
+        height: 56px;
+        font-size: 22px;
+    }
+
+    .activity-title h2 {
+        font-size: 22px;
+        margin-bottom: 6px;
+    }
+
+    .activity-title p {
+        font-size: 14px;
+    }
+
+    .activity-content {
+        font-size: 14px;
+    }
+
+    .activity-content h3 {
+        font-size: 16px;
+        margin-top: 18px;
+        margin-bottom: 8px;
+    }
+
+    .activity-content ul li {
+        padding-left: 20px;
+        margin-bottom: 8px;
+        font-size: 13px;
+    }
+}
+
+/* ===== Small Mobile (320px - 480px) ===== */
+@media screen and (max-width: 480px) {
+    /* Flash Notifications */
+    .flash-notification {
+        padding: 12px 14px;
+        min-width: auto;
+        border-radius: var(--radius-lg);
+    }
+
+    .flash-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 11px;
+    }
+
+    .flash-title {
+        font-size: 12px;
+        margin-bottom: 2px;
+    }
+
+    .flash-message {
+        font-size: 11px;
+    }
+
+    .flash-close {
+        padding: 2px;
+        font-size: 12px;
+    }
+
+    /* Activities Page */
+    .activities-page {
+        top: calc(60px + 0.25rem*6);
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    /* Hero Section */
+    .activities-hero {
+        padding: 32px 12px 60px;
+        min-height: 65vh;
+    }
+
+    .hero-chakra-bg {
+        width: 250px;
+        height: 250px;
+        opacity: 0.04;
+    }
+
+    .hero-badge {
+        font-size: 11px;
+        padding: 5px 10px;
+        gap: 5px;
+        margin-bottom: 14px;
+    }
+
+    .hero-badge i {
+        font-size: 11px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.35rem, 5vw, 1.75rem);
+        margin-bottom: 14px;
+        line-height: 1.2;
+    }
+
+    .hero-description {
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 24px;
+        padding: 0;
+    }
+
+    /* Impact Stats */
+    .activities-impact {
+        gap: 12px;
+    }
+
+    .activities-impact-item {
+        padding: 16px 14px;
+        gap: 12px;
+        border-radius: var(--radius-lg);
+    }
+
+    .impact-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 15px;
+    }
+
+    .activities-impact-number {
+        font-size: 18px;
+        margin-bottom: 2px;
+    }
+
+    .activities-impact-label {
+        font-size: 11px;
+    }
+
+    /* Activities Container */
+    .activities-container {
+        margin-top: -45px;
+        padding: 0 12px 32px;
+        gap: 24px;
+    }
+
+    /* Activity Cards */
+    .activity-card {
+        padding: 20px 16px;
+        border-radius: var(--radius-lg);
+        border-top-width: 3px;
+    }
+
+    .activity-header {
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .activity-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .activity-title h2 {
+        font-size: 20px;
+        margin-bottom: 4px;
+    }
+
+    .activity-title p {
+        font-size: 13px;
+        line-height: 1.4;
+    }
+
+    .activity-content {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .activity-content p {
+        margin-bottom: 0.9em;
+    }
+
+    .activity-content h3 {
+        font-size: 15px;
+        margin-top: 16px;
+        margin-bottom: 8px;
+        padding-bottom: 6px;
+    }
+
+    .activity-content ul li {
+        padding-left: 18px;
+        margin-bottom: 8px;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .activity-content ul li::before {
+        font-size: 11px;
+        top: 1px;
+    }
+
+    .activity-content strong {
+        font-weight: 600;
+    }
+}
+
+/* ===== Extra Small Mobile (320px - 375px) ===== */
+@media screen and (max-width: 375px) {
+    .activities-hero {
+        padding: 28px 10px 50px;
+        min-height: 60vh;
+    }
+
+    .hero-chakra-bg {
+        width: 220px;
+        height: 220px;
+    }
+
+    .hero-badge {
+        font-size: 10px;
+        padding: 4px 8px;
+        margin-bottom: 12px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.25rem, 4.5vw, 1.6rem);
+        margin-bottom: 12px;
+    }
+
+    .hero-description {
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+    .activities-impact-item {
+        padding: 14px 12px;
+    }
+
+    .impact-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 14px;
+    }
+
+    .activities-impact-number {
+        font-size: 17px;
+    }
+
+    .activities-impact-label {
+        font-size: 10px;
+    }
+
+    .activities-container {
+        margin-top: -40px;
+        padding: 0 10px 28px;
+        gap: 20px;
+    }
+
+    .activity-card {
+        padding: 18px 14px;
+    }
+
+    .activity-icon {
+        width: 46px;
+        height: 46px;
+        font-size: 18px;
+    }
+
+    .activity-title h2 {
+        font-size: 18px;
+    }
+
+    .activity-title p {
+        font-size: 12px;
+    }
+
+    .activity-content {
+        font-size: 12px;
+    }
+
+    .activity-content h3 {
+        font-size: 14px;
+        margin-top: 14px;
+    }
+
+    .activity-content ul li {
+        font-size: 11px;
+        padding-left: 16px;
+        margin-bottom: 7px;
+    }
+}
+
+/* ===== Ultra Small Mobile (320px and below) ===== */
+@media screen and (max-width: 320px) {
+    .activities-page {
+        top: calc(60px);
+    }
+
+    .activities-hero {
+        padding: 24px 8px 45px;
+        min-height: 55vh;
+    }
+
+    .hero-chakra-bg {
+        width: 200px;
+        height: 200px;
+        opacity: 0.03;
+    }
+
+    .hero-badge {
+        font-size: 9px;
+        padding: 4px 8px;
+        margin-bottom: 10px;
+    }
+
+    .hero-title {
+        font-size: 1.25rem;
+        margin-bottom: 10px;
+    }
+
+    .hero-description {
+        font-size: 12px;
+        margin-bottom: 18px;
+    }
+
+    .activities-impact {
+        gap: 10px;
+    }
+
+    .activities-impact-item {
+        padding: 12px 10px;
+        gap: 10px;
+    }
+
+    .impact-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+    }
+
+    .activities-impact-number {
+        font-size: 16px;
+    }
+
+    .activities-impact-label {
+        font-size: 9px;
+    }
+
+    .activities-container {
+        margin-top: -35px;
+        padding: 0 8px 24px;
+        gap: 18px;
+    }
+
+    .activity-card {
+        padding: 16px 12px;
+    }
+
+    .activity-header {
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .activity-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 17px;
+    }
+
+    .activity-title h2 {
+        font-size: 17px;
+    }
+
+    .activity-title p {
+        font-size: 11px;
+    }
+
+    .activity-content {
+        font-size: 11px;
+        line-height: 1.55;
+    }
+
+    .activity-content h3 {
+        font-size: 13px;
+        margin-top: 12px;
+        margin-bottom: 6px;
+    }
+
+    .activity-content ul li {
+        font-size: 10px;
+        padding-left: 14px;
+        margin-bottom: 6px;
+    }
+
+    .activity-content ul li::before {
+        font-size: 10px;
+    }
+
+    .flash-notification {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+}
+
+/* ===== Landscape Orientation Fixes ===== */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .activities-hero {
+        min-height: auto;
+        padding: 30px 16px 50px;
+    }
+
+    .hero-chakra-bg {
+        width: 200px;
+        height: 200px;
+    }
+
+    .hero-title {
+        font-size: 1.75rem;
+        margin-bottom: 12px;
+    }
+
+    .hero-description {
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+    .activities-impact {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+
+    .activities-container {
+        margin-top: -40px;
+    }
+}
+
+/* ===== Touch Target Improvements for Mobile ===== */
+@media screen and (max-width: 768px) {
+    .flash-close {
+        min-width: 32px;
+        min-height: 32px;
+    }
+
+    /* Ensure animations are smoother on mobile */
+    .activity-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .activity-card:active {
+        transform: scale(0.98);
+    }
+
+    .activities-impact-item {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .activities-impact-item:active {
+        transform: scale(0.97);
+    }
+}
+
+/* ===== Performance Optimizations for Mobile ===== */
+@media screen and (max-width: 768px) {
+    /* Reduce animation complexity on mobile */
+    .hero-chakra-bg {
+        animation: spin 90s linear infinite;
+    }
+
+    /* Simplify shadows on smaller screens */
+    .activity-card {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .activity-card:hover {
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+}

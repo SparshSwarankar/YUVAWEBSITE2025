@@ -1,0 +1,142 @@
+// ===== YUVA ALUMNI HUB BACKEND - CODE.GS (FINAL VERSION) =====
+
+// --- CONFIGURATION ---
+// PASTE THE ID OF YOUR GOOGLE SHEET HERE
+const SHEET_ID = '1-GQjJ9sWX1jcuFSESxsPbdebFyzZ9isWzWyM6qvvvpI'; 
+
+/**
+ * Run this function once from the editor after setting your SHEET_ID.
+ * It will create and style the headers for both the submissions and featured alumni sheets.
+ */
+function initialSetup() {
+  try {
+    const doc = SpreadsheetApp.openById(SHEET_ID);
+    Logger.log(`Successfully opened spreadsheet: ${doc.getName()}`);
+
+    // Setup for the AlumniSubmissions sheet
+    setupSheetTab(doc, 'AlumniSubmissions', [
+      'Timestamp', 'Full Name', 'Email', 'Phone', 'Batch Year', 'Current City', 
+      'Current Profession', 'Organization', 'Areas of Interest','ImageURL'
+    ]);
+
+    // Setup for the FeaturedAlumni sheet
+    setupSheetTab(doc, 'FeaturedAlumni', [
+      'Name', 'Role', 'Batch', 'City', 'Quote', 'ImageURL', 'Badge'
+    ]);
+
+    Logger.log(`Setup complete. View your sheet at: ${doc.getUrl()}`);
+
+  } catch (e) {
+    Logger.log(`Error during setup: ${e.message}. Please double-check your SHEET_ID.`);
+  }
+}
+
+/**
+ * Helper function to create and format a sheet tab.
+ */
+function setupSheetTab(spreadsheet, sheetName, headers) {
+  let sheet = spreadsheet.getSheetByName(sheetName);
+  if (!sheet) {
+    sheet = spreadsheet.insertSheet(sheetName);
+    Logger.log(`Created new tab: "${sheetName}"`);
+  }
+
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(headers);
+    sheet.setFrozenRows(1);
+    const headerRange = sheet.getRange(1, 1, 1, headers.length);
+    headerRange.setBackground('#555879').setFontColor('#ffffff').setFontWeight('bold');
+    Logger.log(`Styled headers created for "${sheetName}".`);
+  } else {
+    Logger.log(`"${sheetName}" already has data. Headers not changed.`);
+  }
+}
+
+/**
+ * Main router for GET requests from the frontend.
+ */
+function doGet(e) {
+  const action = e.parameter.action;
+  if (action === 'getFeaturedAlumni') {
+    return getFeaturedAlumni();
+  }
+  return ContentService
+    .createTextOutput(JSON.stringify({ success: false, error: 'Invalid action' }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
+ * Fetches data from the 'FeaturedAlumni' sheet for the dynamic success stories.
+ */
+function getFeaturedAlumni() {
+  try {
+    const doc = SpreadsheetApp.openById(SHEET_ID);
+    const sheet = doc.getSheetByName('FeaturedAlumni');
+    const data = sheet.getDataRange().getValues();
+
+    const headers = data.shift(); // Remove header row
+    const stories = data.map(row => {
+      let story = {};
+      headers.forEach((header, index) => {
+        story[header] = row[index];
+      });
+      return story;
+    });
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ success: true, data: stories }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (error) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ success: false, error: error.message }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+/**
+ * Handles POST requests from the alumni registration form.
+ */
+function doPost(e) {
+  try {
+    const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName('AlumniSubmissions');
+    
+    // The headers are created by initialSetup, but this is a fallback.
+    if (sheet.getLastRow() === 0) {
+      const headers = ['Timestamp', 'Full Name', 'Email', 'Phone', 'Batch Year', 'Current City', 'Current Profession', 'Organization', 'Areas of Interest','ImageURL'];
+      sheet.appendRow(headers);
+    }
+
+    const newRow = [
+      new Date(),
+      e.parameter.fullName,
+      e.parameter.email,
+      e.parameter.phone,
+      e.parameter.batch,
+      e.parameter.city,
+      e.parameter.profession,
+      e.parameter.organization,
+      e.parameter.interests,
+      e.parameter.imageUrl
+    ];
+    
+    sheet.appendRow(newRow);
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ success: true, message: 'Form submitted successfully!' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (error) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ success: false, error: error.message }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+/**
+ * Handles OPTIONS requests for CORS pre-flight checks.
+ */
+function doOptions(e) {
+  return ContentService
+    .createTextOutput(JSON.stringify({ status: 'SUCCESS' }))
+    .setMimeType(ContentService.MimeType.JSON);
+}

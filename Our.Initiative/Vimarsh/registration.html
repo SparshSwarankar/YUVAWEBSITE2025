@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vimarsh 2025 Registration | YUVA India</title>
+    <meta name="description"
+        content="Register now for Vimarsh 2025 — the premier youth conference by YUVA India. Secure your spot to be part of inspiring talks, cultural events, and leadership sessions.">
+    <meta name="keywords"
+        content="Vimarsh 2025 registration, YUVA India registration, youth conference India, register Vimarsh, event registration, join Vimarsh 2025, youth leadership event">
+    <meta name="robots" content="index, follow">
+
+    <!-- ✅ Bing Webmaster Verification -->
+    <meta name="msvalidate.01" content="762998E140200B5AFB94E40845B01499" />
+
+    <!-- Open Graph (Facebook / LinkedIn) -->
+    <meta property="og:title" content="Vimarsh 2025 Registration | YUVA India">
+    <meta property="og:description"
+        content="Join Vimarsh 2025 by registering online today. Be part of India's youth movement for change.">
+    <meta property="og:image" content="https://yuva.ind.in/Images/Vimarsh2025_logo.jpg">
+    <meta property="og:url" content="https://yuva.ind.in/registration">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vimarsh 2025 Registration">
+    <meta name="twitter:description"
+        content="Register now for Vimarsh 2025 and become part of India's premier youth event by YUVA India.">
+    <meta name="twitter:image" content="https://yuva.ind.in/Images/Vimarsh2025_logo.jpg">
+
+    <!-- Schema.org for Registration Page -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "RegisterAction",
+        "name": "Vimarsh 2025 Registration",
+        "description": "Online registration page for Vimarsh 2025 by YUVA India.",
+        "url": "https://yuva.ind.in/registration",
+        "event": {
+          "@type": "Event",
+          "name": "Vimarsh 2025",
+          "startDate": "2025-01-10",  
+          "endDate": "2025-01-12",    
+          "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+          "eventStatus": "https://schema.org/EventScheduled",
+          "location": {
+            "@type": "Place",
+            "name": "Vimarsh 2025 Venue",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "India",
+              "addressCountry": "IN"
+            }
+          },
+          "organizer": {
+            "@type": "Organization",
+            "name": "YUVA India",
+            "url": "https://yuva.ind.in"
+          }
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "YUVA India",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://yuva.ind.in/Images/Vimarsh2025_logo.jpg"
+          }
+        }
+      }
+      </script>
+
+    <link rel="shortcut icon" href="/Images/Vimarsh2025_logo.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="/Our.Initiative/style.css">
+    <link rel="stylesheet" href="/Mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Style for select field */
+        #college {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ccc;
+            border-radius: 12px;
+            font-size: 1rem;
+            line-height: 1.4;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-color: #fff;
+            cursor: pointer;
+            white-space: normal;
+            /* ✅ allow wrapping */
+            word-wrap: break-word;
+            /* ✅ break long words */
+            overflow-wrap: break-word;
+        }
+
+        /* Dropdown options */
+        #college option {
+            white-space: normal;
+            /* ✅ wrap text */
+            word-wrap: break-word;
+            padding: 10px;
+            max-width: 100%;
+            /* ✅ prevent overflow */
+        }
+
+        /* Ensure dropdown stays within form */
+        select {
+            max-width: 100%;
+            /* ✅ dropdown will not extend out */
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="registration" id="registration">
+        <div class="form-container">
+            <h2>Vimarsh 2025 Registration</h2>
+
+            <!-- Success Message -->
+            <div class="success-message" id="successMessage" style="display: none;">
+                <i class="fas fa-check-circle"></i> Registration successful! Check your email for confirmation and QR
+                code.
+            </div>
+
+            <!-- Registration Fee Display -->
+            <div class="registration-fee">
+                <h3>Registration Fee</h3>
+                <div class="fee-amount" id="feeAmount">Select a category to see fee</div>
+            </div>
+
+            <form id="registrationForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name <span>*</span></label>
+                        <input type="text" id="firstName" name="firstName" required>
+                        <div class="error-message" id="firstNameError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name <span>*</span></label>
+                        <input type="text" id="lastName" name="lastName" required>
+                        <div class="error-message" id="lastNameError"></div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="age">Age <span>*</span></label>
+                        <select id="age" name="age" required>
+                            <option value="">Select Age Group</option>
+                            <option value="below-18">Below 18</option>
+                            <option value="18-21">18-21</option>
+                            <option value="22-25">22-25</option>
+                            <option value="25-30">25-30</option>
+                            <option value="30-40">30-40</option>
+                            <option value="above-40">Above 40</option>
+                        </select>
+                        <div class="error-message" id="ageError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bloodGroup">Blood Group <span>*</span></label>
+                        <select id="bloodGroup" name="bloodGroup" required>
+                            <option value="">Select Blood Group</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                        </select>
+                        <div class="error-message" id="bloodGroupError"></div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="college">College <span>*</span></label>
+                        <div>
+
+                            <select id="college" name="college" required>
+                                <option value="">--Select a College--</option>
+                                <option value="5 Year Intergrated Law, DU">5 Year Intergrated Law, DU</option>
+                                <option value="Acharya-narendra-dev-college">Acharya Narendra Dev College</option>
+                                <option value="Aditi-mahavidyalaya">Aditi Mahavidyalaya</option>
+                                <option value="Ahilyabai-college-of-nursing">Ahilyabai College Of Nursing</option>
+                                <option value="All-india-institute-of-medical-science-aiims">All India Institute Of
+                                    Medical
+                                    Science-Aiims</option>
+                                <option value="All-yavar-jung-institute-of-hearing-handicapped">All Yavar Jung Institute
+                                    Of
+                                    Hearing Handicapped</option>
+                                <option value="Amar-jyoti-institute-of-physiotherapy-karkardooma">Amar Jyoti Institute
+                                    Of
+                                    Physiotherapy Karkardooma</option>
+                                <option
+                                    value="Ambedkar-institute-of-advanced-communication-technologies-and-research-geeta-colony">
+                                    Ambedkar Institute Of Advanced Communication Technologies And Research Geeta Colony
+                                </option>
+                                <option value="Ambedkar-institute-of-technology">Ambedkar Institute Of Technology
+                                </option>
+                                <option value="Ambedkar-institute-of-technology-shakarpur">Ambedkar Institute Of
+                                    Technology
+                                    Shakarpur</option>
+                                <option value="Amity-institute-of-biotechnology">Amity Institute Of Biotechnology
+                                </option>
+                                <option value="Amity-law-school">Amity Law School</option>
+                                <option value="Amity-school-of-engg.-&-technology">Amity School Of Engg. & Technology
+                                </option>
+                                <option value="Amity-school-of-physiotherapy">Amity School Of Physiotherapy</option>
+                                <option value="Amity-university">Amity University</option>
+                                <option value="Ansal-institute-of-technology">Ansal Institute Of Technology</option>
+                                <option value="Apeejay-school-of-management">Apeejay School Of Management</option>
+                                <option value="Army-college-of-medical-science-delhi-cantt">Army College Of Medical
+                                    Science
+                                    Delhi Cantt</option>
+                                <option value="Army-institute-of-education">Army Institute Of Education</option>
+                                <option value="Army-institute-of-management-&-technology">Army Institute Of Management &
+                                    Technology</option>
+                                <option value="Aryabhatt-institute-of-technology-shakti-nagar">Aryabhatt Institute Of
+                                    Technology Shakti Nagar</option>
+                                <option value="Arybhatta-college">Arybhatta College</option>
+                                <option value="Ashoka-university">Ashoka University</option>
+                                <option value="Asia-pacific-institute-of-management">Asia Pacific Institute Of
+                                    Management
+                                </option>
+                                <option value="Atma-ram-sanatan-dharma-college">Atma Ram Sanatan Dharma College</option>
+                                <option value="Ayurvedic-and-unani-tibbia-college">Ayurvedic And Unani Tibbia College
+                                </option>
+                                <option value="B-k-institute-of-education-technology-narela">B K Institute Of Education
+                                    Technology Narela</option>
+                                <option value="Bakson-homeopathic-medical-college">Bakson Homeopathic Medical College
+                                </option>
+                                <option value="Banarsidas-chandiwala-institute-of-hotel-management-kalkaji">Banarsidas
+                                    Chandiwala Institute Of Hotel Management Kalkaji</option>
+                                <option
+                                    value="Banarsidas-chandiwala-institute-of-professional-studies-sector-11-dwarka">
+                                    Banarsidas Chandiwala Institute Of Professional Studies Sector 11 Dwarka</option>
+                                <option value="Beri-institute-of-technology">Beri Institute Of Technology</option>
+                                <option value="Bhagini-nivedita-college">Bhagini Nivedita College</option>
+                                <option value="Bhagwan-mahabir-jain-girls-college-of-education">Bhagwan Mahabir Jain
+                                    Girls
+                                    College Of Education</option>
+                                <option value="Bhagwan-parshuram-institute-of-technology-sector-17">Bhagwan Parshuram
+                                    Institute Of Technology Sector 17</option>
+                                <option value="Bhai-parmananad-institute-of-business-studies">Bhai Parmananad Institute
+                                    Of
+                                    Business Studies</option>
+                                <option value="Bhai-parmanand-institute-of-business-studies-shakarpur">Bhai Parmanand
+                                    Institute Of Business Studies Shakarpur</option>
+                                <option
+                                    value="Bharati-vidyapeeth-university-institute-of-management-&-research-(bvimr)">
+                                    Bharati Vidyapeeth University Institute Of Management & Research (Bvimr)</option>
+                                <option value="Bharti-college">Bharti College</option>
+                                <option value="Bharti-vidyapeeth’s-institute-of-computer-applications-and-management">
+                                    Bharti
+                                    Vidyapeeth’S Institute Of Computer Applications And Management</option>
+                                <option value="Bhartiya-vidyapeeth-college-of-engineering-paschim-vihar">Bhartiya
+                                    Vidyapeeth
+                                    College Of Engineering Paschim Vihar</option>
+                                <option value="Bhaskaracharya-college-of-applied-sciences">Bhaskaracharya College Of
+                                    Applied
+                                    Sciences</option>
+                                <option value="Bhimrao-ambedkar-college">Bhimrao Ambedkar College</option>
+                                <option value="Bls-institute-of-management">Bls Institute Of Management</option>
+                                <option value="C-dec-(electronics-research-&-development-centre-of-india)">C-Dec
+                                    (Electronics Research & Development Centre Of India)</option>
+                                <option value="Campus-law-center">Campus Law Center</option>
+                                <option value="Capital-business-school">Capital Business School</option>
+                                <option value="Ces-college-of-educational-research-&-training">Ces College Of
+                                    Educational
+                                    Research & Training</option>
+                                <option value="Chandra-prabhu-jain-college-of-higher-studies-narela">Chandra Prabhu Jain
+                                    College Of Higher Studies Narela</option>
+                                <option value="Chaudhary-brahm-prakash-ayurved-charak-sansthan">Chaudhary Brahm Prakash
+                                    Ayurved Charak Sansthan</option>
+                                <option
+                                    value="Chaudhary-brahm-prakash-government-engineering-college-jaffarpur-integrated-institute-of-technology-sector-9">
+                                    Chaudhary Brahm Prakash Government Engineering College Jaffarpur Integrated
+                                    Institute Of
+                                    Technology Sector 9</option>
+                                <option value="College-of-arts">College Of Arts</option>
+                                <option value="College-of-medical-lab-technology-hindu-rao-hospital">College Of Medical
+                                    Lab
+                                    Technology Hindu Rao Hospital</option>
+                                <option value="College-of-nursing-dr-ram-manohar-lohia-hospital">College Of Nursing Dr
+                                    Ram
+                                    Manohar Lohia Hospital</option>
+                                <option value="College-of-nursing-vardhman-mahavir-medical-college-safdarjung">College
+                                    Of
+                                    Nursing Vardhman Mahavir Medical College Safdarjung</option>
+                                <option value="College-of-pharmacy">College Of Pharmacy</option>
+                                <option value="College-of-vocational-studies">College Of Vocational Studies</option>
+                                <option value="Comm-it-career-academy-sheikh-sarai">Comm It Career Academy Sheikh Sarai
+                                </option>
+                                <option value="Comm-it-career-academy">Comm-It Career Academy</option>
+                                <option value="Daulat-ram-college">Daulat Ram College</option>
+                                <option value="Deen-dayal-upadhyay-college">Deen Dayal Upadhyay College</option>
+                                <option value="Delhi--institute-of-rural-development-gt-karnal-road-nangli-poona">Delhi
+                                    Institute Of Rural Development Gt Karnal Road Nangli Poona</option>
+                                <option value="Delhi-college-of-advanced-studies">Delhi College Of Advanced Studies
+                                </option>
+                                <option value="Delhi-college-of-arts-and-commerce">Delhi College Of Arts And Commerce
+                                </option>
+                                <option value="Delhi-institute-of-advanced-studies">Delhi Institute Of Advanced Studies
+                                </option>
+                                <option
+                                    value="Delhi-institute-of-pharmaceutical-science-and-research-pushp-vihar-durgabai-deshmukh-college-of-special-education">
+                                    Delhi Institute Of Pharmaceutical Science And Research Pushp Vihar Durgabai Deshmukh
+                                    College Of Special Education</option>
+                                <option value="Delhi-institute-of-pharmaceutical-sciences-and-research">Delhi Institute
+                                    Of
+                                    Pharmaceutical Sciences And Research</option>
+                                <option value="Delhi-institute-of-rural-development">Delhi Institute Of Rural
+                                    Development
+                                </option>
+                                <option value="Delhi-institute-of-tool-engineering-okhla">Delhi Institute Of Tool
+                                    Engineering Okhla</option>
+                                <option value="Delhi-school-of-economics">Delhi School Of Economics</option>
+                                <option value="Delhi-school-of-journalism">Delhi School Of Journalism</option>
+                                <option value="Delhi-school-of-professional-studies-&-research">Delhi School Of
+                                    Professional
+                                    Studies & Research</option>
+                                <option value="Delhi-school-of-professional-studies-and-research-sector-25">Delhi School
+                                    Of
+                                    Professional Studies And Research Sector 25</option>
+                                <option value="Delhi-teachers’-training-college">Delhi Teachers’ Training College
+                                </option>
+                                <option value="Delhi-technical-university-dtu">Delhi Technical University-Dtu</option>
+                                <option value="Delhi-technological-university">Delhi Technological University</option>
+                                <option value="Deshbandhu-college">Deshbandhu College</option>
+                                <option
+                                    value="Dr-br-sur-h0meopethic-medical-college-and-research-centre-moti-bagh-vardhman-mahavir-medical-college-safdarjung">
+                                    Dr Br Sur H0Meopethic Medical College And Research Centre Moti Bagh Vardhman Mahavir
+                                    Medical College Safdarjung</option>
+                                <option
+                                    value="Dr-ram-manohar-lohia-hospital-pg-institute-of-medical-education-and-research">
+                                    Dr
+                                    Ram Manohar Lohia Hospital Pg Institute Of Medical Education And Research</option>
+                                <option value="Du-ncweb">Du Ncweb</option>
+                                <option value="Du-sol">Du Sol</option>
+                                <option value="Dyal-singh-college">Dyal Singh College</option>
+                                <option value="Dyal-singh-college-evening">Dyal Singh College Evening</option>
+                                <option value="Eastern-institute-for-integrated-learning-in-management-(eiilm)">Eastern
+                                    Institute For Integrated Learning In Management (Eiilm)</option>
+                                <option value="Empi-business-school">Empi Business School</option>
+                                <option value="Esic-dental-college-and-hospital-sector-15">Esic Dental College And
+                                    Hospital
+                                    Sector 15</option>
+                                <option value="Esic-institute-of-rehabilitation-sciences-vasant-kunj">Esic Institute Of
+                                    Rehabilitation Sciences Vasant Kunj</option>
+                                <option value="Excel-institute-of-management-&-technology">Excel Institute Of Management
+                                    &
+                                    Technology</option>
+                                <option value="Faculty-of-management-studies">Faculty Of Management Studies</option>
+                                <option value="Fairfield-institute-of-management-and-technology">Fairfield Institute Of
+                                    Management And Technology</option>
+                                <option value="Fairfield-institute-of-management-and-technology-kapashera">Fairfield
+                                    Institute Of Management AGd Technology Kapashera</option>
+                                <option value="Fore-school-of-management">Fore School Of Management</option>
+                                <option value="Gargi-college">Gargi College</option>
+                                <option value="Gautam-buddha-university">Gautam Buddha University</option>
+                                <option value="Gb-pant-government-engineering-college-okhla">Gb Pant Government
+                                    Engineering
+                                    College Okhla</option>
+                                <option value="Gd-goenka-university">Gd Goenka University</option>
+                                <option value="Gitarattan-institute-of-advanced-studies-and-training-sector-7">
+                                    Gitarattan
+                                    Institute Of Advanced Studies And Training Sector 7</option>
+                                <option value="Gitarattan-international-business-school-madhuban-chowk">Gitarattan
+                                    International Business School Madhuban Chowk</option>
+                                <option value="Guru-gobind-singh-indraprastha-university">Guru Gobind Singh Indraprastha
+                                    University</option>
+                                <option value="Guru-nanak-college-of-education-punjabi-bagh">Guru Nanak College Of
+                                    Education
+                                    Punjabi Bagh</option>
+                                <option value="Guru-nanak-dev-institute-of-technology-sector-15">Guru Nanak Dev
+                                    Institute Of
+                                    Technology Sector 15</option>
+                                <option value="Guru-nanak-institute-of-management">Guru Nanak Institute Of Management
+                                </option>
+                                <option value="Guru-premsukh-memorial-college-of-engg.">Guru Premsukh Memorial College
+                                    Of
+                                    Engg.</option>
+                                <option value="Guru-ram-das-college-of-education-west-jyoti-nagar-shahdara">Guru Ram Das
+                                    College Of Education West Jyoti Nagar Shahdara</option>
+                                <option value="Guru-tegh-bahadur-institute-of-technology-rajouri-garden">Guru Tegh
+                                    Bahadur
+                                    Institute Of Technology Rajouri Garden</option>
+                                <option value="Hansraj-college">Hansraj College</option>
+                                <option value="Hindu-college">Hindu College</option>
+                                <option value="Hmr-institute-of-technology-and-management-hamidpur">Hmr Institute Of
+                                    Technology And Management Hamidpur</option>
+                                <option value="Icfai-university">Icfai University</option>
+                                <option value="Ideal-institute-of-management-and-technology-vivek-vihar">Ideal Institute
+                                    Of
+                                    Management And Technology Vivek Vihar</option>
+                                <option value="Ignou-distance">Ignou-Distance</option>
+                                <option value="Iilm-institute-for-higher-education">Iilm Institute For Higher Education
+                                </option>
+                                <option value="Indian-agricultural-research-institute-iari">Indian Agricultural Research
+                                    Institute-Iari</option>
+                                <option value="Indian-institute-of-finance-(iif)">Indian Institute Of Finance (Iif)
+                                </option>
+                                <option value="Indian-institute-of-foreign-trade-iift">Indian Institute Of Foreign
+                                    Trade-Iift</option>
+                                <option value="Indian-institute-of-mass-communication-iimc">Indian Institute Of Mass
+                                    Communication-Iimc</option>
+                                <option value="Indian-institute-of-technology-iit">Indian Institute Of Technology-Iit
+                                </option>
+                                <option value="Indian-law-institute">Indian Law Institute</option>
+                                <option value="Indian-red-cross-society">Indian Red Cross Society</option>
+                                <option value="Indian-statistical-institute">Indian Statistical Institute</option>
+                                <option value="Indira-gandhi-institute-of-physical-education-&-sports-sciences">Indira
+                                    Gandhi Institute Of Physical Education & Sports Sciences</option>
+                                <option value="Indira-gandhi-national-open-university-ignou">Indira Gandhi National Open
+                                    University-Ignou</option>
+                                <option value="Indraprastha-college-for-women">Indraprastha College For Women</option>
+                                <option value="Indraprastha-institute-of-information-technology-delhi-(iiit-delhi)">
+                                    Indraprastha Institute Of Information Technology Delhi (Iiit-Delhi)</option>
+                                <option value="Institute-of-applied-manpower-research">Institute Of Applied Manpower
+                                    Research</option>
+                                <option value="Institute-of-higher-education-vikaspuri">Institute Of Higher Education
+                                    Vikaspuri</option>
+                                <option value="Institute-of-home-economics">Institute Of Home Economics</option>
+                                <option value="Institute-of-information-technology-and-management-janakpuri">Institute
+                                    Of
+                                    Information Technology And Management Janakpuri</option>
+                                <option value="Institute-of-liver-and-biliary-sciences-ilbs">Institute Of Liver And
+                                    Biliary
+                                    Sciences-Ilbs</option>
+                                <option value="Institute-of-physically-handicapped">Institute Of Physically Handicapped
+                                </option>
+                                <option value="Institute-of-rehabilitation-medicine-&-allied-sciences">Institute Of
+                                    Rehabilitation Medicine & Allied Sciences</option>
+                                <option value="Institute-of-research-and-advanced-studies-alaknanda">Institute Of
+                                    Research
+                                    And Advanced Studies Alaknanda</option>
+                                <option value="Institute-of-rural-development-holambi-khurd">Institute Of Rural
+                                    Development
+                                    Holambi Khurd</option>
+                                <option value="Institute-of-technology-najafgarh">Institute Of Technology Najafgarh
+                                </option>
+                                <option value="Institute-of-vocational-studies-sheikh-sarai">Institute Of Vocational
+                                    Studies
+                                    Sheikh Sarai</option>
+                                <option value="International-management-institute(imi)">International Management
+                                    Institute(Imi)</option>
+                                <option value="Isic-institute-of-rehabilitation-science">Isic Institute Of
+                                    Rehabilitation
+                                    Science</option>
+                                <option value="Jagan-institute-of-management-studies-sector-5">Jagan Institute Of
+                                    Management
+                                    Studies Sector 5</option>
+                                <option value="Jagannath-international-management-school-kalkaji">Jagannath
+                                    International
+                                    Management School Kalkaji</option>
+                                <option value="Jagannath-international-management-school-vasant-kunj">Jagannath
+                                    International Management School Vasant Kunj</option>
+                                <option value="Jamia-hamdard">Jamia Hamdard</option>
+                                <option value="Jamia-millia-islamia">Jamia Millia Islamia</option>
+                                <option value="Janki-devi-memorial-college">Janki Devi Memorial College</option>
+                                <option value="Jawaharlal-nehru-university">Jawaharlal Nehru University</option>
+                                <option value="Jaypee-institute-of-information-technology-(jiit)---deemed-university">
+                                    Jaypee
+                                    Institute Of Information Technology (Jiit) - Deemed University</option>
+                                <option value="Jesus-and-mary-college">Jesus And Mary College</option>
+                                <option value="Kalindi-college">Kalindi College</option>
+                                <option value="Kalka-institute-for-research-&-advanced-studies">Kalka Institute For
+                                    Research
+                                    & Advanced Studies</option>
+                                <option value="Kamla-nehru-college">Kamla Nehru College</option>
+                                <option value="Kasturba-gandhi-institute-of-technology-pitampura">Kasturba Gandhi
+                                    Institute
+                                    Of Technology Pitampura</option>
+                                <option value="Kasturi-ram-college-of-higher-education-narela">Kasturi Ram College Of
+                                    Higher
+                                    Education Narela</option>
+                                <option value="Keshav-mahavidyalaya">Keshav Mahavidyalaya</option>
+                                <option value="Kirori-mal-college">Kirori Mal College</option>
+                                <option value="Lady-hardinge-medical-college">Lady Hardinge Medical College</option>
+                                <option value="Lady-irwin-college">Lady Irwin College</option>
+                                <option value="Lady-shri-ram-college">Lady Shri Ram College</option>
+                                <option value="Lakshmibai-college">Lakshmibai College</option>
+                                <option value="Lal-bahadur-shastri-institute-of-management-sector-11-dwarka">Lal Bahadur
+                                    Shastri Institute Of Management Sector 11 Dwarka</option>
+                                <option value="Lalita-devi-institute-of-management-and-science">Lalita Devi Institute Of
+                                    Management And Science</option>
+                                <option value="Law-center-1">Law Center 1</option>
+                                <option value="Law-center-2">Law Center 2</option>
+                                <option value="Laxmi-bai-batra-college-of-nursing-mehrauli">Laxmi Bai Batra College Of
+                                    Nursing Mehrauli</option>
+                                <option value="Lingaya's-vidyapeeth">Lingaya'S Vidyapeeth</option>
+                                <option
+                                    value="Lok-nayak-jayaprakash-narayan-national-institute-of-criminology-and-forensic-science-sector-3">
+                                    Lok Nayak Jayaprakash Narayan National Institute Of Criminology And Forensic Science
+                                    Sector 3</option>
+                                <option
+                                    value="Madhubala-institute-of-communication-and-electronic-media-new-delhi-institute-of-management-tughlakabad">
+                                    Madhubala Institute Of Communication And Electronic Media New Delhi Institute Of
+                                    Management Tughlakabad</option>
+                                <option value="Maharaja-agrasen-college">Maharaja Agrasen College</option>
+                                <option value="Maharaja-agrasen-institute-of-management-studies">Maharaja Agrasen
+                                    Institute
+                                    Of Management Studies</option>
+                                <option value="Maharaja-agrasen-institute-of-management-studies">Maharaja Agrasen
+                                    Institute
+                                    Of Management Studies</option>
+                                <option value="Maharaja-surajmal-institute-janakpuri">Maharaja Surajmal Institute
+                                    Janakpuri
+                                </option>
+                                <option value="Maharaja-surajmal-institute-of-pharmacy">Maharaja Surajmal Institute Of
+                                    Pharmacy</option>
+                                <option value="Maharaja-surajmal-institute-of-technology">Maharaja Surajmal Institute Of
+                                    Technology</option>
+                                <option value="Maharshi-valmiki-college-of-education">Maharshi Valmiki College Of
+                                    Education
+                                </option>
+                                <option value="Maharshi-vedic-university">Maharshi Vedic University</option>
+                                <option value="Maitri-college">Maitri College</option>
+                                <option value="Management-education-and-research-institute-janakpuri">Management
+                                    Education
+                                    And Research Institute Janakpuri</option>
+                                <option value="Mata-sundari-college">Mata Sundari College</option>
+                                <option value="Maulana-maulana-azad-medical-college">Maulana Maulana Azad Medical
+                                    College
+                                </option>
+                                <option value="Mbs-school-of-planning-and-architecture-sector-9">Mbs School Of Planning
+                                    And
+                                    Architecture Sector 9</option>
+                                <option value="Mera-by-integrated-institute-of-technology-maharani-bagh">Mera By
+                                    Integrated
+                                    Institute Of Technology Maharani Bagh</option>
+                                <option value="Miranda-house">Miranda House</option>
+                                <option value="Morarji-desai-national-institute-of-yoga">Morarji Desai National
+                                    Institute Of
+                                    Yoga</option>
+                                <option value="Mother-teresa-institute-of-management">Mother Teresa Institute Of
+                                    Management
+                                </option>
+                                <option value="Motilal-nehru-college">Motilal Nehru College</option>
+                                <option value="Motilal-nehru-college-evening">Motilal Nehru College Evening</option>
+                                <option value="National-centre-for-disease-control-ncdc">National Centre For Disease
+                                    Control-Ncdc</option>
+                                <option value="National-institute-of-communicable-diseases-(nicd)">National Institute Of
+                                    Communicable Diseases (Nicd)</option>
+                                <option value="National-institute-of-fashion-technology-nift">National Institute Of
+                                    Fashion
+                                    Technology-Nift</option>
+                                <option value="National-institute-of-labour-economics-narela">National Institute Of
+                                    Labour
+                                    Economics Narela</option>
+                                <option value="National-institute-of-mentally-handicapped">National Institute Of
+                                    Mentally
+                                    Handicapped</option>
+                                <option value="National-law-university-nlu">National Law University-Nlu</option>
+                                <option
+                                    value="National-museum-institute-of-the-history-of-the-art-conservation-and-museology">
+                                    National Museum Institute Of The History Of The Art Conservation And Museology
+                                </option>
+                                <option value="National-power-training-institute-badarpur">National Power Training
+                                    Institute
+                                    Badarpur</option>
+                                <option value="National-school-of-drama-nsd">National School Of Drama-Nsd</option>
+                                <option value="Ndmc-medical-college-at-hindu-rao-hospital">Ndmc Medical College At Hindu
+                                    Rao
+                                    Hospital</option>
+                                <option value="Nehru-homeopathic-college">Nehru Homeopathic College</option>
+                                <option value="Netaji-subhas-institute-of-technology-nsut">Netaji Subhas Institute Of
+                                    Technology-Nsut</option>
+                                <option value="New-delhi-institute-for-information-technology">New Delhi Institute For
+                                    Information Technology</option>
+                                <option value="New-delhi-institute-of-management">New Delhi Institute Of Management
+                                </option>
+                                <option value="Niilm-centre-for-management-studies">Niilm Centre For Management Studies
+                                </option>
+                                <option value="Northcap-university">Northcap University</option>
+                                <option value="Northern-india-engineering-college">Northern India Engineering College
+                                </option>
+                                <option value="Nrai-school-of-mass-communication">Nrai School Of Mass Communication
+                                </option>
+                                <option value="P.g.d.a.v.-college">P.G.D.A.V. College</option>
+                                <option value="P.g.d.a.v.-college-(evening)">P.G.D.A.V. College (Evening)</option>
+                                <option value="Pandit-deen-dayal-institute-of-physically-handicapped">Pandit Deen Dayal
+                                    Institute Of Physically Handicapped</option>
+                                <option value="Pradeep-memorial-comprehensive-college-of-education-kirari-extension">
+                                    Pradeep
+                                    Memorial Comprehensive College Of Education Kirari Extension</option>
+                                <option value="Pusa-institute-of-technology">Pusa Institute Of Technology</option>
+                                <option value="R.c.-institute-of-technology">R.C. Institute Of Technology</option>
+                                <option value="Rai-business-school-(rbs)">Rai Business School (Rbs)</option>
+                                <option value="Rajdhani-college">Rajdhani College</option>
+                                <option value="Rajiv-gandhi-cancer-institute-and-research-centre-sector-5">Rajiv Gandhi
+                                    Cancer Institute And Research Centre Sector 5</option>
+                                <option value="Rajkumari-amrit-kaur-college-of-nursing">Rajkumari Amrit Kaur College Of
+                                    Nursing</option>
+                                <option value="Ram-lal-anand-college">Ram Lal Anand College</option>
+                                <option value="Ramanujan-college">Ramanujan College</option>
+                                <option value="Ramjas-college">Ramjas College</option>
+                                <option value="Rishihood-university">Rishihood University</option>
+                                <option value="Rukmini-devi-institute-of-advanced-studies">Rukmini Devi Institute Of
+                                    Advanced Studies</option>
+                                <option value="Rukmini-devi-institute-of-advanced-studies-madhuban-chowk">Rukmini Devi
+                                    Institute Of Advanced Studies Madhuban Chowk</option>
+                                <option value="Saint-lawrence-college-of-higher-education-geeta-colony">Saint Lawrence
+                                    College Of Higher Education Geeta Colony</option>
+                                <option value="Saint-stephen's-college">Saint Stephen'S College</option>
+                                <option value="Sant-haridas-college-of-higher-education-najafgarh">Sant Haridas College
+                                    Of
+                                    Higher Education Najafgarh</option>
+                                <option value="Satyawati-college">Satyawati College</option>
+                                <option value="Satyawati-college-evening">Satyawati College Evening</option>
+                                <option value="School-of-computer-science-(delhi-kannada-education-society)">School Of
+                                    Computer Science (Delhi Kannada Education Society)</option>
+                                <option value="School-of-correspondence-courses-&-cont.-edu.">School Of Correspondence
+                                    Courses & Cont. Edu.</option>
+                                <option value="School-of-planning-and-architecture">School Of Planning And Architecture
+                                </option>
+                                <option value="School-of-rehabilitation-science">School Of Rehabilitation Science
+                                </option>
+                                <option value="Sent-stephen-college-of-nursing-tees-hazari">Sent Stephen College Of
+                                    Nursing
+                                    Tees Hazari</option>
+                                <option value="Shaheed-bhagat-singh-college">Shaheed Bhagat Singh College</option>
+                                <option value="Shaheed-bhagat-singh-college-evening">Shaheed Bhagat Singh College
+                                    Evening
+                                </option>
+                                <option value="Shaheed-rajguru-college-of-applied-science-for-women">Shaheed Rajguru
+                                    College
+                                    Of Applied Science For Women</option>
+                                <option value="Shaheed-sukhdev-college-of-business-studies">Shaheed Sukhdev College Of
+                                    Business Studies</option>
+                                <option value="Sharda-university">Sharda University</option>
+                                <option value="Sherubtse-college">Sherubtse College</option>
+                                <option value="Shivaji-college">Shivaji College</option>
+                                <option value="Shri-guru-nanak-dev-khalsa-college">Shri Guru Nanak Dev Khalsa College
+                                </option>
+                                <option value="Shri-guru-teg-bahadur-khalsa-college">Shri Guru Teg Bahadur Khalsa
+                                    College
+                                </option>
+                                <option value="Shri-lal-bahadur-shastri-rashtriya-sanskrit-vidyapeeth">Shri Lal Bahadur
+                                    Shastri Rashtriya Sanskrit Vidyapeeth</option>
+                                <option value="Shri-ram-college-of-commerce">Shri Ram College Of Commerce</option>
+                                <option value="Shri-ram-institute-of-teacher-education-sector">Shri Ram Institute Of
+                                    Teacher
+                                    Education Sector</option>
+                                <option value="Shyam-lal-college">Shyam Lal College</option>
+                                <option value="Shyam-lal-college-evening">Shyam Lal College Evening</option>
+                                <option value="Shyama-prasad-mukherjee-college">Shyama Prasad Mukherjee College</option>
+                                <option value="Sirifort-college-of-computer-technology-&-management">Sirifort College Of
+                                    Computer Technology & Management</option>
+                                <option value="Special-art-school-madhuban-chowk">Special Art School Madhuban Chowk
+                                </option>
+                                <option value="Sri-aurobindo-college">Sri Aurobindo College</option>
+                                <option value="Sri-aurobindo-college-evening">Sri Aurobindo College Evening</option>
+                                <option value="Sri-guru-gobind-singh-college-of-commerce">Sri Guru Gobind Singh College
+                                    Of
+                                    Commerce</option>
+                                <option
+                                    value="Sri-guru-tegh-bahadur-institute-of-management-and-information-technology">Sri
+                                    Guru Tegh Bahadur Institute Of Management And Information Technology</option>
+                                <option value="Sri-venkateswara-college">Sri Venkateswara College</option>
+                                <option value="St.-joan’s-college-of-vocational-studies">St. Joan’S College Of
+                                    Vocational
+                                    Studies</option>
+                                <option value="St.-lawrence-pharmacy-college">St. Lawrence Pharmacy College</option>
+                                <option value="St.-stephens-college">St. Stephens College</option>
+                                <option value="State-council-of-educational-research-and-training-defence-colony">State
+                                    Council Of Educational Research And Training Defence Colony</option>
+                                <option value="Subhash-chandra-bose-institute-of-business-management-shahdara">Subhash
+                                    Chandra Bose Institute Of Business Management Shahdara</option>
+                                <option value="Sumit-institute-of-education-and-research-palam">Sumit Institute Of
+                                    Education
+                                    And Research Palam</option>
+                                <option value="Sushant-school-of-art-and-architecture">Sushant School Of Art And
+                                    Architecture</option>
+                                <option value="Swami-shraddhanand-college">Swami Shraddhanand College</option>
+                                <option value="Syndicate-bank-staff-training-college-rajouri-garden">Syndicate Bank
+                                    Staff
+                                    Training College Rajouri Garden</option>
+                                <option value="Tarun-bharat-college-of-education-najafgarh">Tarun Bharat College Of
+                                    Education Najafgarh</option>
+                                <option value="Teacher-training-institute-for-special-education-okhla">Teacher Training
+                                    Institute For Special Education Okhla</option>
+                                <option value="Tecnia-institute-of-advanced-studies-madhuban-chowk">Tecnia Institute Of
+                                    Advanced Studies Madhuban Chowk</option>
+                                <option value="Tejasvini-institute-of-professional-studies-bhorgarh-alipur">Tejasvini
+                                    Institute Of Professional Studies Bhorgarh Alipur</option>
+                                <option value="Teri-university">Teri University</option>
+                                <option value="The-indian-institute-of-planning-and-management-iipm">The Indian
+                                    Institute Of
+                                    Planning And Management-Iipm</option>
+                                <option value="The-lakshmibai-college">The Lakshmibai College</option>
+                                <option value="Times-college-of-professional-studies">Times College Of Professional
+                                    Studies
+                                </option>
+                                <option value="Titiksha-institute-of-education">Titiksha Institute Of Education</option>
+                                <option value="Trinity-institute-of-professional-studies-sector-9">Trinity Institute Of
+                                    Professional Studies Sector 9</option>
+                                <option value="Trinity-institute-of-professional-studies-sector-9-dwarka">Trinity
+                                    Institute
+                                    Of Professional Studies Sector 9 Dwarka</option>
+                                <option value="Tvb-school-of-habitat-studies">Tvb School Of Habitat Studies</option>
+                                <option value="Unitedworld-school-of-business">Unitedworld School Of Business</option>
+                                <option value="University-college-of-medical-sciences">University College Of Medical
+                                    Sciences</option>
+                                <option value="University-of-delhi">University Of Delhi</option>
+                                <option value="University-of-media-arts">University Of Media Arts</option>
+                                <option value="University-school-of-management-studies-(usms)">University School Of
+                                    Management Studies (Usms)</option>
+                                <option value="University-school-of-mass-communication-(usmc)">University School Of Mass
+                                    Communication (Usmc)</option>
+                                <option value="Vallabhbhai-patel-chest-institute">Vallabhbhai Patel Chest Institute
+                                </option>
+                                <option value="Vardhman-mahavir-medical-college">Vardhman Mahavir Medical College
+                                </option>
+                                <option value="Vastu-kala-academy">Vastu Kala Academy</option>
+                                <option value="Vd-institute-of-technology-sultanpuri">Vd Institute Of Technology
+                                    Sultanpuri
+                                </option>
+                                <option value="Vips-pitampura">Vips Pitampura</option>
+                                <option value="Vivekananda-college">Vivekananda College</option>
+                                <option value="Vivekananda-institute-of-professional-studies-pitampura">Vivekananda
+                                    Institute Of Professional Studies Pitampura</option>
+                                <option value="Walk-in-school-of-business-management">Walk In School Of Business
+                                    Management
+                                </option>
+                                <option value="Williams-institute-of-management-&-technology">Williams Institute Of
+                                    Management & Technology</option>
+                                <option value="World-university-of-design">World University Of Design</option>
+                                <option value="Zakhir-husain-college-(evening)">Zakhir Husain College (Evening)</option>
+                                <option value="Zakir-husain-college-(evening)">Zakir Husain College (Evening)</option>
+                                <option value="Zakir-hussain-college">Zakir Hussain College</option>
+
+                            </select>
+                        </div>
+                        <div class="error-message" id="collegeError"></div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email <span>*</span></label>
+                        <input type="email" id="email" name="email" required>
+                        <div class="error-message" id="emailError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile">Mobile Number <span>*</span></label>
+                        <input type="tel" id="mobile" name="mobile" required pattern="[0-9]{10}"
+                            placeholder="10-digit number">
+                        <div class="error-message" id="mobileError"></div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="state">Which State Do You Belong To? <span>*</span></label>
+                        <select id="state" name="state" required>
+                            <option value="">Select State</option>
+                            <option value="Andhra Pradesh">Andhra Pradesh</option>
+                            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                            <option value="Assam">Assam</option>
+                            <option value="Bihar">Bihar</option>
+                            <option value="Chhattisgarh">Chhattisgarh</option>
+                            <option value="Goa">Goa</option>
+                            <option value="Gujarat">Gujarat</option>
+                            <option value="Haryana">Haryana</option>
+                            <option value="Himachal Pradesh">Himachal Pradesh</option>
+                            <option value="Jharkhand">Jharkhand</option>
+                            <option value="Karnataka">Karnataka</option>
+                            <option value="Kerala">Kerala</option>
+                            <option value="Madhya Pradesh">Madhya Pradesh</option>
+                            <option value="Maharashtra">Maharashtra</option>
+                            <option value="Manipur">Manipur</option>
+                            <option value="Meghalaya">Meghalaya</option>
+                            <option value="Mizoram">Mizoram</option>
+                            <option value="Nagaland">Nagaland</option>
+                            <option value="Odisha">Odisha</option>
+                            <option value="Punjab">Punjab</option>
+                            <option value="Rajasthan">Rajasthan</option>
+                            <option value="Sikkim">Sikkim</option>
+                            <option value="Tamil Nadu">Tamil Nadu</option>
+                            <option value="Telangana">Telangana</option>
+                            <option value="Tripura">Tripura</option>
+                            <option value="Uttar Pradesh">Uttar Pradesh</option>
+                            <option value="Uttarakhand">Uttarakhand</option>
+                            <option value="West Bengal">West Bengal</option>
+                            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                            <option value="Chandigarh">Chandigarh</option>
+                            <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+                            <option value="Daman and Diu">Daman and Diu</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                            <option value="Ladakh">Ladakh</option>
+                            <option value="Lakshadweep">Lakshadweep</option>
+                            <option value="Puducherry">Puducherry</option>
+                        </select>
+                        <div class="error-message" id="stateError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="previousVimarsh">Were You With Us Earlier in Vimarsh? <span>*</span></label>
+                        <select id="previousVimarsh" name="previousVimarsh" required>
+                            <option value="">Select Option</option>
+                            <option value="Vimarsh'17, IIMC">Vimarsh'17, IIMC</option>
+                            <option value="Vimarsh'18, AIC">Vimarsh'18, AIC</option>
+                            <option value="Vimarsh'19, UoD">Vimarsh'19, UoD</option>
+                            <option value="Vimarsh'22, UoD">Vimarsh'22, UoD</option>
+                            <option value="Vimarsh'23, Satyawati College">Vimarsh'23, Satyawati College</option>
+                            <option value="Vimarsh'24, Shyama-prasad-mukherjee-college">Vimarsh'24,
+                                Shyama-prasad-mukherjee-college</option>
+                            <option value="It's going to be my 1st Vimarsh">It's going to be my 1st Vimarsh</option>
+                        </select>
+                        <div class="error-message" id="previousVimarshError"></div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="howYouKnow">How Did You Get to Know About Vimarsh? <span>*</span></label>
+                        <select id="howYouKnow" name="howYouKnow" required>
+                            <option value="">Select Option</option>
+                            <option value="Faculty">Faculty</option>
+                            <option value="Friends">Friends</option>
+                            <option value="Newspaper/Radio">Newspaper/Radio</option>
+                            <option value="Poster">Poster</option>
+                            <option value="Social Media">Social Media</option>
+                            <option value="Website">Website</option>
+                        </select>
+                        <div class="error-message" id="howYouKnowError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentCategory">Registration Category <span>*</span></label>
+                        <select id="paymentCategory" name="paymentCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="Student" data-amount="300">Student - ₹300</option>
+                            <option value="Teacher" data-amount="1000">Teacher - ₹1000</option>
+                            <option value="Other" data-amount="1000">Other - ₹1000</option>
+                        </select>
+                        <div class="error-message" id="paymentCategoryError"></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" id="submitBtn" disabled>
+                    <i class="fas fa-credit-card"></i> Proceed to Payment
+                </button>
+
+            </form>
+
+            <!-- Loading Spinner -->
+            <div class="loading-spinner" id="loadingSpinner" style="display: none;">
+                <i class="fas fa-spinner"></i>
+                <p>Processing your registration...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <i class="fas fa-check-circle"></i>
+            <h2>Registration Successful!</h2>
+            <p>Your registration has been completed successfully. Please check your email for the confirmation and QR
+                code.</p>
+            <button class="btn-primary" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content error">
+            <i class="fas fa-times-circle"></i>
+            <h2 id="errorTitle">Something went wrong</h2>
+            <p id="errorMessage">An unexpected error occurred. Please try again.</p>
+            <button class="btn-primary" onclick="closeErrorModal()">Close</button>
+        </div>
+    </div>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script>
+        // Configuration - Replace with your actual values
+        const CONFIG = {
+            APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwAgAm80kX2vARQC4aeaFyZbmBquPTsVYaIyRReEmHi4N4XEFUOg3zQvENiB01uKE4p/exec', // Replace with your Apps Script Web App URL
+            RAZORPAY_KEY_ID: 'rzp_live_RCnlaKffG5VeY0', // Replace with your Razorpay Key ID
+            REGISTRATION_AMOUNT: 30000 // Amount in paise (₹300 = 30000 paise) - default student amount
+        };
+
+        // Handle payment category selection and fee display
+        const paymentCategorySelect = document.getElementById('paymentCategory');
+        const feeAmountDisplay = document.getElementById('feeAmount');
+
+        paymentCategorySelect.addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            if (selectedOption.value) {
+                const amount = selectedOption.getAttribute('data-amount');
+                feeAmountDisplay.textContent = `₹${amount}`;
+                CONFIG.REGISTRATION_AMOUNT = parseInt(amount) * 100; // Convert to paise
+
+                // Debug log
+                console.log('Payment amount updated:', CONFIG.REGISTRATION_AMOUNT, 'paise (₹' + amount + ')');
+
+                // Add pulse animation
+                feeAmountDisplay.classList.add('updated');
+                setTimeout(() => {
+                    feeAmountDisplay.classList.remove('updated');
+                }, 500);
+            } else {
+                feeAmountDisplay.textContent = 'Select a category to see fee';
+                CONFIG.REGISTRATION_AMOUNT = 30000; // Default student amount
+            }
+        });
+
+        // Grab the form and submit button
+        const form = document.querySelector("form");
+        const submitBtn = document.getElementById("submitBtn");
+
+        // Run validation on every input change
+        form.addEventListener("input", () => {
+            submitBtn.disabled = !validateForm();
+        });
+
+        // Initialize submit button state on load (handles autofill cases)
+        submitBtn.disabled = !validateForm();
+
+        function validateForm() {
+            let isValid = true;
+
+            // Reset all error messages
+            document.querySelectorAll('.error-message').forEach(msg => msg.style.display = 'none');
+
+            // Validate First Name
+            const firstName = document.getElementById('firstName').value.trim();
+            if (!firstName) {
+                showError('firstNameError', 'First name is required');
+                isValid = false;
+            } else if (!/^[A-Z][a-zA-Z\s]*$/.test(firstName)) {
+                showError('firstNameError', 'First name must start with a capital letter and contain only letters');
+                isValid = false;
+            }
+
+            // Validate Last Name
+            const lastName = document.getElementById('lastName').value.trim();
+            if (!lastName) {
+                showError('lastNameError', 'Last name is required');
+                isValid = false;
+            } else if (!/^[A-Z][a-zA-Z\s]*$/.test(lastName)) {
+                showError('lastNameError', 'Last name must start with a capital letter and contain only letters');
+                isValid = false;
+            }
+
+            // Validate Age
+            const age = document.getElementById('age').value;
+            if (!age) {
+                showError('ageError', 'Please select your age group');
+                isValid = false;
+            }
+
+            // Validate Blood Group
+            const bloodGroup = document.getElementById('bloodGroup').value;
+            if (!bloodGroup) {
+                showError('bloodGroupError', 'Please select your blood group');
+                isValid = false;
+            }
+
+            // Validate College
+            const college = document.getElementById('college').value;
+            if (!college) {
+                showError('collegeError', 'Please select your college');
+                isValid = false;
+            }
+
+            // Validate Email
+            const email = document.getElementById('email').value.trim();
+            const emailRegex = /^[a-z][a-z0-9._%+-]*@[a-z0-9.-]+\.[a-z]{2,}$/;
+            if (!email) {
+                showError('emailError', 'Email is required');
+                isValid = false;
+            } else if (!emailRegex.test(email)) {
+                showError('emailError', 'Email must start with a lowercase letter and be valid');
+                isValid = false;
+            }
+
+            // Validate Mobile Number
+            const mobile = document.getElementById('mobile').value.trim();
+            if (!mobile) {
+                showError('mobileError', 'Mobile number is required');
+                isValid = false;
+            } else if (!/^[0-9]{10}$/.test(mobile)) {
+                showError('mobileError', 'Please enter a valid 10-digit number');
+                isValid = false;
+            }
+
+            // Validate State
+            const state = document.getElementById('state').value;
+            if (!state) {
+                showError('stateError', 'Please select your state');
+                isValid = false;
+            }
+
+            // Validate Previous Vimarsh Participation
+            const previousVimarsh = document.getElementById('previousVimarsh').value;
+            if (!previousVimarsh) {
+                showError('previousVimarshError', 'Please select an option');
+                isValid = false;
+            }
+
+            // Validate How You Know About Vimarsh
+            const howYouKnow = document.getElementById('howYouKnow').value;
+            if (!howYouKnow) {
+                showError('howYouKnowError', 'Please select how you got to know about Vimarsh');
+                isValid = false;
+            }
+
+            // Validate Payment Category
+            const paymentCategory = document.getElementById('paymentCategory').value;
+            if (!paymentCategory) {
+                showError('paymentCategoryError', 'Please select your registration category');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        // Check if email is already registered
+        async function checkEmailRegistration(email) {
+            try {
+                const response = await fetch(CONFIG.APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        action: 'checkEmail',
+                        email: email
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const result = await response.json();
+                return result.data || { alreadyRegistered: false, paymentStatus: null };
+            } catch (error) {
+                console.error('Error checking email registration:', error);
+                return { alreadyRegistered: false, paymentStatus: null };
+            }
+        }
+
+
+
+        // Collect form data
+        function collectFormData() {
+            return {
+                firstName: document.getElementById('firstName').value.trim(),
+                lastName: document.getElementById('lastName').value.trim(),
+                age: document.getElementById('age').value,
+                bloodGroup: document.getElementById('bloodGroup').value,
+                college: document.getElementById('college').value,
+                email: document.getElementById('email').value.trim(),
+                mobile: document.getElementById('mobile').value.trim(),
+                state: document.getElementById('state').value,
+                previousVimarsh: document.getElementById('previousVimarsh').value,
+                howYouKnow: document.getElementById('howYouKnow').value,
+                paymentCategory: document.getElementById('paymentCategory').value,
+                timestamp: new Date().toISOString()
+            };
+        }
+
+        // Show/hide loading spinner
+        function toggleLoading(show) {
+            document.getElementById('loadingSpinner').style.display = show ? 'block' : 'none';
+            document.getElementById('registrationForm').style.display = show ? 'none' : 'block';
+            document.getElementById('submitBtn').disabled = show;
+        }
+
+        // Initialize Razorpay payment
+        function initializePayment(orderId, formData) {
+            const options = {
+                key: CONFIG.RAZORPAY_KEY_ID,
+                amount: CONFIG.REGISTRATION_AMOUNT,
+                currency: 'INR',
+                name: 'Vimarsh 2025',
+                description: 'Vimarsh 2025 Registration Fee',
+                order_id: orderId,
+                prefill: {
+                    name: `${formData.firstName} ${formData.lastName}`,
+                    email: formData.email,
+                    contact: formData.mobile
+                },
+                theme: {
+                    color: '#667eea'
+                },
+                handler: function (response) {
+                    // Payment successful
+                    handlePaymentSuccess(response, formData);
+                },
+                modal: {
+                    ondismiss: function () {
+                        toggleLoading(false);
+                        showErrorModal('Payment was cancelled before completion. No amount has been charged.');
+                    }
+                }
+            };
+
+            const rzp = new Razorpay(options);
+            rzp.on('payment.failed', function (response) {
+                toggleLoading(false);
+                console.error('Payment failed:', response.error);
+                showErrorModal('Payment failed. Please try again or use a different payment method.');
+            });
+
+            rzp.open();
+        }
+
+        // Handle successful payment
+        async function handlePaymentSuccess(paymentResponse, formData) {
+            try {
+                toggleLoading(true);
+
+                // Send payment confirmation to Apps Script
+                const confirmBody = new URLSearchParams();
+                confirmBody.append('action', 'confirmPayment');
+                Object.entries(formData).forEach(([k, v]) => confirmBody.append(k, v));
+                confirmBody.append('paymentId', paymentResponse.razorpay_payment_id);
+                confirmBody.append('orderId', paymentResponse.razorpay_order_id);
+                confirmBody.append('signature', paymentResponse.razorpay_signature);
+
+                const response = await fetch(CONFIG.APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: confirmBody
+                });
+
+                // Show success message
+                toggleLoading(false);
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('registrationForm').reset();
+
+                // Show success modal
+                document.getElementById('successModal').style.display = 'block';
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            } catch (error) {
+                console.error('Error confirming payment:', error);
+                toggleLoading(false);
+                showErrorModal('Payment succeeded, but we could not confirm your registration automatically. You should receive the confirmation email shortly. If not, please contact support.', 'Confirmation Pending');
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+
+        function showErrorModal(message, title = 'Something went wrong') {
+            document.getElementById('errorTitle').textContent = title;
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorModal').style.display = 'block';
+        }
+        function closeErrorModal() {
+            document.getElementById('errorModal').style.display = 'none';
+        }
+
+        // Form submission handler
+        document.getElementById('registrationForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // Validate form
+            if (!validateForm()) {
+                return;
+            }
+
+            // Check if Razorpay is loaded
+            if (typeof Razorpay === 'undefined') {
+                showErrorModal('Payment system is not loaded. Please refresh the page and try again.');
+                return;
+            }
+
+            // Check configuration
+            if (CONFIG.APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL' || CONFIG.RAZORPAY_KEY_ID === 'YOUR_RAZORPAY_KEY_ID') {
+                showErrorModal('System configuration pending. Please contact the administrator.');
+                return;
+            }
+
+            toggleLoading(true);
+
+            try {
+                const formData = collectFormData();
+
+                // Check if email is already registered with successful payment
+                const emailCheck = await checkEmailRegistration(formData.email);
+                if (emailCheck.alreadyRegistered && emailCheck.paymentStatus === 'Completed') {
+                    toggleLoading(false);
+                    showErrorModal('This email is already registered with a successful payment. Please use a different email address.');
+                    return;
+                }
+
+                // Create order via Apps Script
+                const createBody = new URLSearchParams();
+                createBody.append('action', 'createOrder');
+                Object.entries(formData).forEach(([k, v]) => createBody.append(k, v));
+
+                const response = await fetch(CONFIG.APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: createBody
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                let result;
+                try {
+                    result = await response.json();
+                } catch (e) {
+                    throw new Error('Invalid server response.');
+                }
+
+                if (result.success && result.data && result.data.orderId) {
+                    // Initialize Razorpay payment
+                    toggleLoading(false);
+                    initializePayment(result.data.orderId, formData);
+                } else {
+                    throw new Error(result.message || 'Failed to create order');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                toggleLoading(false);
+                showErrorModal('An error occurred while processing your registration. Please try again later.');
+            }
+        });
+
+        // Prevent form resubmission on page refresh
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
+
+
+</body>
+
+</html>

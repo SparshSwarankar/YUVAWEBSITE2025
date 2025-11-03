@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who is Who | YUVA India</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="whoiswho.css">
+    <link rel="shortcut icon" href="/Images/YUVA logo.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+    <!-- ===== Website Header ===== -->
+    <header class="site-header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="/Images/YUVA logo.png" alt="YUVA Logo">
+                <h1>YUVA</h1>
+            </div>
+            <div class="page-title">Who is Who</div>
+        </div>
+    </header>
+
+    <!-- ===== Sidebar ===== -->
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <button class="hamburger-menu" aria-label="Toggle Menu">
+        <span class="bar"></span>
+    </button>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <h2>YUVA</h2>
+            <a href="/home.html">Home</a>
+            <div class="dropdown">
+                <a class="dropdown-btn">About ▾</a>
+                <div class="dropdown-content">
+                    <a href="/About/AboutUs.html">About Us</a>
+                    <a href="/About/whoiswho.html">Who is Who</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Our Initiatives ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Our.Initiative/vimarsh2025.html">Vimarsh</a>
+                    <a href="/Our.Initiative/Bharatparv.html">Bharat Parv</a>
+                    <a href="/Our.Initiative/ritam.html">Ritam</a>
+                    <a href="/Our.Initiative/ims.html">Indraprasth Media Sambad</a>
+                    <a href="/Our.Initiative/Samarpan.html">Samarpan</a>
+                    <a href="/Our.Initiative/NatyaTarang.html">Natya Tarang</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Our Verticals ▾</a>
+                <div class="dropdown-content">
+                    <a href="/OurVerticals/MedicoYuva.html">Medico YUVA</a>
+                    <a href="/OurVerticals/MediaManthan.html">Media Manthan</a>
+                    <a href="/OurVerticals/NitiManthan.html">Nidhi Manthan</a>
+                    <a href="/OurVerticals/TechYuva.html">Tech YUVA</a>
+                    <a href="/OurVerticals/YDL.html">YUVA Distance Learning</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Our Activities ▾</a>
+                <div class="dropdown-content">
+                    <a href="/our activity/Activities.html">Activities</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Media ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Media/DigitalMedia.html">In Digital Media</a>
+                    <a href="/Media/News.html">In the News</a>
+                    <a href="/Media/Video.html">Events Recordings</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Events ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Events/Upcoming.html">Upcoming Events</a>
+                    <a href="/Events/Past.html">Past Events</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Gallery ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Gallary/photo.html">Photo Gallery</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Blog ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Blog/CC.html">Campus Chronicles</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Get Involved ▾</a>
+                <div class="dropdown-content">
+                    <a href="/GetInvolve/Fellowship.html">Fellowship</a>
+                    <a href="/GetInvolve/internship.html">Internship</a>
+                    <a href="/GetInvolve/Volunteer.html">Volunteer</a>
+                    <a href="/GetInvolve/YuvaAlumini.html">YUVA Alumni</a>
+                    <a href="/GetInvolve/UnitRegistration.html">Unit Registration</a>
+                </div>
+            </div>
+
+            <a href="/Donate/Donate.html">Donate</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <section class="executive-team-section">
+            <div class="executive-team-container">
+                <h2 class="executive-team-title">YUVA Delhi Executive Team</h2>
+                <div id="executive-grid" class="executive-grid">
+                </div>
+                <div id="executive-loading" class="loading-indicator" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Loading Team...</p>
+                </div>
+                <div id="executive-error" class="state-message" style="display: none;"></div>
+            </div>
+        </section>
+
+        <section class="page-intro">
+            <h2>Explore Our Structure</h2>
+            <p>Meet the leadership and navigate through Zones, Colleges, and Members.</p>
+        </section>
+
+        <nav class="navigation-bar">
+            <button id="back-button" class="btn-back" style="display: none;">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <div id="breadcrumbs" class="breadcrumbs">
+            </div>
+        </nav>
+
+        <div class="level-container-wrapper">
+            <div id="level-zones" class="level-container active">
+                <h3 class="level-title">Select a Zone</h3>
+                <div id="zones-grid" class="card-grid"></div>
+            </div>
+            <div id="level-colleges" class="level-container">
+                <h3 class="level-title">Select a College</h3>
+                <div id="colleges-grid" class="card-grid"></div>
+            </div>
+            <div id="level-members" class="level-container">
+                <h3 class="level-title">Team Members</h3>
+                <div id="members-grid" class="card-grid member-grid"></div>
+            </div>
+            <div id="loading-indicator" class="loading-indicator" style="display: none;">
+                <div class="spinner"></div>
+                <p>Loading...</p>
+            </div>
+            <div id="state-message" class="state-message" style="display: none;"></div>
+        </div>
+
+    </div>
+
+    <div class="modal-backdrop" id="member-modal-backdrop" style="display: none;">
+        <div class="modal-content" id="member-modal-content"></div>
+    </div>
+
+    <script src="/script.js"></script>
+    <script src="whoiswho.js" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>YUVA India - Donate</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/Mobile.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="/Images/YUVA logo.png" type="image/x-icon">
+    <meta name="msvalidate.01" content="762998E140200B5AFB94E40845B01499" />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .tax-exemption-fields {
+            display: none;
+            /* Hidden by default */
+            padding: 16px;
+            background: var(--bg-subtle, #f5f5f4);
+            border-radius: var(--radius-lg, 0.75rem);
+            margin-top: 16px;
+        }
+
+        .terms-checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 24px;
+            cursor: pointer;
+        }
+
+        .terms-checkbox-container label {
+            font-size: 14px;
+            color: var(--text-secondary, #475569);
+            cursor: pointer;
+        }
+
+        .terms-checkbox-container input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="/Images/YUVA logo.png" alt="YUVA Logo">
+                <h1>YUVA Delhi</h1>
+            </div>
+            <div class="page-title">Donate Us</div>
+        </div>
+    </header>
+
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <button class="hamburger-menu" aria-label="Toggle Menu">
+        <span class="bar"></span>
+    </button>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <h2>YUVA</h2>
+            <a href="/home.html">Home</a>
+            <div class="dropdown">
+                <a class="dropdown-btn">About ▾</a>
+                <div class="dropdown-content">
+                    <a href="/About/AboutUs.html">About Us</a>
+                    <a href="/About/whoiswho.html">Who is Who</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Our Initiatives ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Our.Initiative/vimarsh2025.html">Vimarsh</a>
+                    <a href="/Our.Initiative/Bharatparv.html">Bharat Parv</a>
+                    <a href="/Our.Initiative/ritam.html">Ritam</a>
+                    <a href="/Our.Initiative/ims.html">Indraprasth Media Sambad</a>
+                    <a href="/Our.Initiative/Samarpan.html">Samarpan</a>
+                    <a href="/Our.Initiative/NatyaTarang.html">Natya Tarang</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Our Verticals ▾</a>
+                <div class="dropdown-content">
+                    <a href="/OurVerticals/MedicoYuva.html">Medico YUVA</a>
+                    <a href="/OurVerticals/MediaManthan.html">Media Manthan</a>
+                    <a href="/OurVerticals/NitiManthan.html">Nidhi Manthan</a>
+                    <a href="/OurVerticals/TechYuva.html">Tech YUVA</a>
+                    <a href="/OurVerticals/YDL.html">YUVA Distance Learning</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Our Activities ▾</a>
+                <div class="dropdown-content">
+                    <a href="/our activity/Activities.html">Activities</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Media ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Media/DigitalMedia.html">In Digital Media</a>
+                    <a href="/Media/News.html">In the News</a>
+                    <a href="/Media/Video.html">Events Recordings</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Events ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Events/Upcoming.html">Upcoming Events</a>
+                    <a href="/Events/Past.html">Past Events</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Gallery ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Gallary/photo.html">Photo Gallery</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Blog ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Blog/CC.html">Campus Chronicles</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Get Involved ▾</a>
+                <div class="dropdown-content">
+                    <a href="/GetInvolve/Fellowship.html">Fellowship</a>
+                    <a href="/GetInvolve/internship.html">Internship</a>
+                    <a href="/GetInvolve/Volunteer.html">Volunteer</a>
+                    <a href="/GetInvolve/YuvaAlumini.html">YUVA Alumni</a>
+                    <a href="/GetInvolve/UnitRegistration.html">Unit Registration</a>
+                </div>
+            </div>
+
+            <a href="/Donate/Donate.html">Donate</a>
+        </div>
+    </div>
+
+    <div id="flash-container" class="flash-container"></div>
+
+    <div class="main">
+        <div class="donate-page">
+            <div class="donate-hero">
+                <div class="hero-background">
+                </div>
+
+                <svg class="hero-chakra-bg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                    role="img">
+                    <circle cx="50" cy="50" r="46" stroke-width="2" fill="none" />
+                    <circle cx="50" cy="50" r="1.2" stroke-width="2" fill="none" />
+                    <g>
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(15 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(30 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(45 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(60 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(75 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(90 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(105 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(120 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(135 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(150 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(165 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(180 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(195 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(210 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(225 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(240 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(255 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(270 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(285 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(300 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(315 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(330 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(345 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                </svg>
+
+                <div class="donate-hero-content">
+                    <div class="hero-badge">
+                        <i class="fas fa-heart"></i>
+                        <span>Make a Difference</span>
+                    </div>
+                    <h1 class="hero-title">
+                        <span class="hero-title-line">Empower the</span>
+                        <span class="hero-title-line hero-title-accent">Future of India</span>
+                    </h1>
+                    <p class="hero-description">
+                        Your donation helps us create opportunities for thousands of young minds across India.
+                        Together, we're building a brighter tomorrow through education, innovation, and community
+                        development.
+                    </p>
+
+                    <div class="donate-impact">
+                        <div class="donate-impact-item">
+                            <div class="impact-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="impact-content">
+                                <span class="donate-impact-number">10,000+</span>
+                                <span class="donate-impact-label">Students Helped</span>
+                            </div>
+                        </div>
+                        <div class="donate-impact-item">
+                            <div class="impact-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="impact-content">
+                                <span class="donate-impact-number">500+</span>
+                                <span class="donate-impact-label">Events Organized</span>
+                            </div>
+                        </div>
+                        <div class="donate-impact-item">
+                            <div class="impact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="impact-content">
+                                <span class="donate-impact-number">50+</span>
+                                <span class="donate-impact-label">Cities Covered</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="donation-form-container">
+                <div class="form-card">
+                    <div class="form-header">
+                        <div class="form-icon">
+                            <i class="fas fa-donate"></i>
+                        </div>
+                        <h2>Support Our Mission</h2>
+                        <p>Choose your donation amount and help us continue our mission</p>
+                    </div>
+
+                    <form id="donateForm" class="donation-form">
+
+                        <div class="form-section">
+                            <label class="section-label">
+                                <i class="fas fa-calendar-check"></i>
+                                Donation Type
+                            </label>
+                            <div class="donation-type-selector">
+                                <div class="type-option">
+                                    <input type="radio" id="oneTime" name="donationType" value="one-time" checked>
+                                    <label for="oneTime" class="type-label">
+                                        <div class="type-icon">
+                                            <i class="fas fa-gift"></i>
+                                        </div>
+                                        <div class="type-content">
+                                            <span class="type-title">One-time Donation</span>
+                                            <span class="type-subtitle">Make a single contribution</span>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="type-option">
+                                    <input type="radio" id="recurring" name="donationType" value="recurring">
+                                    <label for="recurring" class="type-label">
+                                        <div class="type-icon">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </div>
+                                        <div class="type-content">
+                                            <span class="type-title">Monthly Donation</span>
+                                            <span class="type-subtitle">Support us every month</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <label class="section-label">
+                                <i class="fas fa-rupee-sign"></i>
+                                Select Amount
+                            </label>
+                            <div class="amount-selector">
+                                <div class="amount-grid">
+                                    <div class="amount-option">
+                                        <input type="radio" id="amount500" name="amount" value="500">
+                                        <label for="amount500" class="amount-label">
+                                            <span class="amount-currency">₹</span>
+                                            <span class="amount-value">500</span>
+                                        </label>
+                                    </div>
+                                    <div class="amount-option">
+                                        <input type="radio" id="amount1000" name="amount" value="1000">
+                                        <label for="amount1000" class="amount-label">
+                                            <span class="amount-currency">₹</span>
+                                            <span class="amount-value">1,000</span>
+                                        </label>
+                                    </div>
+                                    <div class="amount-option">
+                                        <input type="radio" id="amount2500" name="amount" value="2500">
+                                        <label for="amount2500" class="amount-label">
+                                            <span class="amount-currency">₹</span>
+                                            <span class="amount-value">2,500</span>
+                                        </label>
+                                    </div>
+                                    <div class="amount-option">
+                                        <input type="radio" id="amount5000" name="amount" value="5000">
+                                        <label for="amount5000" class="amount-label">
+                                            <span class="amount-currency">₹</span>
+                                            <span class="amount-value">5,000</span>
+                                        </label>
+                                    </div>
+                                    <div class="amount-option">
+                                        <input type="radio" id="amount10000" name="amount" value="10000">
+                                        <label for="amount10000" class="amount-label">
+                                            <span class="amount-currency">₹</span>
+                                            <span class="amount-value">10,000</span>
+                                        </label>
+                                    </div>
+                                    <div class="amount-option">
+                                        <input type="radio" id="custom" name="amount" value="custom">
+                                        <label for="custom" class="amount-label custom-label">
+                                            <i class="fas fa-edit"></i>
+                                            <span>Custom</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="custom-amount-container">
+                                    <div class="custom-amount-input-wrapper">
+                                        <span class="currency-symbol">₹</span>
+                                        <input type="number" id="customAmount" class="custom-amount-input"
+                                            placeholder="Enter amount" min="1" step="1">
+                                    </div>
+                                </div>
+
+                                <div id="amountDisplay" class="amount-display"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <label class="section-label">
+                                <i class="fas fa-user"></i>
+                                Personal Information
+                            </label>
+                            <div class="donor-info-grid">
+
+                                <div class="form-group">
+                                    <label for="firstName" class="form-label">
+                                        <i class="fas fa-user"></i>
+                                        1. First Name *
+                                    </label>
+                                    <input type="text" id="firstName" name="firstName" class="form-input"
+                                        placeholder="Enter your first name" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="surname" class="form-label">
+                                        <i class="fas fa-user"></i>
+                                        2. Surname *
+                                    </label>
+                                    <input type="text" id="surname" name="surname" class="form-input"
+                                        placeholder="Enter your surname" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="donorEmail" class="form-label">
+                                        <i class="fas fa-envelope"></i>
+                                        3. E-mail *
+                                    </label>
+                                    <input type="email" id="donorEmail" name="donorEmail" class="form-input"
+                                        placeholder="Enter your email address" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="donorPhone" class="form-label">
+                                        <i class="fas fa-phone"></i>
+                                        Mobile Number *
+                                    </label>
+                                    <input type="tel" id="donorPhone" name="donorPhone" class="form-input"
+                                        placeholder="Enter your mobile number" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="donorAddress" class="form-label">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        5. Address *
+                                    </label>
+                                    <textarea id="donorAddress" name="donorAddress" class="form-input"
+                                        placeholder="Enter your full address" required rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <label class="section-label">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                                Tax Exemption
+                            </label>
+                            <div class="form-group">
+                                <label class="terms-checkbox-container" for="wants80G">
+                                    <input type="checkbox" id="wants80G" name="wants80G">
+                                    <span>
+                                        4. Do you want u/s 80G/12A/10 BE certificate for IT Exemption?
+                                    </span>
+                                </label>
+                                <p
+                                    style="font-size: 13px; color: var(--text-muted); margin-top: 8px; padding-left: 30px;">
+                                    *Please tick this box if you are a taxpayer in India and would like to avail tax
+                                    exemption
+                                    under 10 BE. To avail this, you need to provide your PAN/Aadhaar number
+                                </p>
+                            </div>
+
+                            <div class="tax-exemption-fields" id="tax-exemption-fields">
+                                <div class="donor-info-grid">
+                                    <div class="form-group">
+                                        <label for="aadhaarNumber" class="form-label">
+                                            <i class="fas fa-id-card"></i>
+                                            6. Aadhaar Number *
+                                        </label>
+                                        <input type="text" id="aadhaarNumber" name="aadhaarNumber" class="form-input"
+                                            placeholder="Enter your 12-digit Aadhaar number" maxlength="12">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="panNumber" class="form-label">
+                                            <i class="fas fa-id-card"></i>
+                                            7. PAN Number * </label>
+                                        <input type="text" id="panNumber" name="panNumber" class="form-input"
+                                            placeholder="Enter your 10-digit PAN" maxlength="10"
+                                            style="text-transform: uppercase;" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="terms-checkbox-container" for="agreeToTerms">
+                                <input type="checkbox" id="agreeToTerms" name="agreeToTerms">
+                                <span>
+                                    I Agree and accept that Donations are not refundable under any circumstances.
+                                </span>
+                            </label>
+                        </div>
+
+                        <button type="submit" id="donateButton" class="donate-button" disabled>
+                            <span class="button-content">
+                                <i class="fas fa-heart"></i>
+                                <span class="button-text">Continue to Payment</span>
+                            </span>
+                            <div class="button-loading">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <span>Processing...</span>
+                            </div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script src="/script.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

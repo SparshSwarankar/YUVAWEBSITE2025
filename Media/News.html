@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YUVA India - News</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/Mobile.css">
+    <link rel="stylesheet" href="media-styles.css">
+    <link rel="shortcut icon" href="/Images/YUVA logo.png" type="image/x-icon">
+    <!-- ✅ Bing Webmaster Verification -->
+    <meta name="msvalidate.01" content="762998E140200B5AFB94E40845B01499" />
+
+    <!-- Modern Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="/Images/YUVA logo.png" alt="YUVA Logo">
+                <h1>YUVA</h1>
+            </div>
+            <div class="page-title">In News</div>
+        </div>
+    </header>
+
+
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <button class="hamburger-menu" aria-label="Toggle Menu">
+        <span class="bar"></span>
+    </button>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <h2>YUVA</h2>
+            <a href="/home.html">Home</a>
+            <div class="dropdown">
+                <a class="dropdown-btn">About ▾</a>
+                <div class="dropdown-content">
+                    <a href="/About/AboutUs.html">About Us</a>
+                    <a href="/About/whoiswho.html">Who is Who</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Our Initiatives ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Our.Initiative/vimarsh2025.html">Vimarsh</a>
+                    <a href="/Our.Initiative/Bharatparv.html">Bharat Parv</a>
+                    <a href="/Our.Initiative/ritam.html">Ritam</a>
+                    <a href="/Our.Initiative/ims.html">Indraprasth Media Sambad</a>
+                    <a href="/Our.Initiative/Samarpan.html">Samarpan</a>
+                    <a href="/Our.Initiative/NatyaTarang.html">Natya Tarang</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Our Initiatives ▾</a>
+                <div class="dropdown-content">
+                    <!-- <a href="/Our.Initiative/vimarsh2025.html">Vimarsh</a> -->
+                    <a href="/coming-soon.html">Vimarsh</a>
+                    <!-- <a href="/Our.Initiative/Bharatparv.html">Bharat Parv</a> -->
+                    <a href="/coming-soon.html">Bharat Parv</a>
+                    <!-- <a href="/Our.Initiative/ritam.html">Ritam</a> -->
+                    <a href="/coming-soon.html">Ritam</a>
+                    <!-- <a href="/Our.Initiative/ims.html">Indraprasth Media Sambad</a> -->
+                    <a href="/coming-soon.html">Indraprasth Media Sambad</a>
+                    <!-- <a href="/Our.Initiative/Samarpan.html">Samarpan</a> -->
+                    <a href="/coming-soon.html">Samarpan</a>
+                    <!-- <a href="/Our.Initiative/NatyaTarang.html">Natya Tarang</a> -->
+                    <a href="/coming-soon.html">Natya Tarang</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Our Activities ▾</a>
+                <div class="dropdown-content">
+                    <a href="/our activity/Activities.html">Activities</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Media ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Media/DigitalMedia.html">In Digital Media</a>
+                    <a href="/Media/News.html">In the News</a>
+                    <a href="/Media/Video.html">Events Recordings</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Events ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Events/Upcoming.html">Upcoming Events</a>
+                    <a href="/Events/Past.html">Past Events</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Gallery ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Gallary/photo.html">Photo Gallery</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Blog ▾</a>
+                <div class="dropdown-content">
+                    <a href="/Blog/CC.html">Campus Chronicles</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-btn">Get Involved ▾</a>
+                <div class="dropdown-content">
+                    <a href="/GetInvolve/Fellowship.html">Fellowship</a>
+                    <a href="/GetInvolve/internship.html">Internship</a>
+                    <a href="/GetInvolve/Volunteer.html">Volunteer</a>
+                    <a href="/GetInvolve/YuvaAlumini.html">YUVA Alumni</a>
+                    <a href="/GetInvolve/UnitRegistration.html">Unit Registration</a>
+                </div>
+            </div>
+
+            <a href="/Donate/Donate.html">Donate</a>
+        </div>
+    </div>
+
+
+    <div class="main">
+        <div class="media-page">
+            <!-- Hero Section -->
+            <div class="media-hero">
+                <div class="hero-background">
+                    <div class="hero-particles"></div>
+                </div>
+                <svg class="hero-chakra-bg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                    role="img">
+                    <circle cx="50" cy="50" r="46" stroke-width="2" fill="none" />
+                    <circle cx="50" cy="50" r="1.2" stroke-width="2" fill="none" />
+                    <g>
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(15 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(30 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(45 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(60 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(75 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(90 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(105 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(120 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(135 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(150 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(165 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(180 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(195 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(210 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(225 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(240 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(255 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(270 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(285 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(300 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(315 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(330 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                    <g transform="rotate(345 50 50)">
+                        <path d="M50 12 V 48" stroke-width="2" />
+                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                    </g>
+                </svg>
+                <div class="media-hero-content">
+                    <div class="hero-badge">
+                        <i class="fas fa-newspaper"></i>
+                        <span>Latest News</span>
+                    </div>
+                    <h1 class="hero-title">
+                        <span class="hero-title-line">YUVA in the</span>
+                        <span class="hero-title-line hero-title-accent">News</span>
+                    </h1>
+                    <p class="hero-description">
+                        Stay informed about our latest achievements, media coverage, and recognition
+                        from leading publications and news outlets across India.
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- Content Section -->
+            <div class="content-section">
+                <div class="content-card">
+                    <div class="newspaper-gallery-container">
+                        <div class="section-header">
+                            <h2 class="section-title">From the Headlines</h2>
+                            <p class="section-subtitle">A snapshot of our presence in the press. Click any cutting to
+                                enlarge.</p>
+                        </div>
+                        <div class="newspaper-grid">
+                            <div class="newspaper-cutting tall"
+                                data-title="Youth Conclave 'Vimarsh' to be Held from Oct 13-15 at Satyawati College">
+                                <img src="/Images/Newspaper/WhatsApp-Image-2023-11-08-at-1.31.58-AM.jpeg"
+                                    alt="Newspaper clipping announcing the Vimarsh Youth Conclave">
+                            </div>
+                            <div class="newspaper-cutting"
+                                data-title="Youth are the Representative Signature of Amritkaal: DU Vice-Chancellor at Vimarsh Conclave">
+                                <img src="/Images/Newspaper/WhatsApp-Image-2023-11-08-at-10.04.36-AM.jpeg"
+                                    alt="Newspaper clipping about the Vimarsh 2023 closing ceremony">
+                            </div>
+                            <div class="newspaper-cutting"
+                                data-title="Youth Should Demolish Anti-India Narratives: Monika Arora">
+                                <img src="/Images/Newspaper/WhatsApp-Image-2023-11-08-at-10.04.37-AM-1.jpeg"
+                                    alt="Newspaper clipping of Monika Arora speaking at Vimarsh">
+                            </div>
+                            <div class="newspaper-cutting tall"
+                                data-title="Indian Society is Based on Acceptance, Not Tolerance: Monika Arora">
+                                <img src="/Images/Newspaper/WhatsApp-Image-2023-11-08-at-10.04.38-AM-1.jpeg"
+                                    alt="Rashtriya Sahara article on Monika Arora's speech">
+                            </div>
+                            <div class="newspaper-cutting"
+                                data-title="Indian Philosophy Inspires Compassion for All: Monika Arora">
+                                <img src="/Images/Newspaper/WhatsApp-Image-2023-11-08-at-10.04.38-AM.jpeg"
+                                    alt="Newspaper clipping of an interview with Monika Arora">
+                            </div>
+                            <div class="newspaper-cutting"
+                                data-title="Youth are Representatives of Amritkaal: DU Vice-Chancellor">
+                                <img src="/Images/Newspaper/WhatsApp-Image-2023-11-08-at-10.04.39-AM-1.jpeg"
+                                    alt="Newspaper clipping covering the DU Vice-Chancellor's speech">
+                            </div>
+                            <div class="newspaper-cutting" data-title="Three-Day 'Vimarsh 2023' Program Concludes">
+                                <img src="/Images/Newspaper/WhatsApp-Image-2023-11-08-at-10.04.39-AM.jpeg"
+                                    alt="Urdu newspaper clipping about the conclusion of Vimarsh 2023">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- News Filters -->
+                    <div class="news-filters">
+                        <button class="filter-btn active" data-filter="all">All News</button>
+                        <button class="filter-btn" data-filter="awards">Awards & Recognition</button>
+                        <button class="filter-btn" data-filter="events">Events Coverage</button>
+                        <button class="filter-btn" data-filter="interviews">Interviews</button>
+                        <button class="filter-btn" data-filter="features">Features</button>
+                    </div>
+
+                    <!-- News Grid -->
+                    <div class="news-grid">
+                        <!-- News Article 1 -->
+                        <div class="news-card" data-category="awards">
+                            <div class="news-image">
+                                <img src="/Images/2024.JPG" alt="YUVA Award Ceremony">
+                                <div class="news-category">Awards</div>
+                            </div>
+                            <div class="news-content">
+                                <h3 class="news-title">YUVA Delhi Receives National Youth Excellence Award 2024</h3>
+                                <p class="news-excerpt">
+                                    Recognized for outstanding contribution to youth development and community service
+                                    across India.
+                                </p>
+                                <div class="news-meta">
+                                    <div class="news-date">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>March 15, 2024</span>
+                                    </div>
+                                    <div class="news-source">
+                                        <i class="fas fa-newspaper"></i>
+                                        <span>The Times of India</span>
+                                    </div>
+                                </div>
+                                <a href="#" class="news-link">
+                                    Read Full Article
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- News Article 2 -->
+                        <div class="news-card" data-category="events">
+                            <div class="news-image">
+                                <img src="/Images/2023.JPG" alt="Vimarsh 2023 Event">
+                                <div class="news-category">Events</div>
+                            </div>
+                            <div class="news-content">
+                                <h3 class="news-title">Vimarsh 2023: A Grand Success with 5000+ Participants</h3>
+                                <p class="news-excerpt">
+                                    The annual youth summit brought together students, professionals, and thought
+                                    leaders for meaningful discussions.
+                                </p>
+                                <div class="news-meta">
+                                    <div class="news-date">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>December 10, 2023</span>
+                                    </div>
+                                    <div class="news-source">
+                                        <i class="fas fa-newspaper"></i>
+                                        <span>Hindustan Times</span>
+                                    </div>
+                                </div>
+                                <a href="#" class="news-link">
+                                    Read Full Article
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- News Article 3 -->
+                        <div class="news-card" data-category="interviews">
+                            <div class="news-image">
+                                <img src="/Images/2022.jpeg" alt="YUVA Leadership Interview">
+                                <div class="news-category">Interviews</div>
+                            </div>
+                            <div class="news-content">
+                                <h3 class="news-title">Exclusive Interview: YUVA's Vision for India's Youth</h3>
+                                <p class="news-excerpt">
+                                    Our leadership team shares insights on empowering the next generation of Indian
+                                    leaders.
+                                </p>
+                                <div class="news-meta">
+                                    <div class="news-date">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>October 22, 2023</span>
+                                    </div>
+                                    <div class="news-source">
+                                        <i class="fas fa-newspaper"></i>
+                                        <span>India Today</span>
+                                    </div>
+                                </div>
+                                <a href="#" class="news-link">
+                                    Read Full Article
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- News Article 4 -->
+                        <div class="news-card" data-category="features">
+                            <div class="news-image">
+                                <img src="/Images/2019.jpg" alt="YUVA Community Impact">
+                                <div class="news-category">Features</div>
+                            </div>
+                            <div class="news-content">
+                                <h3 class="news-title">How YUVA is Transforming Lives Through Education</h3>
+                                <p class="news-excerpt">
+                                    A deep dive into our educational initiatives and their impact on thousands of
+                                    students nationwide.
+                                </p>
+                                <div class="news-meta">
+                                    <div class="news-date">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>August 30, 2023</span>
+                                    </div>
+                                    <div class="news-source">
+                                        <i class="fas fa-newspaper"></i>
+                                        <span>Economic Times</span>
+                                    </div>
+                                </div>
+                                <a href="#" class="news-link">
+                                    Read Full Article
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- News Article 5 -->
+                        <div class="news-card" data-category="events">
+                            <div class="news-image">
+                                <img src="/Images/Card Image 1.jpeg" alt="Bharat Parv Event">
+                                <div class="news-category">Events</div>
+                            </div>
+                            <div class="news-content">
+                                <h3 class="news-title">Bharat Parv 2023: Celebrating India's Cultural Heritage</h3>
+                                <p class="news-excerpt">
+                                    A spectacular celebration of Indian culture and traditions with performances from
+                                    across the country.
+                                </p>
+                                <div class="news-meta">
+                                    <div class="news-date">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>July 15, 2023</span>
+                                    </div>
+                                    <div class="news-source">
+                                        <i class="fas fa-newspaper"></i>
+                                        <span>NDTV</span>
+                                    </div>
+                                </div>
+                                <a href="#" class="news-link">
+                                    Read Full Article
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- News Article 6 -->
+                        <div class="news-card" data-category="awards">
+                            <div class="news-image">
+                                <img src="/Images/Card Image 2.jpg" alt="YUVA Recognition">
+                                <div class="news-category">Awards</div>
+                            </div>
+                            <div class="news-content">
+                                <h3 class="news-title">YUVA Delhi Honored with Best NGO Award 2023</h3>
+                                <p class="news-excerpt">
+                                    Recognized by the Delhi Government for exceptional contribution to youth development
+                                    and social welfare.
+                                </p>
+                                <div class="news-meta">
+                                    <div class="news-date">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>June 8, 2023</span>
+                                    </div>
+                                    <div class="news-source">
+                                        <i class="fas fa-newspaper"></i>
+                                        <span>Delhi Times</span>
+                                    </div>
+                                </div>
+                                <a href="#" class="news-link">
+                                    Read Full Article
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Media Coverage Stats -->
+                    <div
+                        style="margin-top: 40px; padding: 32px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: var(--radius-xl);">
+                        <h3
+                            style="font-size: 24px; font-weight: 700; color: var(--gray-800); margin: 0 0 16px 0; text-align: center;">
+                            Our Media Coverage
+                        </h3>
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-top: 24px;">
+                            <div style="text-align: center;">
+                                <div
+                                    style="font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 8px;">
+                                    150+</div>
+                                <div style="color: var(--gray-600); font-weight: 500;">Media Mentions</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div
+                                    style="font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 8px;">
+                                    25+</div>
+                                <div style="color: var(--gray-600); font-weight: 500;">News Outlets</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div
+                                    style="font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 8px;">
+                                    5M+</div>
+                                <div style="color: var(--gray-600); font-weight: 500;">Media Reach</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div
+                                    style="font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 8px;">
+                                    12</div>
+                                <div style="color: var(--gray-600); font-weight: 500;">Awards Won</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/script.js"></script>
+    <script src="media-script.js"></script>
+</body>
+
+</html>
