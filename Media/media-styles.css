@@ -1105,74 +1105,6 @@
     /* Mapped from --primary-dark */
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 768px) {
-    .media-hero {
-        padding: 60px 0 40px;
-    }
-
-    .media-hero-content {
-        padding: 0 16px;
-    }
-
-    .hero-title {
-        font-size: 2.5rem;
-    }
-
-    .content-section {
-        margin: -40px auto 0;
-        padding: 0 16px 60px;
-    }
-
-    .content-card {
-        padding: 24px;
-    }
-
-    .social-grid,
-    .news-grid,
-    .video-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .news-filters,
-    .video-filters {
-        justify-content: center;
-    }
-
-    .modal-content {
-        margin: 20px;
-        padding: 20px;
-    }
-
-    .video-player {
-        height: 250px;
-    }
-
-    .flash-container {
-        top: 10px;
-        right: 10px;
-        left: 10px;
-    }
-
-    .flash-notification {
-        min-width: auto;
-        max-width: none;
-    }
-}
-
-@media (max-width: 480px) {
-    .social-stats {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .news-meta,
-    .video-meta {
-        flex-direction: column;
-        gap: 8px;
-        align-items: flex-start;
-    }
-}
 
 /* ===== ANIMATIONS ===== */
 @keyframes fadeInUp {
@@ -1391,12 +1323,6 @@
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-@media (max-width: 768px) {
-    .newspaper-grid {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        grid-auto-rows: 140px;
-    }
-}
 
 /* ===== MOBILE MEDIA QUERIES FOR MEDIA PAGES - 2025 ===== */
 

@@ -1112,6 +1112,7 @@ class ZoneManager {
         const zoneSection = document.getElementById('zone-section');
         if (!dashboard) return;
         if (zoneSection) zoneSection.style.display = 'none';
+        document.getElementById('login-btn').style.display = 'none';
         dashboard.style.display = 'block';
         // Reset members list UI to avoid showing previous college data
         const membersContainer = document.getElementById('cd-members-list');
@@ -1129,6 +1130,7 @@ class ZoneManager {
         if (backBtn) backBtn.onclick = () => {
             dashboard.style.display = 'none';
             if (zoneSection) zoneSection.style.display = 'block';
+            document.getElementById('login-btn').style.display = 'inline-flex';
             // Refresh zone cards and stats so counts reflect any changes
             try {
                 if (zoneManager && zoneManager.currentZone) {

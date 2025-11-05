@@ -13,19 +13,20 @@
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        .site-header .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            /* This pushes the logo left and actions right */
-            width: 100%;
-        }
+        /* This media query makes these styles ONLY apply to desktop screens */
+        @media (min-width: 769px) {
+            .site-header .header-content {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+            }
 
-        .header-main-actions {
-            display: flex;
-            align-items: center;
-            gap: 32rem;
-            /* 24px space between "Unit Registrations" and the "Login" button */
+            .header-main-actions {
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+            }
         }
     </style>
 </head>
