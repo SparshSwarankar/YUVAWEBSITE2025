@@ -131,7 +131,6 @@
 
     <div class="main">
         <div class="home-page">
-            <!-- Hero Section with Animated Background -->
             <div class="home-hero ">
                 <div class="hero-background">
                     <div class="hero-particles"></div>
@@ -284,7 +283,21 @@
                 </div>
             </div>
 
-            <!-- Features Section -->
+            <!-- <div class="events-section section-container" id="events-section">
+                <div class="section-header">
+                    <h2>Upcoming Events</h2>
+                    <p>Don't miss out on our latest activities and workshops.</p>
+                </div>
+                <div class="loading-spinner" id="events-loading">
+                    <div class="spinner"></div>
+                </div>
+                <div class="events-grid" id="events-grid"></div>
+                <div class="empty-state" id="events-empty" style="display: none;">
+                    <i class="far fa-calendar-times"></i>
+                    <p>No upcoming events at the moment. Stay tuned!</p>
+                </div>
+            </div> -->
+
             <div class="features-section section-pattern">
                 <div class="features-container">
                     <div class="features-header">
@@ -342,7 +355,6 @@
                 </div>
             </div>
 
-            <!-- Dynamic Stats Section -->
             <div class="stats-section">
                 <div class="stats-container">
                     <div class="stats-header">
@@ -370,7 +382,7 @@
                 </div>
             </div>
 
-            <section class="gallery-preview-section">
+            <div class="gallery-preview-section">
                 <div class="gallery-preview-container">
                     <div class="gallery-preview-header">
                         <h2>Glimpses of YUVA</h2>
@@ -384,9 +396,8 @@
                         </a>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- Quick Links Section -->
             <div class="quick-links-section">
                 <div class="quick-links-container">
                     <div class="quick-links-header">
@@ -461,7 +472,42 @@
                 </div>
             </div>
 
-            <!-- Call to Action Section -->
+            <!-- <div class="executives-section section-container" id="executives-section">
+                <div class="section-header">
+                    <h2>Meet Our Leadership</h2>
+                    <p>The dedicated team driving YUVA's vision forward.</p>
+                </div>
+                <div class="loading-spinner" id="executives-loading">
+                    <div class="spinner"></div>
+                </div>
+                <div class="executives-grid" id="executives-grid"></div>
+            </div>
+            <div class="partners-section section-container">
+                <div class="section-header">
+                    <h2>Our Partners & Collaborators</h2>
+                    <p>Working together with leading institutions to create impact.</p>
+                </div>
+                <div class="partners-slider">
+                    <div class="slider-track track-left">
+                        <div class="partner-logo"><i class="fas fa-university"></i><span>IIT Delhi</span></div>
+                        <div class="partner-logo"><i class="fas fa-building-columns"></i><span>Delhi University</span>
+                        </div>
+                        <div class="partner-logo"><i class="fas fa-graduation-cap"></i><span>JNU</span></div>
+                        <div class="partner-logo"><i class="fas fa-school"></i><span>Jamia Millia</span></div>
+                        <div class="partner-logo"><i class="fas fa-landmark"></i><span>IGNOU</span></div>
+                        <div class="partner-logo"><i class="fas fa-book-open"></i><span>NITI Aayog</span></div>
+                        <div class="partner-logo"><i class="fas fa-university"></i><span>IIT Delhi</span></div>
+                        <div class="partner-logo"><i class="fas fa-building-columns"></i><span>Delhi University</span>
+                        </div>
+                        <div class="partner-logo"><i class="fas fa-graduation-cap"></i><span>JNU</span></div>
+                        <div class="partner-logo"><i class="fas fa-school"></i><span>Jamia Millia</span></div>
+                        <div class="partner-logo"><i class="fas fa-landmark"></i><span>IGNOU</span></div>
+                        <div class="partner-logo"><i class="fas fa-book-open"></i><span>NITI Aayog</span></div>
+                    </div>
+                </div>
+            </div> -->
+
+
             <div class="cta-section">
                 <div class="cta-container">
                     <div class="cta-content">
@@ -477,8 +523,31 @@
                 </div>
             </div>
         </div>
+        <div class="newsletter-section">
+            <div class="newsletter-container">
+                <div class="newsletter-content">
+                    <h2>Stay Updated with YUVA</h2>
+                    <p>Subscribe to our newsletter for the latest updates, upcoming events, and opportunities. No
+                        spam, we promise!</p>
+                </div>
+                <form class="newsletter-form" id="newsletter-form">
+                    <div class="input-group">
+                        <input type="email" id="newsletter-email" placeholder="Enter your email address" required>
+                        <button type="submit" class="btn-primary" id="newsletter-btn">
+                            <span>Subscribe</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-
+    <div class="modal-backdrop" id="generic-modal">
+        <div class="modal-content" id="modal-content-area">
+        </div>
+        <button class="modal-close" aria-label="Close Modal"><i class="fas fa-times"></i></button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
     <script src="home.js"></script>
 </body>

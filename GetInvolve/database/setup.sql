@@ -935,3 +935,40 @@ TO authenticated
 USING (
   (get_my_claim('role'::text)) = '"super_admin"'::jsonb
 );
+
+
+-- 1. Create the new table for executive members
+CREATE TABLE IF NOT EXISTS public.executive_members (
+    id SERIAL PRIMARY KEY,
+    member_name TEXT NOT NULL,
+    designation TEXT NOT NULL, -- e.g., President, Vice President, General Secretary
+    role TEXT DEFAULT 'Executive Member', -- A general role category
+    photo_url TEXT, -- URL to the member's photo
+    contact_email TEXT UNIQUE, -- Optional email, ensure uniqueness if provided
+    description TEXT, -- Short description or message
+    display_order SMALLINT DEFAULT 0, -- Optional: To control the order they appear
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 2. Enable Row Level Security (RLS) - Important for security
+ALTER TABLE public.executive_members ENABLE ROW LEVEL SECURITY;
+
+-- 3. Create a policy to allow public read access (for the website)
+--    DROP POLICY first in case it already exists from testing
+DROP POLICY IF EXISTS "Allow public read access" ON public.executive_members;
+
+CREATE POLICY "Allow public read access"
+ON public.executive_members
+FOR SELECT
+USING (true); -- Allows anyone to SELECT (read) data
+
+-- 4. (Optional) Add some sample data - Replace with your actual members
+INSERT INTO public.executive_members (member_name, designation, photo_url, description, display_order) VALUES
+('Amit Sharma', 'President', '/Images/Executives/amit.jpg', 'Leading YUVA Delhi towards a brighter future.', 1),
+('Priya Singh', 'Vice President', '/Images/Executives/priya.jpg', 'Supporting the vision and driving initiatives.', 2),
+('Rahul Verma', 'General Secretary', '/Images/Executives/rahul.jpg', 'Managing organizational operations.', 3)
+ON CONFLICT DO NOTHING; -- Avoid inserting duplicates if run multiple times
+
+-- 5. Grant usage on the sequence for the primary key (needed for RLS + Inserts if using Supabase client)
+--    May not be strictly necessary for read-only 'anon' key but good practice.
+GRANT USAGE, SELECT ON SEQUENCE executive_members_id_seq TO anon, authenticated;

@@ -1064,6 +1064,590 @@
     }
 }
 
+/* =================================================================== */
+/* ===== NEW MODERN SECTION STYLES (ROBUST & INTEGRATED) ===== */
+/* =================================================================== */
+
+/* --- SHARED UTILITIES FOR NEW SECTIONS --- */
+/* Ensures content within full-width sections is centered and bounded */
+.section-content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Standardized Section Header for new sections */
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section-header h2 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--navy-chakra);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+}
+
+.section-header p {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    padding: 60px 0;
+    width: 100%;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--bg-muted);
+    border-top: 4px solid var(--saffron-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* --- 2. MODERN UPCOMING EVENTS SECTION (FULL WIDTH) --- */
+/* Overrides .section-container default padding/margin for full-width background */
+.events-section.section-container {
+    max-width: none;
+    padding: 100px 0;
+    margin: 0;
+    background-color: #f0f4ff;
+    /* Fallback */
+    background-image:
+        radial-gradient(at 100% 0%, var(--saffron-pale) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, var(--green-pale) 0px, transparent 50%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Constrain inner content */
+.events-section .section-header,
+.events-grid,
+.events-section .loading-spinner,
+.events-section .empty-state {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 32px;
+    position: relative;
+    z-index: 2;
+}
+
+.event-card {
+    background: rgba(255, 255, 255, 0.8);
+    /* Glass effect base */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--white-primary);
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+}
+
+.event-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: var(--shadow-2xl);
+    border-color: var(--saffron-light);
+}
+
+.event-image {
+    height: 220px;
+    position: relative;
+    overflow: hidden;
+}
+
+.event-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.event-card:hover .event-image img {
+    transform: scale(1.1);
+}
+
+.event-date-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--white-primary);
+    padding: 10px 16px;
+    border-radius: var(--radius-xl);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    z-index: 2;
+    border: 2px solid var(--saffron-primary);
+}
+
+.event-date-badge .day {
+    font-size: 1.5rem;
+    font-weight: 800;
+    display: block;
+    line-height: 1;
+    color: var(--navy-chakra);
+}
+
+.event-date-badge .month {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--saffron-dark);
+    margin-top: 4px;
+    display: block;
+}
+
+.event-details {
+    padding: 32px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), var(--white-primary));
+}
+
+.event-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0 0 16px 0;
+    color: var(--navy-chakra);
+    line-height: 1.3;
+}
+
+.event-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.event-info span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green-pale);
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    color: var(--green-dark);
+}
+
+.event-info i {
+    color: var(--green-primary);
+}
+
+.event-description {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+    display: -webkit-box;
+    display: box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    overflow: hidden;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px;
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: var(--radius-xl);
+    margin-top: 20px;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    margin-bottom: 24px;
+    display: block;
+    color: var(--border-medium);
+    opacity: 0.5;
+}
+
+/* Tricolor top borders for event cards */
+.event-card:nth-child(3n+1) {
+    border-top: 6px solid var(--saffron-primary);
+}
+
+.event-card:nth-child(3n+2) {
+    border-top: 6px solid var(--navy-chakra);
+}
+
+.event-card:nth-child(3n+3) {
+    border-top: 6px solid var(--green-primary);
+}
+
+
+/* --- 5. MODERN EXECUTIVE LEADERSHIP SECTION (CLEAN SOLID BORDERS) --- */
+.executives-section.section-container {
+    max-width: none;
+    padding: 100px 0;
+    margin: 0;
+    background-color: #f9fafb;
+    /* Very clean, almost white gray */
+    position: relative;
+}
+
+.executives-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.exec-card {
+    background: var(--white-primary);
+    padding: 48px 32px;
+    border-radius: var(--radius-2xl);
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-light);
+    /* Subtle shadow for depth, no heavy gradients */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.exec-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: var(--border-medium);
+}
+
+/* === CLEAN PROFILE IMAGE (SOLID BORDER, NO GRADIENT) === */
+.exec-image {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 28px;
+    position: relative;
+    border-radius: 50%;
+    /* Default solid border */
+    border: 4px solid var(--border-light);
+    padding: 4px;
+    /* Space between border and image */
+    background: var(--white-primary);
+    transition: all 0.3s ease;
+}
+
+.exec-card:hover .exec-image {
+    /* Slight scale up on hover */
+    transform: scale(1.05);
+}
+
+.exec-image img,
+.exec-image div {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* === ROLE BADGES & SPECIFIC BORDER COLORS === */
+.exec-name {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin: 0 0 12px 0;
+    color: var(--navy-chakra);
+}
+
+.exec-role {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 0;
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    background: var(--bg-muted);
+    color: var(--text-secondary);
+}
+
+/* Card 1: Saffron Accent */
+.exec-card:nth-child(3n+1):hover {
+    border-bottom: 4px solid var(--saffron-primary);
+}
+
+.exec-card:nth-child(3n+1) .exec-image {
+    border-color: var(--saffron-pale);
+}
+
+.exec-card:nth-child(3n+1):hover .exec-image {
+    border-color: var(--saffron-primary);
+}
+
+.exec-card:nth-child(3n+1) .exec-role {
+    background: var(--saffron-pale);
+    color: var(--saffron-dark);
+}
+
+/* Card 2: Navy Accent */
+.exec-card:nth-child(3n+2):hover {
+    border-bottom: 4px solid var(--navy-chakra);
+}
+
+.exec-card:nth-child(3n+2) .exec-image {
+    border-color: var(--color-info-pale);
+}
+
+.exec-card:nth-child(3n+2):hover .exec-image {
+    border-color: var(--navy-chakra);
+}
+
+.exec-card:nth-child(3n+2) .exec-role {
+    background: var(--color-info-pale);
+    color: var(--navy-dark);
+}
+
+/* Card 3: Green Accent */
+.exec-card:nth-child(3n+3):hover {
+    border-bottom: 4px solid var(--green-primary);
+}
+
+.exec-card:nth-child(3n+3) .exec-image {
+    border-color: var(--green-pale);
+}
+
+.exec-card:nth-child(3n+3):hover .exec-image {
+    border-color: var(--green-primary);
+}
+
+.exec-card:nth-child(3n+3) .exec-role {
+    background: var(--green-pale);
+    color: var(--green-dark);
+}
+
+/* ========================================= */
+/* ===== MODERN GENERIC MODAL STYLES ===== */
+/* ========================================= */
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    /* Highest priority */
+    background: rgba(15, 23, 42, 0.6);
+    /* Navy tinted dark overlay */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: var(--white-primary);
+    width: 100%;
+    max-width: 550px;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-2xl);
+    padding: 48px 40px;
+    position: relative;
+    transform: scale(0.95) translateY(20px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Springy open effect */
+    max-height: 90vh;
+    overflow-y: auto;
+    /* Scroll if content is too tall */
+}
+
+.modal-backdrop.active .modal-content {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+/* --- CLOSE BUTTON --- */
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: var(--bg-muted);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 2;
+}
+
+.modal-close:hover {
+    background: var(--color-error-pale);
+    color: var(--color-error);
+    transform: rotate(90deg);
+}
+
+/* ========================================= */
+/* ===== MODAL INNER CONTENT STYLES ===== */
+/* ========================================= */
+
+.modal-exec-profile {
+    text-align: center;
+}
+
+/* Large Profile Image in Modal */
+.modal-exec-img {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 32px;
+    border-radius: 50%;
+    padding: 5px;
+    background: var(--white-primary);
+    /* Replaced conic-gradient with a simple, clean solid border */
+    border: 4px solid var(--border-light);
+    box-shadow: var(--shadow-lg);
+}
+
+.modal-exec-img img,
+.modal-exec-img div {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    /* Removed inner border for cleaner look */
+}
+
+.modal-exec-name {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--navy-chakra);
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+}
+
+.modal-exec-role {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--saffron-dark);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 32px 0;
+    background: var(--saffron-pale);
+    display: inline-block;
+    padding: 8px 24px;
+    border-radius: var(--radius-full);
+}
+
+.modal-exec-bio {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    text-align: left;
+    /* Better readability for longer text */
+    background: var(--bg-subtle);
+    padding: 24px;
+    border-radius: var(--radius-xl);
+    margin-bottom: 24px;
+}
+
+.modal-exec-bio p {
+    margin: 0;
+}
+
+/* Social Links in Modal */
+.modal-socials {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-light);
+}
+
+.modal-social-link {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--bg-elevated);
+    border: 2px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.modal-social-link:hover {
+    background: var(--navy-chakra);
+    color: var(--white-primary);
+    border-color: var(--navy-chakra);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Mobile adjustments for Modal */
+@media (max-width: 640px) {
+    .modal-content {
+        padding: 40px 24px;
+        margin: 20px;
+        max-height: 85vh;
+    }
+
+    .modal-exec-img {
+        width: 140px;
+        height: 140px;
+        margin-bottom: 24px;
+    }
+
+    .modal-exec-name {
+        font-size: 1.75rem;
+    }
+
+    .modal-exec-bio {
+        padding: 16px;
+        font-size: 0.95rem;
+    }
+}
+
 /* ================================================================ */
 /* ===== HOME PAGE MOBILE RESPONSIVE MEDIA QUERIES - 480px & 768px ===== */
 /* ================================================================ */

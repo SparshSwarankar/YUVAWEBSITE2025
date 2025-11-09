@@ -1,5 +1,267 @@
 /* ===== MODERN HOME PAGE JAVASCRIPT - YUVA 2025 ===== */
 
+// --- CONFIGURATION ---
+// IMPORTANT: Replace these with your actual Supabase project URL and Anon Key
+const SUPABASE_URL = 'https://jgsrsjwmywiirtibofth.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_5KtvO0cEHfnECBoyp2CQnw_RC3_x2me';
+// Initialize Supabase client if the library is loaded
+const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+class HomePageManager {
+    constructor() {
+        if (!supabase) {
+            console.error("Supabase client not initialized. Dynamic content (Executives, Events) will not load.");
+            return;
+        }
+        this.init();
+    }
+
+    init() {
+        this.loadExecutiveTeam();
+        this.loadUpcomingEvents();
+        this.setupNewsletter();
+        this.setupModal();
+    }
+
+    // --- 👇 INSERT THIS NEW METHOD HERE 👇 ---
+    async loadUpcomingEvents() {
+        const grid = document.getElementById('events-grid');
+        const loader = document.getElementById('events-loading');
+        const emptyState = document.getElementById('events-empty');
+
+        if (!grid) return;
+
+        try {
+            // 1. Reset UI State
+            if (loader) loader.style.display = 'flex';
+            grid.style.display = 'none';
+            if (emptyState) emptyState.style.display = 'none';
+
+            // 2. Fetch from Supabase 'events' table
+            // Filtering for future events that are 'scheduled'
+            const { data: events, error } = await supabase
+                .from('events')
+                .select('id, title, description, start_at, location, banner_url')
+                .eq('status', 'scheduled')
+                .gte('start_at', new Date().toISOString()) // Only future events
+                .order('start_at', { ascending: true })      // Nearest event first
+                .limit(3);                                   // Limit to 3 for homepage
+
+            if (error) throw error;
+
+            // 3. Update UI based on results
+            if (loader) loader.style.display = 'none';
+
+            if (!events || events.length === 0) {
+                // Show empty state if no events found
+                if (emptyState) emptyState.style.display = 'block';
+                return;
+            }
+
+            // 4. Render Events
+            grid.style.display = 'grid';
+            grid.innerHTML = ''; // Clear any existing content
+
+            events.forEach(event => {
+                // Format date and time
+                const startDate = new Date(event.start_at);
+                const day = startDate.getDate();
+                const month = startDate.toLocaleString('default', { month: 'short' }).toUpperCase();
+                const time = startDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                // Handle banner image (use a fallback gradient if no URL provided)
+                const bannerHtml = event.banner_url
+                    ? `<img src="${event.banner_url}" alt="${event.title}" loading="lazy">`
+                    : `<div style="width:100%; height:100%; background: var(--gradient-navy); display:flex; align-items:center; justify-content:center; color:var(--white-primary); font-size:3rem; opacity:0.8;"><i class="fas fa-calendar-alt"></i></div>`;
+
+                const card = document.createElement('div');
+                card.className = 'event-card';
+
+                // Using your existing CSS classes
+                card.innerHTML = `
+                    <div class="event-image">
+                        ${bannerHtml}
+                        <div class="event-date-badge">
+                            <span class="day">${day}</span>
+                            <span class="month">${month}</span>
+                        </div>
+                    </div>
+                    <div class="event-details">
+                        <h3 class="event-title">${event.title}</h3>
+                        <div class="event-info">
+                            <span><i class="far fa-clock"></i> ${time}</span>
+                            ${event.location ? `<span><i class="fas fa-map-marker-alt"></i> ${event.location}</span>` : ''}
+                        </div>
+                        <p class="event-description">${event.description || 'No description available.'}</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+        } catch (err) {
+            console.error("Error loading upcoming events:", err);
+            if (loader) loader.style.display = 'none';
+            // Optionally show an error state in the empty container
+            if (emptyState) {
+                emptyState.innerHTML = '<div style="text-align:center; color:var(--color-error);"><i class="fas fa-exclamation-triangle fa-2x"></i><p>Unable to load events at the moment.</p></div>';
+                emptyState.style.display = 'block';
+            }
+        }
+    }
+
+    // --- FETCH & RENDER EXECUTIVE TEAM ---
+    async loadExecutiveTeam() {
+        const grid = document.getElementById('executives-grid');
+        const loader = document.getElementById('executives-loading');
+        if (!grid) return;
+
+        try {
+            const { data: execs, error } = await supabase
+                .from('executive_members')
+                .select('member_name, designation, role, photo_url, description, contact_email')
+                .order('display_order', { ascending: true });
+
+            if (error) throw error;
+            if (loader) loader.style.display = 'none';
+            if (!execs || execs.length === 0) {
+                grid.innerHTML = '<p style="text-align:center; color:var(--text-muted); grid-column:1/-1;">Leadership team to be announced.</p>';
+                return;
+            }
+
+            execs.forEach((exec, index) => {
+                const initials = exec.member_name
+                    ? exec.member_name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2)
+                    : '??';
+
+                // USE SOLID PASTEL COLORS INSTEAD OF GRADIENTS
+                const themeIndex = index % 3;
+                let fallbackBg = 'var(--color-info-pale)'; // Default pale navy
+                let fallbackColor = 'var(--navy-chakra)';
+
+                if (themeIndex === 0) { // Saffron Theme
+                    fallbackBg = 'var(--saffron-pale)';
+                    fallbackColor = 'var(--saffron-dark)';
+                } else if (themeIndex === 2) { // Green Theme
+                    fallbackBg = 'var(--green-pale)';
+                    fallbackColor = 'var(--green-dark)';
+                }
+
+                // Simple, clean fallback with NO GRADIENT
+                const imgHtml = exec.photo_url
+                    ? `<img src="${exec.photo_url}" alt="${exec.member_name}" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML='${initials}'; this.parentElement.style.background='${fallbackBg}'; this.parentElement.style.color='${fallbackColor}'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.style.fontSize='2.5rem'; this.parentElement.style.fontWeight='700';">`
+                    : `<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:2.5rem; color:${fallbackColor}; font-weight:700; background:${fallbackBg};">${initials}</div>`;
+
+                const card = document.createElement('div');
+                card.className = 'exec-card';
+                card.innerHTML = `
+                    <div class="exec-image">${imgHtml}</div>
+                    <h3 class="exec-name">${exec.member_name}</h3>
+                    <p class="exec-role">${exec.designation || exec.role}</p>
+                `;
+
+                card.addEventListener('click', () => this.openExecModal(exec, imgHtml));
+                grid.appendChild(card);
+            });
+
+        } catch (err) {
+            console.error("Error loading executives:", err);
+            if (loader) loader.style.display = 'none';
+        }
+    }
+
+    // --- NEWSLETTER SUBSCRIPTION (Placeholder for future use) ---
+    setupNewsletter() {
+        const form = document.getElementById('newsletter-form');
+        if (!form) return;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const emailInput = document.getElementById('newsletter-email');
+            const btn = document.getElementById('newsletter-btn');
+            const originalBtnHtml = btn.innerHTML;
+
+            if (!emailInput.value || !emailInput.value.includes('@')) {
+                if (window.flashNotification) window.flashNotification.showError('Invalid Email', 'Please enter a valid email address.');
+                return;
+            }
+
+            try {
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subscribing...';
+                btn.disabled = true;
+
+                // Assuming you have a 'subscriptions' table. If not, create it or remove this block.
+                const { error } = await supabase
+                    .from('subscriptions')
+                    .insert([{ email: emailInput.value }]);
+
+                if (error) {
+                    if (error.code === '23505') throw new Error("You are already subscribed!");
+                    throw error;
+                }
+
+                if (window.flashNotification) window.flashNotification.showSuccess('Subscribed!', 'Thanks for joining our community.');
+                form.reset();
+
+            } catch (err) {
+                if (window.flashNotification) window.flashNotification.showError('Subscription Failed', err.message || 'Please try again later.');
+            } finally {
+                btn.innerHTML = originalBtnHtml;
+                btn.disabled = false;
+            }
+        });
+    }
+
+    // --- GENERIC MODAL UTILITIES ---
+    setupModal() {
+        this.modal = document.getElementById('generic-modal');
+        if (!this.modal) return;
+        this.modalContent = document.getElementById('modal-content-area');
+        this.closeBtn = this.modal.querySelector('.modal-close');
+
+        if (this.closeBtn) this.closeBtn.addEventListener('click', () => this.closeModal());
+        this.modal.addEventListener('click', (e) => {
+            if (e.target === this.modal) this.closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.modal.classList.contains('active')) this.closeModal();
+        });
+    }
+
+    openExecModal(exec, imgHtml) {
+        if (!this.modal || !this.modalContent) return;
+        // Populate modal with executive details
+        this.modalContent.innerHTML = `
+            <div class="modal-exec-profile">
+                <div class="modal-exec-img">${imgHtml}</div>
+                <h3 class="modal-exec-name">${exec.member_name}</h3>
+                <p class="modal-exec-role">${exec.designation || exec.role}</p>
+                <div class="modal-exec-bio">
+                    ${exec.description ? `<p>${exec.description}</p>` : '<p>No further details available.</p>'}
+                </div>
+                 ${exec.contact_email ? `
+                    <div class="modal-socials" style="margin-top: 20px;">
+                        <a href="mailto:${exec.contact_email}" class="modal-social-link" title="Contact via Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+        this.modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    closeModal() {
+        if (!this.modal) return;
+        this.modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+/* =========================================
+   EXISTING ANIMATIONS & UTILITIES
+   ========================================= */
+
 class HomePageAnimations {
     constructor() {
         this.init();
@@ -198,7 +460,7 @@ class HomePageAnimations {
         }, observerOptions);
 
         // Observe sections for scroll animations (exclude features and quick links)
-        const sections = document.querySelectorAll('.cta-section');
+        const sections = document.querySelectorAll('.cta-section, .executives-section, .events-section, .partners-section, .newsletter-section');
         sections.forEach(section => {
             observer.observe(section);
         });
@@ -337,10 +599,8 @@ class HomePageAnimations {
             if (lastSyncEl) lastSyncEl.textContent = 'Error';
         }
     }
-    // ===== NEW: HOMEPAGE GALLERY =====
-    // ===== REVISED: HOMEPAGE GALLERY =====
-    // ===== FINAL REVISION: HOMEPAGE GALLERY =====
-    // ===== UPDATED: HOMEPAGE GALLERY (10 IMAGES, NO CATEGORY FILTER) =====
+
+    // ===== HOMEPAGE GALLERY =====
     async initializeHomepageGallery() {
         const grid = document.getElementById('gallery-preview-grid');
         if (!grid) return;
@@ -519,11 +779,14 @@ class HomeUtils {
 
 // ===== INITIALIZE ON DOM LOAD =====
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize flash notifications first (used by other classes)
+    window.flashNotification = new FlashNotification();
+
+    // Initialize new dynamic content manager
+    new HomePageManager();
+
     // Initialize animations
     new HomePageAnimations();
-
-    // Initialize flash notifications
-    window.flashNotification = new FlashNotification();
 
     // Add ripple effect styles
     const style = document.createElement('style');
@@ -536,7 +799,6 @@ document.addEventListener('DOMContentLoaded', () => {
             animation: ripple 0.6s linear;
             pointer-events: none;
         }
-        
         @keyframes ripple {
             to {
                 transform: scale(4);
@@ -549,14 +811,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show welcome message
     setTimeout(() => {
         if (window.flashNotification) {
-            window.flashNotification.showSuccess('Welcome!', 'YUVA India page loaded successfully', 3000);
+            window.flashNotification.showSuccess('Welcome to YUVA Delhi!', 'Explore our community and initiatives.', 3000);
         }
     }, 2000);
 });
 
-
-
 // ===== EXPORT FOR GLOBAL ACCESS =====
+window.HomePageManager = HomePageManager;
 window.HomePageAnimations = HomePageAnimations;
 window.FlashNotification = FlashNotification;
 window.HomeUtils = HomeUtils;
