@@ -972,3 +972,25 @@ ON CONFLICT DO NOTHING; -- Avoid inserting duplicates if run multiple times
 -- 5. Grant usage on the sequence for the primary key (needed for RLS + Inserts if using Supabase client)
 --    May not be strictly necessary for read-only 'anon' key but good practice.
 GRANT USAGE, SELECT ON SEQUENCE executive_members_id_seq TO anon, authenticated;
+
+
+
+-- table for news letter
+/* ===== 1. CREATE THE 'subscriptions' TABLE ===== */
+CREATE TABLE IF NOT EXISTS public.subscriptions (
+    id SERIAL PRIMARY KEY,
+    email TEXT NOT NULL UNIQUE,
+    is_subscribed BOOLEAN DEFAULT true,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+/* ===== 2. ENABLE RLS (Security) ===== */
+ALTER TABLE public.subscriptions ENABLE ROW LEVEL SECURITY;
+
+/* ===== 3. RLS POLICY (Allow anyone to sign up) ===== */
+DROP POLICY IF EXISTS "Allow public insert for subscriptions" ON public.subscriptions;
+
+CREATE POLICY "Allow public insert for subscriptions"
+ON public.subscriptions
+FOR INSERT
+WITH CHECK (true);

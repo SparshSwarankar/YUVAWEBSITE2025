@@ -94,7 +94,8 @@
             <div class="dropdown">
                 <a class="dropdown-btn">Events ▾</a>
                 <div class="dropdown-content">
-                    <a href="/Events/Upcoming.html">Upcoming Events</a>
+                    <!-- <a href="/Events/Upcoming.html">Upcoming Events</a> -->
+                    <a href="coming-soon.html">Upcoming Events</a>
                     <a href="/Events/Past.html">Past Events</a>
                 </div>
             </div>
@@ -116,8 +117,10 @@
             <div class="dropdown">
                 <a class="dropdown-btn">Get Involved ▾</a>
                 <div class="dropdown-content">
-                    <a href="/GetInvolve/Fellowship.html">Fellowship</a>
-                    <a href="/GetInvolve/internship.html">Internship</a>
+                    <!-- <a href="/GetInvolve/Fellowship.html">Fellowship</a> -->
+                    <a href="coming-soon.html">Fellowship</a>
+                    <!-- <a href="/GetInvolve/internship.html">Internship</a> -->
+                    <a href="coming-soon.html">Internship</a>
                     <a href="/GetInvolve/Volunteer.html">Volunteer</a>
                     <a href="/GetInvolve/YuvaAlumini.html">YUVA Alumni</a>
                     <a href="/GetInvolve/UnitRegistration.html">Unit Registration</a>
@@ -283,7 +286,7 @@
                 </div>
             </div>
 
-            <!-- <div class="events-section section-container" id="events-section">
+            <div class="events-section section-container" id="events-section">
                 <div class="section-header">
                     <h2>Upcoming Events</h2>
                     <p>Don't miss out on our latest activities and workshops.</p>
@@ -296,7 +299,7 @@
                     <i class="far fa-calendar-times"></i>
                     <p>No upcoming events at the moment. Stay tuned!</p>
                 </div>
-            </div> -->
+            </div>
 
             <div class="features-section section-pattern">
                 <div class="features-container">
@@ -472,7 +475,7 @@
                 </div>
             </div>
 
-            <!-- <div class="executives-section section-container" id="executives-section">
+            <div class="executives-section section-container" id="executives-section">
                 <div class="section-header">
                     <h2>Meet Our Leadership</h2>
                     <p>The dedicated team driving YUVA's vision forward.</p>
@@ -505,13 +508,29 @@
                         <div class="partner-logo"><i class="fas fa-book-open"></i><span>NITI Aayog</span></div>
                     </div>
                 </div>
-            </div> -->
-
-
+            </div>
+            <div class="newsletter-section">
+                <div class="newsletter-container">
+                    <div class="newsletter-content">
+                        <h2>Stay Updated with YUVA</h2>
+                        <p>Subscribe to our newsletter for the latest updates, upcoming events, and opportunities. No
+                            spam, we promise!</p>
+                    </div>
+                    <form class="newsletter-form" id="newsletter-form">
+                        <div class="input-group">
+                            <input type="email" id="newsletter-email" placeholder="Enter your email address" required>
+                            <button type="submit" class="btn-primary" id="newsletter-btn">
+                                <span>Subscribe</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <p id="email-suggestion" class="email-suggestion"></p>
+                    </form>
+                </div>
+            </div>
             <div class="cta-section">
                 <div class="cta-container">
                     <div class="cta-content">
-
                         <h2>Ready to Make a Difference?</h2>
                         <p>Join thousands of young Indians who are already part of the YUVA community and are making a
                             positive impact in society.</p>
@@ -523,31 +542,15 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="newsletter-section">
-            <div class="newsletter-container">
-                <div class="newsletter-content">
-                    <h2>Stay Updated with YUVA</h2>
-                    <p>Subscribe to our newsletter for the latest updates, upcoming events, and opportunities. No
-                        spam, we promise!</p>
-                </div>
-                <form class="newsletter-form" id="newsletter-form">
-                    <div class="input-group">
-                        <input type="email" id="newsletter-email" placeholder="Enter your email address" required>
-                        <button type="submit" class="btn-primary" id="newsletter-btn">
-                            <span>Subscribe</span>
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
     </div>
     <div class="modal-backdrop" id="generic-modal">
         <div class="modal-content" id="modal-content-area">
         </div>
         <button class="modal-close" aria-label="Close Modal"><i class="fas fa-times"></i></button>
-    </div> -->
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mailcheck/1.1.1/mailcheck.min.js"></script>
     <script src="script.js"></script>
     <script src="home.js"></script>
 </body>

@@ -169,16 +169,54 @@ class HomePageManager {
         }
     }
 
-    // --- NEWSLETTER SUBSCRIPTION (Placeholder for future use) ---
+    // --- NEWSLETTER SUBSCRIPTION (WITH LIVE TYPO VALIDATION) ---
+    // --- NEWSLETTER SUBSCRIPTION (WITH LIVE TYPO VALIDATION) ---
     setupNewsletter() {
         const form = document.getElementById('newsletter-form');
-        if (!form) return;
+        const emailInput = document.getElementById('newsletter-email');
+        const btn = document.getElementById('newsletter-btn');
+        const suggestionEl = document.getElementById('email-suggestion');
 
+        if (!form || !emailInput || !btn || !suggestionEl) return;
+
+        // --- 1. Define our most common domains ---
+        // This makes the suggestions much more accurate
+        const commonDomains = [
+            'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com',
+            'aol.com', 'icloud.com', 'live.com', 'msn.com'
+        ];
+
+        // --- 2. Live Typo Checking on Input ---
+        emailInput.addEventListener('input', function () {
+            // Use Mailcheck library
+            Mailcheck.run({
+                email: emailInput.value,
+                domains: commonDomains, // <-- THIS IS THE FIX
+
+                suggested: function (suggestion) {
+                    suggestionEl.innerHTML = `Did you mean <strong id="suggestion-link">${suggestion.full}</strong>?`;
+                    suggestionEl.style.display = 'block';
+                },
+                empty: function () {
+                    suggestionEl.style.display = 'none';
+                }
+            });
+        });
+
+        // --- 3. Click handler for the suggestion (Same as before) ---
+        suggestionEl.addEventListener('click', (e) => {
+            if (e.target.id === 'suggestion-link') {
+                emailInput.value = e.target.textContent;
+                suggestionEl.style.display = 'none';
+                emailInput.focus();
+            }
+        });
+
+        // --- 4. Form Submit Handler (Same as before) ---
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const emailInput = document.getElementById('newsletter-email');
-            const btn = document.getElementById('newsletter-btn');
             const originalBtnHtml = btn.innerHTML;
+            suggestionEl.style.display = 'none';
 
             if (!emailInput.value || !emailInput.value.includes('@')) {
                 if (window.flashNotification) window.flashNotification.showError('Invalid Email', 'Please enter a valid email address.');
@@ -189,10 +227,9 @@ class HomePageManager {
                 btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subscribing...';
                 btn.disabled = true;
 
-                // Assuming you have a 'subscriptions' table. If not, create it or remove this block.
                 const { error } = await supabase
                     .from('subscriptions')
-                    .insert([{ email: emailInput.value }]);
+                    .insert([{ email: emailInput.value.toLowerCase().trim() }]);
 
                 if (error) {
                     if (error.code === '23505') throw new Error("You are already subscribed!");

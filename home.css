@@ -511,7 +511,7 @@
 /* ===== QUICK LINKS SECTION ===== */
 /* ===== QUICK LINKS SECTION (Tricolor Themed) ===== */
 .quick-links-section {
-    background: var(--bg-elevated);
+    /* background: var(--bg-elevated); */
     /* Changed to elevated white for better contrast */
     padding: 100px 0;
 }
@@ -1449,6 +1449,8 @@
     color: var(--green-dark);
 }
 
+
+
 /* ========================================= */
 /* ===== MODERN GENERIC MODAL STYLES ===== */
 /* ========================================= */
@@ -1624,27 +1626,1456 @@
     box-shadow: var(--shadow-md);
 }
 
-/* Mobile adjustments for Modal */
-@media (max-width: 640px) {
+/* --- 7. MODERN PARTNERS CAROUSEL (FULL WIDTH) --- */
+/* Override .section-container for full-width background */
+.partners-section.section-container {
+    max-width: none;
+    padding: 100px 0;
+    /* Standardized padding */
+    margin: 0;
+    background-color: #f9fafb;
+    /* Clean fallback */
+    position: relative;
+    overflow: hidden;
+    /* Important for the slider */
+}
+
+/* Fades on the sides for a clean scrolling effect */
+.partners-section::before,
+.partners-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 150px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.partners-section::before {
+    left: 0;
+    background: linear-gradient(to right, #f9fafb, transparent);
+}
+
+.partners-section::after {
+    right: 0;
+    background: linear-gradient(to left, #f9fafb, transparent);
+}
+
+/* Constrain inner content */
+.partners-section .section-header {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+}
+
+.partners-slider {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow: hidden;
+}
+
+.slider-track {
+    display: flex;
+    gap: 32px;
+    /* Spacing between cards */
+    width: max-content;
+    padding: 20px 0;
+    /* Add padding so shadows don't get cut off */
+}
+
+.track-left {
+    animation: scrollLeft 40s linear infinite;
+    /* Slowed down animation */
+}
+
+/* Hover to pause */
+.slider-track:hover {
+    animation-play-state: paused;
+}
+
+/* Modern "Glass" Partner Card */
+.partner-logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.9);
+    /* Glass effect */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 24px 32px;
+    border-radius: var(--radius-xl);
+    /* Modern rounded rectangle */
+    color: var(--text-secondary);
+    font-weight: 700;
+    font-size: 1.2rem;
+    white-space: nowrap;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--white-primary);
+    transition: all 0.3s ease;
+}
+
+.partner-logo:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-xl);
+    background: var(--white-primary);
+}
+
+.partner-logo i {
+    font-size: 1.8rem;
+    transition: all 0.3s ease;
+}
+
+/* --- Tricolor Accents for Partners --- */
+/* 1: Saffron */
+.partner-logo:nth-child(3n+1) i {
+    color: var(--saffron-primary);
+}
+
+.partner-logo:nth-child(3n+1) span {
+    color: var(--saffron-dark);
+}
+
+.partner-logo:nth-child(3n+1):hover {
+    border-color: var(--saffron-light);
+}
+
+/* 2: Navy */
+.partner-logo:nth-child(3n+2) i {
+    color: var(--navy-chakra);
+}
+
+.partner-logo:nth-child(3n+2) span {
+    color: var(--navy-dark);
+}
+
+.partner-logo:nth-child(3n+2):hover {
+    border-color: var(--color-info-pale);
+}
+
+/* 3: Green */
+.partner-logo:nth-child(3n+3) i {
+    color: var(--green-primary);
+}
+
+.partner-logo:nth-child(3n+3) span {
+    color: var(--green-dark);
+}
+
+.partner-logo:nth-child(3n+3):hover {
+    border-color: var(--green-pale);
+}
+
+
+@keyframes scrollLeft {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* --- 8. MODERN NEWSLETTER (FINAL LIGHT THEME) --- */
+
+/* --- 8. MODERN NEWSLETTER (FINAL CLEAN WHITE) --- */
+
+.newsletter-section {
+    padding: 100px 20px;
+    background: var(--white-warm);
+    color: var(--text-primary);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px dashed var(--border-light);
+}
+
+.newsletter-container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    background: var(--white-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-xl);
+    padding: 56px;
+    transition: all 0.3s ease;
+}
+
+.newsletter-container:hover {
+    box-shadow: var(--shadow-2xl);
+    transform: translateY(-5px);
+}
+
+.newsletter-content h2 {
+    color: var(--navy-chakra);
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 0 16px 0;
+}
+
+.newsletter-content p {
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+    margin: 0 0 40px 0;
+    line-height: 1.6;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ======================================================= */
+/* ===== NEWSLETTER FORM - ROBUST PILL DESIGN FIX ===== */
+/* ======================================================= */
+
+/* 1. The Parent "Pill" Container */
+.newsletter-form .input-group {
+    display: flex;
+    /* REMOVE padding and background */
+    padding: 0;
+    background: transparent;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-light);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    /* This is key to clip the children */
+    box-shadow: var(--shadow-md);
+}
+
+.newsletter-form .input-group:focus-within {
+    border-color: var(--saffron-primary);
+    box-shadow: 0 0 0 3px var(--saffron-pale);
+}
+
+/* 2. The Input Field (Left Side) */
+.newsletter-form input {
+    flex-grow: 1;
+    border: none;
+    padding: 16px 24px;
+    font-size: 1.1rem;
+    outline: none;
+    /* ADD background and border-radius */
+    background: var(--bg-subtle);
+    color: var(--text-primary);
+    font-weight: 500;
+    /* This rounds the left corners */
+    border-radius: var(--radius-full) 0 0 var(--radius-full);
+    transition: background-color 0.3s ease;
+}
+
+/* On focus, make the input white */
+.newsletter-form .input-group:focus-within input {
+    background: var(--white-primary);
+}
+
+.newsletter-form input::placeholder {
+    color: var(--text-muted);
+}
+
+/* 3. The Button (Right Side) */
+.newsletter-form .btn-primary {
+    /* Keep the full radius, as it's the right-most item */
+    border-radius: var(--radius-full);
+    padding: 16px 40px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gradient-saffron);
+    box-shadow: 0 4px 15px rgba(255, 153, 51, 0.3);
+    border: none;
+    color: var(--white-primary);
+    /* Add a left border to separate from input */
+    border-left: 1px solid var(--border-light);
+    /* Remove the default left rounding */
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.newsletter-form .btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 153, 51, 0.5);
+}
+
+/* Loading/spinner styles for the button */
+.newsletter-form .btn-primary:disabled {
+    opacity: 0.8;
+    background: var(--saffron-dark);
+    cursor: wait;
+}
+
+.newsletter-form .btn-primary .fa-spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* ======================================================= */
+/* ===== FIX: BROWSER AUTOFILL STYLES (Final) ===== */
+/* ======================================================= */
+
+/* 1. Autofill when NOT focused */
+.newsletter-form input:-webkit-autofill,
+.newsletter-form input:-webkit-autofill:hover,
+.newsletter-form input:-webkit-autofill:active {
+    box-shadow: 0 0 0 40px var(--bg-subtle) inset !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+    background-color: transparent !important;
+    transition: background-color 5000s ease-in-out 0s;
+    /* IMPORTANT: Match the input's border-radius */
+    border-radius: var(--radius-full) 0 0 var(--radius-full) !important;
+}
+
+/* 2. Autofill WHEN focused */
+.newsletter-form input:-webkit-autofill:focus {
+    box-shadow: 0 0 0 40px var(--white-primary) inset !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+    /* IMPORTANT: Match the input's border-radius */
+    border-radius: var(--radius-full) 0 0 var(--radius-full) !important;
+}
+
+/* ======================================================= */
+/* ===== 10. EMAIL SUGGESTION STYLES ===== */
+/* ======================================================= */
+
+.email-suggestion {
+    display: none;
+    /* Hidden by default */
+    text-align: left;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    /* This margin pushes it below the input field */
+    margin: 8px 0 0 20px;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+/* This makes the "Did you mean..." part clickable */
+.email-suggestion #suggestion-link {
+    color: var(--saffron-dark);
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* ================================================================ */
+/* ===== RESPONSIVE MEDIA QUERIES FOR NEW HOME SECTIONS ===== */
+/* ================================================================ */
+/* Add these to your home.css file */
+
+/* ===== TABLET - 768px and below ===== */
+/* ===== TABLET - 768px and below ===== */
+@media (max-width: 768px) {
+
+    /* ===== Events Section ===== */
+    .events-section.section-container {
+        padding: 60px 0;
+    }
+
+    .events-section .section-header,
+    .events-grid,
+    .events-section .loading-spinner,
+    .events-section .empty-state {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .events-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .event-card {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .event-image {
+        height: 200px;
+    }
+
+    .event-date-badge {
+        top: 12px;
+        right: 12px;
+        padding: 8px 12px;
+    }
+
+    .event-date-badge .day {
+        font-size: 1.35rem;
+    }
+
+    .event-date-badge .month {
+        font-size: 0.8rem;
+    }
+
+    .event-details {
+        padding: 28px;
+    }
+
+    .event-title {
+        font-size: 1.35rem;
+        margin-bottom: 14px;
+    }
+
+    .event-info {
+        gap: 10px;
+        font-size: 0.9rem;
+    }
+
+    .event-info span {
+        padding: 5px 10px;
+    }
+
+    .event-description {
+        font-size: 0.95rem;
+    }
+
+    .empty-state {
+        padding: 50px 20px;
+        font-size: 1.15rem;
+    }
+
+    .empty-state i {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+    }
+
+    /* ===== Executives Section ===== */
+    .executives-section.section-container {
+        padding: 60px 0;
+    }
+
+    .executives-grid {
+        padding: 0 16px;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 32px;
+    }
+
+    .exec-card {
+        padding: 40px 28px;
+    }
+
+    .exec-image {
+        width: 140px;
+        height: 140px;
+        margin-bottom: 24px;
+    }
+
+    .exec-name {
+        font-size: 1.45rem;
+        margin-bottom: 10px;
+    }
+
+    .exec-role {
+        font-size: 0.85rem;
+        padding: 7px 14px;
+    }
+
+    /* ===== Partners Section (UPDATED) ===== */
+    .partners-section.section-container {
+        padding: 60px 0;
+    }
+
+    .partners-section::before,
+    .partners-section::after {
+        width: 100px;
+    }
+
+    .partners-section .section-header {
+        padding: 0 16px;
+    }
+
+    .slider-track {
+        gap: 20px;
+        /* Reduced from 24px */
+        padding: 16px 0;
+    }
+
+    .partner-logo {
+        padding: 16px 20px;
+        /* Reduced from 20px 28px */
+        font-size: 1rem;
+        /* Reduced from 1.1rem */
+        gap: 10px;
+        /* Reduced from 14px */
+    }
+
+    .partner-logo i {
+        font-size: 1.4rem;
+        /* Reduced from 1.6rem */
+    }
+
+    /* ===== Newsletter Section (FIXED for Tablet) ===== */
+    .newsletter-section {
+        padding: 60px 16px;
+    }
+
+    .newsletter-container {
+        padding: 44px;
+    }
+
+    .newsletter-content h2 {
+        font-size: 2.25rem;
+        margin-bottom: 14px;
+    }
+
+    .newsletter-content p {
+        font-size: 1.05rem;
+        margin-bottom: 36px;
+    }
+
+    /* 1. Reset the parent "pill" container */
+    .newsletter-form .input-group {
+        flex-direction: column;
+        overflow: visible;
+        gap: 12px;
+        /* Adds space between the input and button */
+
+        /* These are the missing rules that fix it: */
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    /* 2. Style the input as its own rounded element */
+    .newsletter-form input {
+        border-radius: var(--radius-full) !important;
+        /* Force override */
+        padding: 14px 20px;
+        font-size: 1rem;
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-light);
+        transition: all 0.3s ease;
+        /* ADDED TRANSITION */
+    }
+
+    /* 3. THIS IS THE FIX: Add focus style directly to the input */
+    .newsletter-form input:focus {
+        border-color: var(--saffron-primary);
+        box-shadow: 0 0 0 3px var(--saffron-pale);
+        background: var(--white-primary);
+    }
+
+    /* 4. Style the button as its own rounded element */
+    .newsletter-form .btn-primary {
+        border-radius: var(--radius-full) !important;
+        /* Force override */
+        border-left: none;
+        padding: 14px 36px;
+        font-size: 1rem;
+        width: 100%;
+        justify-content: center;
+    }
+    .newsletter-form .input-group:focus-within {
+        border-color: transparent;
+        box-shadow: none;
+    }
+    /* 5. Fix autofill for the new rounded input */
+    .newsletter-form input:-webkit-autofill,
+    .newsletter-form input:-webkit-autofill:hover,
+    .newsletter-form input:-webkit-autofill:active,
+    .newsletter-form input:-webkit-autofill:focus {
+        border-radius: var(--radius-full) !important;
+    }
+
+    .email-suggestion {
+        margin: 12px 0 0 16px;
+        font-size: 0.85rem;
+    }
+
+    /* ===== Modal Adjustments ===== */
+    .modal-backdrop {
+        padding: 16px;
+    }
+
     .modal-content {
-        padding: 40px 24px;
-        margin: 20px;
+        padding: 40px 32px;
         max-height: 85vh;
+    }
+
+    .modal-exec-img {
+        width: 160px;
+        height: 160px;
+        margin-bottom: 28px;
+    }
+
+    .modal-exec-name {
+        font-size: 2rem;
+    }
+
+    .modal-exec-role {
+        font-size: 1rem;
+        padding: 7px 20px;
+        margin-bottom: 28px;
+    }
+
+    .modal-exec-bio {
+        padding: 20px;
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+
+    .modal-socials {
+        gap: 14px;
+        margin-top: 28px;
+        padding-top: 20px;
+    }
+
+    .modal-social-link {
+        width: 44px;
+        height: 44px;
+        font-size: 1.15rem;
+    }
+
+    /* ===== Section Headers (Global) ===== */
+    .section-header {
+        margin-bottom: 48px;
+    }
+
+    .section-header h2 {
+        font-size: 2.5rem;
+        margin-bottom: 14px;
+    }
+
+    .section-header p {
+        font-size: 1.1rem;
+    }
+
+    /* ===== Loading Spinner ===== */
+    .loading-spinner {
+        padding: 50px 0;
+    }
+
+    .spinner {
+        width: 45px;
+        height: 45px;
+        border-width: 3px;
+    }
+}
+
+/* ===== MOBILE - 480px and below ===== */
+/* ===== MOBILE - 480px and below ===== */
+/* ===== MOBILE - 480px and below ===== */
+@media (max-width: 480px) {
+
+    /* ===== Events Section ===== */
+    .events-section.section-container {
+        padding: 40px 0;
+    }
+
+    .events-section .section-header,
+    .events-grid,
+    .events-section .loading-spinner,
+    .events-section .empty-state {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .events-grid {
+        gap: 20px;
+    }
+
+    .event-card {
+        max-width: 100%;
+    }
+
+    .event-image {
+        height: 180px;
+    }
+
+    .event-date-badge {
+        top: 10px;
+        right: 10px;
+        padding: 6px 10px;
+    }
+
+    .event-date-badge .day {
+        font-size: 1.2rem;
+    }
+
+    .event-date-badge .month {
+        font-size: 0.75rem;
+        margin-top: 2px;
+    }
+
+    .event-details {
+        padding: 24px 20px;
+    }
+
+    .event-title {
+        font-size: 1.25rem;
+        margin-bottom: 12px;
+        line-height: 1.4;
+    }
+
+    .event-info {
+        gap: 8px;
+        font-size: 0.85rem;
+        margin-bottom: 16px;
+    }
+
+    .event-info span {
+        padding: 4px 8px;
+        gap: 6px;
+    }
+
+    .event-description {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .empty-state {
+        padding: 40px 16px;
+        font-size: 1.05rem;
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+        margin-bottom: 16px;
+    }
+
+    /* ===== Executives Section ===== */
+    .executives-section.section-container {
+        padding: 40px 0;
+    }
+
+    .executives-grid {
+        padding: 0 12px;
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .exec-card {
+        padding: 36px 24px;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .exec-image {
+        width: 130px;
+        height: 130px;
+        margin-bottom: 20px;
+        border-width: 3px;
+        padding: 3px;
+    }
+
+    .exec-name {
+        font-size: 1.35rem;
+        margin-bottom: 10px;
+    }
+
+    .exec-role {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+        letter-spacing: 1px;
+    }
+
+    /* ===== Partners Section ===== */
+    .partners-section.section-container {
+        padding: 40px 0;
+    }
+
+    .partners-section::before,
+    .partners-section::after {
+        width: 60px;
+    }
+
+    .partners-section .section-header {
+        padding: 0 12px;
+    }
+
+    .slider-track {
+        gap: 20px;
+        padding: 14px 0;
+    }
+
+    .track-left {
+        animation: scrollLeft 35s linear infinite;
+    }
+
+    .partner-logo {
+        padding: 18px 24px;
+        font-size: 1rem;
+        gap: 12px;
+        min-width: 160px;
+    }
+
+    .partner-logo i {
+        font-size: 1.5rem;
+    }
+
+    /* ===== Newsletter Section (FIXED for 480px) ===== */
+    .newsletter-section {
+        padding: 40px 12px;
+    }
+
+    .newsletter-container {
+        padding: 36px 28px;
+    }
+
+    .newsletter-content h2 {
+        font-size: 1.85rem;
+        margin-bottom: 12px;
+    }
+
+    .newsletter-content p {
+        font-size: 0.95rem;
+        margin-bottom: 32px;
+        line-height: 1.5;
+    }
+
+    /* 1. Reset the parent "pill" container */
+    .newsletter-form .input-group {
+        flex-direction: column;
+        overflow: visible;
+        gap: 12px; /* Space between input and button */
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    /* 2. Style the input as its own rounded element */
+    .newsletter-form input {
+        border-radius: var(--radius-full) !important;
+        padding: 13px 18px;
+        font-size: 0.95rem;
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-light);
+        transition: all 0.3s ease; /* ADDED TRANSITION */
+    }
+    
+    /* 3. THIS IS THE FIX: Add focus style directly to the input */
+    .newsletter-form input:focus {
+        border-color: var(--saffron-primary);
+        box-shadow: 0 0 0 3px var(--saffron-pale);
+        background: var(--white-primary);
+    }
+
+    /* 4. Style the button as its own rounded element */
+    .newsletter-form .btn-primary {
+        border-radius: var(--radius-full) !important;
+        border-left: none;
+        padding: 13px 32px;
+        font-size: 0.95rem;
+        width: 100%;
+        justify-content: center;
+        gap: 8px;
+    }
+    .newsletter-form .input-group:focus-within {
+        border-color: transparent;
+        box-shadow: none;
+    }
+    /* 5. Fix autofill for the new rounded input */
+    .newsletter-form input:-webkit-autofill,
+    .newsletter-form input:-webkit-autofill:hover,
+    .newsletter-form input:-webkit-autofill:active,
+    .newsletter-form input:-webkit-autofill:focus {
+        border-radius: var(--radius-full) !important;
+    }
+
+    .email-suggestion {
+        margin: 10px 0 0 12px;
+        font-size: 0.8rem;
+    }
+
+    /* ===== Modal Adjustments ===== */
+    .modal-backdrop {
+        padding: 12px;
+    }
+
+    .modal-content {
+        padding: 32px 24px;
+        max-height: 82vh;
+    }
+
+    .modal-close {
+        top: 16px;
+        right: 16px;
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
     }
 
     .modal-exec-img {
         width: 140px;
         height: 140px;
         margin-bottom: 24px;
+        border-width: 3px;
+        padding: 4px;
     }
 
     .modal-exec-name {
         font-size: 1.75rem;
+        margin-bottom: 6px;
+    }
+
+    .modal-exec-role {
+        font-size: 0.95rem;
+        padding: 6px 18px;
+        margin-bottom: 24px;
+    }
+
+    .modal-exec-bio {
+        padding: 18px;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 18px;
+    }
+
+    .modal-socials {
+        gap: 12px;
+        margin-top: 24px;
+        padding-top: 18px;
+    }
+
+    .modal-social-link {
+        width: 42px;
+        height: 42px;
+        font-size: 1.1rem;
+    }
+
+    /* ===== Section Headers (Global) ===== */
+    .section-header {
+        margin-bottom: 36px;
+    }
+
+    .section-header h2 {
+        font-size: 1.95rem;
+        margin-bottom: 12px;
+        letter-spacing: -0.01em;
+    }
+
+    .section-header p {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    /* ===== Loading Spinner ===== */
+    .loading-spinner {
+        padding: 40px 0;
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border-width: 3px;
+    }
+
+    /* ===== Section Content Wrapper ===== */
+    .section-content-wrapper {
+        padding: 0 12px;
+    }
+    
+}
+
+/* ===== EXTRA SMALL MOBILE - 375px and below ===== */
+/* ===== EXTRA SMALL MOBILE - 375px and below ===== */
+/* ===== EXTRA SMALL MOBILE - 375px and below ===== */
+@media (max-width: 375px) {
+
+    /* ===== Events Section ===== */
+    .events-section.section-container {
+        padding: 36px 0;
+    }
+
+    .event-image {
+        height: 160px;
+    }
+
+    .event-date-badge {
+        padding: 5px 8px;
+    }
+
+    .event-date-badge .day {
+        font-size: 1.1rem;
+    }
+
+    .event-date-badge .month {
+        font-size: 0.7rem;
+    }
+
+    .event-details {
+        padding: 20px 16px;
+    }
+
+    .event-title {
+        font-size: 1.15rem;
+        margin-bottom: 10px;
+    }
+
+    .event-info {
+        font-size: 0.8rem;
+    }
+
+    .event-description {
+        font-size: 0.85rem;
+    }
+
+    .empty-state {
+        padding: 36px 12px;
+        font-size: 1rem;
+    }
+
+    .empty-state i {
+        font-size: 2.5rem;
+    }
+
+    /* ===== Executives Section ===== */
+    .executives-section.section-container {
+        padding: 36px 0;
+    }
+
+    .exec-card {
+        padding: 32px 20px;
+    }
+
+    .exec-image {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 18px;
+    }
+
+    .exec-name {
+        font-size: 1.25rem;
+        margin-bottom: 8px;
+    }
+
+    .exec-role {
+        font-size: 0.75rem;
+        padding: 5px 10px;
+    }
+
+    /* ===== Partners Section ===== */
+    .partners-section.section-container {
+        padding: 36px 0;
+    }
+
+    .partners-section::before,
+    .partners-section::after {
+        width: 40px;
+    }
+
+    .slider-track {
+        gap: 16px;
+    }
+
+    .partner-logo {
+        padding: 16px 20px;
+        font-size: 0.95rem;
+        gap: 10px;
+        min-width: 140px;
+    }
+
+    .partner-logo i {
+        font-size: 1.4rem;
+    }
+
+    /* ===== Newsletter Section (FIXED for 375px) ===== */
+    .newsletter-section {
+        padding: 36px 10px;
+    }
+
+    .newsletter-container {
+        padding: 32px 24px;
+    }
+
+    .newsletter-content h2 {
+        font-size: 1.7rem;
+        margin-bottom: 10px;
+    }
+
+    .newsletter-content p {
+        font-size: 0.9rem;
+        margin-bottom: 28px;
+    }
+
+    /* 1. Reset the parent "pill" container */
+    .newsletter-form .input-group {
+        flex-direction: column;
+        overflow: visible;
+        gap: 10px; /* Tighter gap for small screens */
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    /* 2. Style the input as its own rounded element */
+    .newsletter-form input {
+        border-radius: var(--radius-full) !important;
+        padding: 12px 16px;
+        font-size: 0.9rem;
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-light);
+        transition: all 0.3s ease; /* ADDED TRANSITION */
+    }
+    
+    /* 3. THIS IS THE FIX: Add focus style directly to the input */
+    .newsletter-form input:focus {
+        border-color: var(--saffron-primary);
+        box-shadow: 0 0 0 3px var(--saffron-pale);
+        background: var(--white-primary);
+    }
+
+    /* 4. Style the button as its own rounded element */
+    .newsletter-form .btn-primary {
+        border-radius: var(--radius-full) !important;
+        border-left: none;
+        padding: 12px 28px;
+        font-size: 0.9rem;
+        width: 100%;
+        justify-content: center;
+    }
+    .newsletter-form .input-group:focus-within {
+        border-color: transparent;
+        box-shadow: none;
+    }
+    
+    /* 5. Fix autofill for the new rounded input */
+    .newsletter-form input:-webkit-autofill,
+    .newsletter-form input:-webkit-autofill:hover,
+    .newsletter-form input:-webkit-autofill:active,
+    .newsletter-form input:-webkit-autofill:focus {
+        border-radius: var(--radius-full) !important;
+    }
+
+    .email-suggestion {
+        margin: 8px 0 0 10px;
+        font-size: 0.75rem;
+    }
+
+    /* ===== Modal Adjustments ===== */
+    .modal-content {
+        padding: 28px 20px;
+    }
+
+    .modal-close {
+        width: 34px;
+        height: 34px;
+        font-size: 1rem;
+    }
+
+    .modal-exec-img {
+        width: 130px;
+        height: 130px;
+        margin-bottom: 20px;
+    }
+
+    .modal-exec-name {
+        font-size: 1.6rem;
+    }
+
+    .modal-exec-role {
+        font-size: 0.9rem;
+        padding: 5px 16px;
+        margin-bottom: 20px;
     }
 
     .modal-exec-bio {
         padding: 16px;
+        font-size: 0.9rem;
+        margin-bottom: 16px;
+    }
+
+    .modal-socials {
+        gap: 10px;
+        margin-top: 20px;
+        padding-top: 16px;
+    }
+
+    .modal-social-link {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    /* ===== Section Headers (Global) ===== */
+    .section-header h2 {
+        font-size: 1.75rem;
+    }
+
+    .section-header p {
+        font-size: 0.9rem;
+    }
+
+    /* ===== Loading Spinner ===== */
+    .spinner {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* ===== LANDSCAPE MODE (Mobile/Tablet) ===== */
+@media (max-height: 600px) and (orientation: landscape) {
+
+    /* Reduce vertical spacing in landscape */
+    .events-section.section-container,
+    .executives-section.section-container,
+    .partners-section.section-container,
+    .newsletter-section {
+        padding: 40px 20px;
+    }
+
+    .section-header {
+        margin-bottom: 32px;
+    }
+
+    .section-header h2 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .section-header p {
         font-size: 0.95rem;
+    }
+
+    .event-image {
+        height: 150px;
+    }
+
+    .event-details {
+        padding: 20px;
+    }
+
+    .exec-card {
+        padding: 32px 24px;
+    }
+
+    .exec-image {
+        width: 110px;
+        height: 110px;
+        margin-bottom: 16px;
+    }
+
+    .newsletter-container {
+        padding: 32px;
+    }
+
+    .newsletter-content h2 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+
+    .newsletter-content p {
+        margin-bottom: 24px;
+    }
+
+    .modal-content {
+        max-height: 85vh;
+        padding: 32px 28px;
+    }
+
+    .modal-exec-img {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 20px;
+    }
+
+    .modal-exec-name {
+        font-size: 1.6rem;
+    }
+
+    .modal-exec-bio {
+        padding: 16px;
+        font-size: 0.9rem;
+    }
+}
+
+/* ===== VERY LARGE SCREENS - 1920px and above ===== */
+@media (min-width: 1920px) {
+
+    /* Prevent elements from becoming too large */
+    .events-section .section-header,
+    .events-grid,
+    .executives-grid,
+    .partners-section .section-header {
+        max-width: 1400px;
+    }
+
+    .newsletter-container {
+        max-width: 900px;
+        padding: 64px;
+    }
+
+    .newsletter-content h2 {
+        font-size: 2.75rem;
+    }
+
+    .newsletter-content p {
+        font-size: 1.25rem;
+    }
+
+    .newsletter-form .input-group {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .newsletter-form input {
+        font-size: 1.15rem;
+        padding: 18px 26px;
+    }
+
+    .newsletter-form .btn-primary {
+        font-size: 1.15rem;
+        padding: 18px 44px;
+    }
+
+    .event-card {
+        max-width: 450px;
+    }
+
+    .exec-card {
+        max-width: 380px;
+    }
+
+    .modal-content {
+        max-width: 650px;
+        padding: 56px 48px;
+    }
+
+    .modal-exec-img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .modal-exec-name {
+        font-size: 2.5rem;
+    }
+
+    .modal-exec-bio {
+        font-size: 1.15rem;
+        padding: 28px;
+    }
+}
+
+/* ===== TOUCH DEVICE OPTIMIZATIONS ===== */
+@media (hover: none) and (pointer: coarse) {
+
+    /* Increase touch targets */
+    .event-card {
+        min-height: 48px;
+    }
+
+    .exec-card {
+        min-height: 48px;
+    }
+
+    .partner-logo {
+        min-height: 48px;
+    }
+
+    .newsletter-form input {
+        min-height: 48px;
+    }
+
+    .newsletter-form .btn-primary {
+        min-height: 48px;
+    }
+
+    .modal-close {
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    .modal-social-link {
+        min-width: 48px;
+        min-height: 48px;
+    }
+
+    /* Simplify hover effects for touch */
+    .event-card:hover {
+        transform: translateY(-6px) scale(1.01);
+    }
+
+    .exec-card:hover {
+        transform: translateY(-6px);
+    }
+
+    .partner-logo:hover {
+        transform: translateY(-4px) scale(1.01);
+    }
+
+    /* Active states are more important than hover on touch */
+    .event-card:active {
+        transform: scale(0.98);
+    }
+
+    .exec-card:active {
+        transform: scale(0.98);
+    }
+
+    .newsletter-form .btn-primary:active {
+        transform: scale(0.97);
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+
+    .events-section.section-container,
+    .executives-section.section-container,
+    .partners-section.section-container,
+    .newsletter-section {
+        background: white !important;
+        background-image: none !important;
+    }
+
+    .partners-section::before,
+    .partners-section::after {
+        display: none;
+    }
+
+    .slider-track {
+        animation: none;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .modal-backdrop {
+        display: none !important;
+    }
+
+    .loading-spinner {
+        display: none !important;
+    }
+
+    .newsletter-form {
+        display: none;
+    }
+
+    .event-card,
+    .exec-card,
+    .partner-logo {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+
+    .slider-track {
+        animation: none !important;
+    }
+
+    .event-card,
+    .exec-card,
+    .partner-logo,
+    .newsletter-container,
+    .modal-content {
+        transition: none !important;
+    }
+
+    .event-image img {
+        transition: none !important;
+    }
+
+    .modal-backdrop.active .modal-content {
+        transition: opacity 0.2s ease !important;
     }
 }
 
