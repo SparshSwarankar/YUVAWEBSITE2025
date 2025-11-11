@@ -3,7 +3,7 @@
 class PhotoGalleryManager {
     constructor() {
         this.events = [];
-        this.vimarshYears = [];
+        this.eventYears = {}; // Changed from vimarshYears to hold years for ALL events
 
         // State management
         this.state = {
@@ -124,38 +124,84 @@ class PhotoGalleryManager {
         }, 100));
     }
 
-    // ===== DATA GENERATION =====
+    // ===== DATA GENERATION (UPDATED) =====
     async generateDataset() {
         try {
-            const response = await fetch('./images.json');
+            // Path to your JSON file. Adjust if it's in a different directory.
+            const response = await fetch('/Gallary/images.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const imagesData = await response.json();
+
             this.state.items = [];
             this.state.availableEvents = new Set();
-            this.vimarshYears = [];
-            Object.keys(imagesData).forEach(yearKey => {
-                const yearData = imagesData[yearKey];
-                let eventName = yearKey.includes('vimarsh') ? "Vimarsh" : (yearKey.charAt(0).toUpperCase() + yearKey.slice(1));
+            this.eventYears = {}; // REPLACEMENT for vimarshYears
+
+            const yearRegex = /(20\d{2})$/; // Regex to find a year like 2022, 2025 at the end
+
+            Object.keys(imagesData).forEach(key => {
+                const eventData = imagesData[key];
+                let eventName = key;
+                let eventYear = eventData.year || null; // Use year from JSON data first
+
+                const match = key.match(yearRegex);
+
+                if (match) {
+                    // Found a year in the key, e.g., "Bharat Parv2025" or "vimarsh2022"
+                    eventName = key.substring(0, match.index).trim(); // "Bharat Parv" or "vimarsh"
+                    eventYear = parseInt(match[1], 10); // 2025 or 2022
+                }
+
+                // Specific override for "vimarsh" keys to ensure grouping
+                if (key.toLowerCase().includes('vimarsh')) {
+                    eventName = "Vimarsh";
+                } else {
+                    // Auto-capitalize other event names like "Bharat Parv"
+                    eventName = eventName.split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
+                }
+
                 this.state.availableEvents.add(eventName);
-                if (yearData.year && !this.vimarshYears.includes(yearData.year)) { this.vimarshYears.push(yearData.year); }
-                yearData.images.forEach((image) => {
+
+                // Store the year if it exists
+                if (eventYear) {
+                    if (!this.eventYears[eventName]) {
+                        this.eventYears[eventName] = new Set();
+                    }
+                    this.eventYears[eventName].add(eventYear);
+                }
+
+                // Add images to the main list
+                eventData.images.forEach((image) => {
                     this.state.items.push({
-                        id: this.state.items.length + 1, event: eventName, year: yearData.year, src: image.src,
+                        id: this.state.items.length + 1,
+                        event: eventName, // "Vimarsh" or "Bharat Parv"
+                        year: eventYear,  // 2022, 2023, 2025...
+                        src: image.src,
                         height: 220 + Math.floor(this.pseudoRandom(this.state.items.length * 7) * 220),
-                        alt: image.alt, category: image.category
+                        alt: image.alt,
+                        category: image.category
                     });
                 });
             });
-            this.vimarshYears.sort((a, b) => b - a);
-            this.events = Array.from(this.state.availableEvents);
+
+            // Sort event names alphabetically for the filter chips
+            this.events = Array.from(this.state.availableEvents).sort();
+
             this.showSuccess('Gallery Ready', `Photo gallery initialized successfully`);
         } catch (error) {
-            console.error('Failed to load images.json, using fallback:', error);
+            console.error('Failed to load images.json:', error);
+            this.showError('Data Error', 'Could not load photo data. Please check images.json.');
             this.generateFallbackDataset();
         }
     }
 
+
     generateFallbackDataset() {
-        this.state.items = []; this.state.availableEvents = new Set(); this.vimarshYears = []; this.events = [];
+        this.state.items = [];
+        this.state.availableEvents = new Set();
+        this.eventYears = {}; // Changed from vimarshYears
+        this.events = [];
         this.showWarning('Fallback Mode', 'No images available - JSON file could not be loaded');
     }
 
@@ -184,16 +230,28 @@ class PhotoGalleryManager {
         });
     }
 
+    // ===== (UPDATED) =====
     renderYearChips() {
         if (!this.elements.yearFilters) return;
         this.elements.yearFilters.innerHTML = '';
-        if (this.state.activeEvent !== 'Vimarsh') return;
+
+        // NEW LOGIC: Check for years associated with the *active* event
+        const activeEventYears = this.eventYears[this.state.activeEvent];
+        if (!activeEventYears || activeEventYears.size === 0) {
+            return; // Hide year filters if no years for this event
+        }
+        // END NEW LOGIC
+
         const allBtn = document.createElement('button');
         allBtn.className = `chip${this.state.activeYear === null ? ' active' : ''}`;
         allBtn.textContent = 'All Years';
         allBtn.addEventListener('click', () => this.onYearChange(null));
         this.elements.yearFilters.appendChild(allBtn);
-        this.vimarshYears.forEach((year) => {
+
+        // NEW LOGIC: Get and sort years from the active event's set
+        const years = Array.from(activeEventYears).sort((a, b) => b - a);
+        years.forEach((year) => {
+            // END NEW LOGIC
             const btn = document.createElement('button');
             btn.className = `chip${this.state.activeYear === year ? ' active' : ''}`;
             btn.textContent = String(year);
@@ -208,7 +266,7 @@ class PhotoGalleryManager {
         this.state.activeEvent = label;
         this.state.activeYear = null;
         this.renderEventChips();
-        this.renderYearChips();
+        this.renderYearChips(); // This will now correctly show/hide years
         this.applyFilters(true);
         this.showInfo('Filter Applied', `Showing photos from ${label}`);
     }
@@ -222,6 +280,7 @@ class PhotoGalleryManager {
         this.showInfo('Year Filter Applied', `Showing ${this.state.activeEvent} photos from ${yearText}`);
     }
 
+    // ===== (UPDATED) =====
     applyFilters(reset = false) {
         if (reset) {
             this.state.page = 0;
@@ -241,13 +300,20 @@ class PhotoGalleryManager {
         if (this.state.availableEvents && this.state.availableEvents.has(this.state.activeEvent)) {
             this.state.filtered = this.state.items.filter((item) => {
                 if (item.event !== this.state.activeEvent) return false;
-                if (this.state.activeEvent === 'Vimarsh' && this.state.activeYear !== null) { return item.year === this.state.activeYear; }
+
+                // NEW LOGIC: Generalized year filtering
+                const hasYearFilters = this.eventYears[this.state.activeEvent] && this.eventYears[this.state.activeEvent].size > 0;
+                if (hasYearFilters && this.state.activeYear !== null) {
+                    return item.year === this.state.activeYear;
+                }
+                // END NEW LOGIC
+
                 return true;
             });
 
             this.updateCounts(0, this.state.filtered.length);
 
-            // **FIX:** Set up and show the progress bar instead of skeletons
+            // Set up and show the progress bar
             this.state.imagesToLoadInBatch = Math.min(this.state.filtered.length, this.state.pageSize);
             this.state.imagesLoadedInBatch = 0;
             if (this.state.imagesToLoadInBatch > 0) {
@@ -264,11 +330,11 @@ class PhotoGalleryManager {
     }
 
     showPlaceholderMessage() {
-        this.elements.masonry.innerHTML = `<div style="column-span: all; text-align: center; padding: 60px 20px; background: var(--white); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); border: 2px dashed var(--gray-300); margin: 0 auto; max-width: 500px;"><i class="fas fa-images" style="font-size: 4rem; color: var(--gray-400); margin-bottom: 20px;"></i><h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-700); margin-bottom: 12px;">Please Select an Event</h3><p style="font-size: 1rem; color: var(--gray-600); margin-bottom: 0;">Choose an event from the filters above to view photos</p></div>`;
+        this.elements.masonry.innerHTML = `<div style="column-span: all; text-align: center; padding: 60px 20px; background: var(--bg-elevated); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); border: 2px dashed var(--border-light); margin: 0 auto; max-width: 500px;"><i class="fas fa-images" style="font-size: 4rem; color: var(--text-muted); margin-bottom: 20px;"></i><h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">Please Select an Event</h3><p style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 0;">Choose an event from the filters above to view photos</p></div>`;
     }
 
     showNoImagesMessage() {
-        this.elements.masonry.innerHTML = `<div style="column-span: all; text-align: center; padding: 60px 20px; background: var(--white); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); border: 2px dashed var(--gray-300); margin: 0 auto; max-width: 500px;"><i class="fas fa-image-slash" style="font-size: 4rem; color: var(--gray-400); margin-bottom: 20px;"></i><h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-700); margin-bottom: 12px;">No Images Available</h3><p style="font-size: 1rem; color: var(--gray-600); margin-bottom: 0;">This event doesn't have any photos yet</p><p style="font-size: 0.875rem; color: var(--gray-500); margin-top: 8px; margin-bottom: 0;">Try selecting "Vimarsh" to view available photos</p></div>`;
+        this.elements.masonry.innerHTML = `<div style="column-span: all; text-align: center; padding: 60px 20px; background: var(--bg-elevated); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); border: 2px dashed var(--border-light); margin: 0 auto; max-width: 500px;"><i class="fas fa-eye-slash" style="font-size: 4rem; color: var(--text-muted); margin-bottom: 20px;"></i><h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">No Images Available</h3><p style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 0;">There are no photos for this selection yet.</p></div>`;
     }
 
     updateCounts(shown, total) {
@@ -276,19 +342,23 @@ class PhotoGalleryManager {
         if (this.elements.totalCount) this.elements.totalCount.textContent = String(total);
     }
 
+    // ===== (UPDATED) =====
     renderActiveMeta() {
         if (!this.elements.activeFilters) return;
         if (!this.state.activeEvent) { this.elements.activeFilters.textContent = 'No event selected'; return; }
         const parts = [this.state.activeEvent];
-        if (this.state.activeEvent === 'Vimarsh' && this.state.activeYear) { parts.push(String(this.state.activeYear)); }
+
+        // NEW LOGIC: Generalized for any event with years
+        const hasYearFilters = this.eventYears[this.state.activeEvent] && this.eventYears[this.state.activeEvent].size > 0;
+        if (hasYearFilters && this.state.activeYear) {
+            // END NEW LOGIC
+            parts.push(String(this.state.activeYear));
+        }
         if (this.state.availableEvents && !this.state.availableEvents.has(this.state.activeEvent)) { parts.push('(No images)'); }
         this.elements.activeFilters.textContent = parts.join(' · ');
     }
 
     // ===== LOADING AND RENDERING =====
-    // **FIX:** renderSkeletons is no longer used
-    // renderSkeletons(count) { ... }
-
     createCard(item) {
         const card = document.createElement('article');
         card.className = 'card';
@@ -300,7 +370,7 @@ class PhotoGalleryManager {
         img.decoding = 'async';
         img.style.aspectRatio = '4 / 3';
 
-        // **FIX:** Add listeners that update the progress bar
+        // Add listeners that update the progress bar
         img.addEventListener('error', () => {
             console.warn(`Failed to load image: ${item.src}`);
             this.handleImageLoadAttempt();
@@ -330,7 +400,6 @@ class PhotoGalleryManager {
         }
     }
 
-    // **FIX:** Simplified and faster loading logic
     loadNextPage() {
         if (this.state.cursor >= this.state.filtered.length) return;
         const start = this.state.cursor;
@@ -355,10 +424,7 @@ class PhotoGalleryManager {
         }
     }
 
-    // **FIX:** Removed slow validateImageUrl function
-    // async validateImageUrl(url) { ... }
-
-    // **FIX:** New helper functions for the progress bar
+    // ===== New helper functions for the progress bar =====
     handleImageLoadAttempt() {
         if (this.state.page > 1) return; // Only run progress bar for the first page load
         if (this.state.imagesLoadedInBatch < this.state.imagesToLoadInBatch) {

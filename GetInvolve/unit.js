@@ -352,6 +352,44 @@ class SupabaseService {
             return { success: false, error: 'A network error occurred.' };
         }
     }
+    static async toggleCollegeStatus(collegeId, newStatus) {
+        try {
+            const params = new URLSearchParams({
+                action: 'colleges',
+                method: 'update',
+                id: collegeId,
+                is_active: newStatus
+            }).toString();
+
+            // Using GET as it's common in this file
+            const response = await fetch(`${GAS_WEB_APP_URL}?${params}`);
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                return { success: true };
+            }
+            return { success: false, error: result.error || 'Failed to update status.' };
+        } catch (error) {
+            console.error("Toggle college status error:", error);
+            return { success: false, error: 'A network error occurred.' };
+        }
+    }
+}
+
+// ===== UTILITY FUNCTIONS =====
+function togglePasswordVisibility() {
+    const passwordInput = document.getElementById('login-password');
+    const toggleBtn = document.getElementById('password-toggle');
+
+    if (!passwordInput || !toggleBtn) return;
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+    } else {
+        passwordInput.type = 'password';
+        toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
+    }
 }
 
 // ===== AUTHENTICATION MANAGER =====
@@ -658,28 +696,38 @@ class AuthManager {
             if (sessionResp && sessionResp.session && sessionResp.session.user) {
                 const authUser = sessionResp.session.user;
                 const email = authUser.email || (authUser.user_metadata && authUser.user_metadata.email) || '';
-                // Default to viewer; upgrade if present in admin_users
-                let resolvedRole = 'viewer';
+
+                // Check if email is registered in admin_users table
+                let adminMatch = null;
                 try {
                     const {
-                        data: adminMatch
+                        data: matchData
                     } = await supabase
                         .from('admin_users')
                         .select('role, zone, college_id, full_name')
                         .eq('email', email)
                         .maybeSingle();
-                    if (adminMatch) {
-                        resolvedRole = adminMatch.role || 'viewer';
-                    }
+                    adminMatch = matchData;
                 } catch (_) { }
+
+                // If no admin record found, show access denied
+                if (!adminMatch) {
+                    flashNotification.showError('Access Denied', 'Your email is not registered as an admin. Please contact the administrator.');
+                    // Sign out the user
+                    try {
+                        await supabase.auth.signOut();
+                    } catch (_) { }
+                    this.showAccessDenied();
+                    return;
+                }
 
                 this.currentUser = {
                     id: authUser.id,
                     email: email,
-                    full_name: (authUser.user_metadata && (authUser.user_metadata.full_name || authUser.user_metadata.name)) || 'User',
-                    role: resolvedRole,
-                    zone: '',
-                    college_id: null
+                    full_name: (authUser.user_metadata && (authUser.user_metadata.full_name || authUser.user_metadata.name)) || adminMatch.full_name || 'User',
+                    role: adminMatch.role || 'viewer',
+                    zone: adminMatch.zone || '',
+                    college_id: adminMatch.college_id || null
                 };
                 this.showAdminInterface();
                 return; // Exit after successful session check
@@ -719,6 +767,20 @@ class AuthManager {
         document.getElementById('access-denied').style.display = 'none';
         document.getElementById('zone-section').style.display = 'block';
 
+        // --- NEW CODE ---
+        // Get header elements
+        const loginBtn = document.getElementById('login-btn');
+        const pageTitle = document.querySelector('.page-title');
+        const toggles = document.querySelectorAll('.toggle-btn, .hamburger-menu');
+
+        // Logged-in state: Hide login, HIDE title, show toggles
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (pageTitle) pageTitle.style.display = 'none'; // <-- THIS LINE IS UPDATED
+
+        // Show toggles. The main style.css will handle their responsive display.
+        toggles.forEach(el => el.style.display = 'block');
+        // --- END NEW CODE ---
+
         // Update user info
         if (this.currentUser) {
             document.getElementById('admin-name').textContent = this.currentUser.full_name;
@@ -741,6 +803,18 @@ class AuthManager {
     showAccessDenied() {
         document.getElementById('access-denied').style.display = 'block';
         document.getElementById('zone-section').style.display = 'none';
+
+        // --- NEW CODE ---
+        // Get header elements
+        const loginBtn = document.getElementById('login-btn');
+        const pageTitle = document.querySelector('.page-title');
+        const toggles = document.querySelectorAll('.toggle-btn, .hamburger-menu');
+
+        // Logged-out state: Show login, hide title, hide toggles
+        if (loginBtn) loginBtn.style.display = 'inline-flex';
+        if (pageTitle) pageTitle.style.display = 'none';
+        toggles.forEach(el => el.style.display = 'none');
+        // --- END NEW CODE ---
     }
 
     applyRolePermissions() {
@@ -967,6 +1041,7 @@ class ZoneManager {
 
         const currentUserRole = (authManager.currentUser && authManager.currentUser.role) || 'viewer';
         const canManage = currentUserRole === 'super_admin' || currentUserRole === 'zone_convener';
+        const isSuperAdmin = currentUserRole === 'super_admin'; // <-- NEW: Check for Super Admin
 
         this.colleges.forEach((college, idx) => {
             const card = document.createElement('div');
@@ -974,7 +1049,7 @@ class ZoneManager {
             card.dataset.collegeId = college.id;
             card.style.animationDelay = `${60 + idx * 50}ms`;
 
-            // --- START of new code ---
+            // --- START of MODIFIED code ---
             let cardActionsHTML = '';
             if (canManage) {
                 // Determine status class and title for the indicator
@@ -982,8 +1057,17 @@ class ZoneManager {
                 const statusTitle = college.is_active ? 'College is Active' : 'College is Inactive';
 
                 // Build the HTML for the status indicator and delete button
-                const statusIndicatorHTML = `<div class="college-status-indicator ${statusClass}" title="${statusTitle}"></div>`;
+                let statusIndicatorHTML = '';
                 const deleteButtonHTML = `<button class="college-delete-btn" title="Delete College"><i class="fas fa-trash"></i></button>`;
+
+                if (isSuperAdmin) {
+                    // Super Admins get a clickable button to toggle status
+                    const newStatusText = college.is_active ? 'Inactive' : 'Active';
+                    statusIndicatorHTML = `<button class="college-status-indicator college-status-toggle ${statusClass}" title="Click to change status to ${newStatusText}"></button>`;
+                } else {
+                    // Other managers just see the status
+                    statusIndicatorHTML = `<div class="college-status-indicator ${statusClass}" title="${statusTitle}"></div>`;
+                }
 
                 cardActionsHTML = `
                     <div class="college-card-actions">
@@ -992,6 +1076,8 @@ class ZoneManager {
                     </div>
                 `;
             }
+            // --- END of MODIFIED code ---
+
             card.innerHTML = `
                 <h3>${college.college_name}</h3>
                 <div class="college-code">${college.college_code}</div>
@@ -1044,6 +1130,49 @@ class ZoneManager {
                         flashNotification.showError('Failed', err && err.message ? err.message : 'Unable to delete college');
                     }
                 });
+
+                // --- NEW: Event listener for toggling college active status (Super Admin only) ---
+                if (isSuperAdmin) {
+                    card.querySelector('.college-status-toggle')?.addEventListener('click', async (e) => {
+                        e.stopPropagation(); // Stop the card click event
+                        const statusBtn = e.currentTarget; // <-- MOVED HERE
+
+                        const currentStatus = college.is_active;
+                        const newStatus = !currentStatus;
+                        const actionText = newStatus ? 'Activate' : 'Deactivate';
+
+                        const ok = await showConfirmDialog({
+                            title: `${actionText} College`,
+                            message: `Are you sure you want to ${actionText.toLowerCase()} ${college.college_name}?`,
+                            confirmText: actionText,
+                            cancelText: 'Cancel',
+                            variant: newStatus ? 'success' : 'warning'
+                        });
+
+                        if (!ok) return;
+
+                        // const statusBtn = e.currentTarget; // <-- REMOVED FROM HERE
+                        statusBtn.disabled = true; // Show loading state
+
+                        try {
+                            const response = await SupabaseService.toggleCollegeStatus(college.id, newStatus);
+
+                            if (response.success) {
+                                flashNotification.showSuccess('Status Updated', `${college.college_name} is now ${newStatus ? 'active' : 'inactive'}.`);
+                                // Refresh the college list to show the change
+                                await this.loadColleges(this.currentZone.id);
+                                this.showZoneStats(); // Update stats (active units)
+                            } else {
+                                flashNotification.showError('Update Failed', response.error || 'Could not update status.');
+                                statusBtn.disabled = false; // Re-enable on failure
+                            }
+                        } catch (err) {
+                            flashNotification.showError('Error', 'A network error occurred.');
+                            statusBtn.disabled = false; // Re-enable on failure
+                        }
+                    });
+                }
+                // --- END NEW ---
             }
             collegeGrid.appendChild(card);
             setTimeout(() => card.classList.add('show'), 30);
@@ -1743,6 +1872,7 @@ async function loadCollegeDashboard(collegeId) {
         setCdLoading(false);
     }
 }
+
 
 async function loadCollegeMembers(collegeId) {
     try {

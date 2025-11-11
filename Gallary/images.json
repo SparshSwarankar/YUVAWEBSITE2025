@@ -791,20 +791,40 @@
       }
     ]
   },
-  "Vimarsh2019": {
-    "year": 2019,
+  "vimarsh2025": {
+    "year": 2025,
+    "totalPhotos": 1,
     "images": [
       {
-        "id": "vimarsh2019_1760520020163",
-        "src": "https://res.cloudinary.com/dnwpgcx7i/image/upload/v1760520019/VimarshGallary2025/2019/skqyk7iff92npgfyetlg.png",
-        "alt": "Vimarsh 2019 Photo",
-        "category": "event"
+        "id": "vimarsh2025_1",
+        "src": "/Images/Vimarsh2025_logo.jpg",
+        "alt": "Vimarsh 2025 Logo",
+        "category": "logo"
       }
-      
     ]
   },
-  "event3": {
-    "year": 2024,
-    "images": []
+  "Bharat Parv2025": {
+    "year": 2025,
+    "totalPhotos": 18,
+    "images": [
+      {
+        "id": "vimarsh2025_1",
+        "src": "/Images/Vimarsh2025_logo.jpg",
+        "alt": "Vimarsh 2025 Logo",
+        "category": "logo"
+      }
+    ]
+  },
+  "Bharat Parv2026": {
+    "year": 2026,
+    "totalPhotos": 18,
+    "images": [
+      {
+        "id": "vimarsh2025_1",
+        "src": "/Images/Vimarsh2025_logo.jpg",
+        "alt": "Vimarsh 2025 Logo",
+        "category": "logo"
+      }
+    ]
   }
 }

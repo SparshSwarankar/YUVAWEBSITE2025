@@ -340,6 +340,42 @@ body.modal-open {
     box-shadow: 0 0 0 3px rgba(0, 0, 128, 0.15);
 }
 
+/* Password Input Wrapper with Toggle Button */
+.password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.password-input-wrapper input {
+    width: 100%;
+    padding-right: 45px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 18px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+}
+
+.password-toggle:hover {
+    color: var(--color-primary);
+}
+
+.password-toggle i {
+    pointer-events: none;
+}
+
 .auth-divider {
     text-align: center;
     margin: 20px 0;
@@ -407,7 +443,7 @@ body.modal-open {
     box-shadow: var(--shadow-lg);
 }
 
-.btn.google-btn {
+/* .btn.google-btn {
     background: var(--bg-elevated);
     color: var(--text-primary);
     border: 2px solid var(--border-light);
@@ -428,7 +464,7 @@ body.modal-open {
     width: 24px;
     height: 24px;
     background: url('https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg') no-repeat center/contain;
-}
+} */
 
 .btn.export-btn {
     background: var(--color-accent);
@@ -657,7 +693,7 @@ body.modal-open {
     /* Allows the input to grow and take available space */
     min-width: 0;
     /* CRITICAL: Allows the input to shrink below its default size */
-    padding: 10px 14px;
+    padding: 13px 4px;
     border: 1px solid var(--border-medium, #CBD5E1);
     border-radius: var(--radius-lg, 0.75rem);
     font-size: 15px;
@@ -1162,6 +1198,26 @@ body.modal-open {
     border-radius: 50%;
     background: var(--color-success);
     animation: pulse 2s infinite;
+}
+
+/* ===== NEW: Make the status toggle button interactive ===== */
+.college-status-toggle {
+    cursor: pointer;
+    border: 2px solid var(--white-primary);
+    padding: 0;
+    /* Reset button padding */
+    transition: all 0.2s ease;
+}
+
+.college-status-toggle:hover {
+    transform: scale(1.2);
+    border-color: var(--color-primary);
+}
+
+.college-status-toggle:disabled {
+    opacity: 0.5;
+    cursor: wait;
+    animation: pulse 1s infinite;
 }
 
 @keyframes pulse {
@@ -1932,7 +1988,7 @@ body.modal-open {
     }
 
     .sync-status {
-        width: 100%;
+        /* width: 100%; */
         justify-content: center;
     }
 
@@ -2621,7 +2677,7 @@ body.modal-open {
     /* Access Denied */
     .access-denied {
         padding: 30px 12px;
-        margin-top: 40px;
+        margin-top: 80px;
     }
 
     .access-denied-content {
@@ -2707,6 +2763,7 @@ body.modal-open {
     /* Admin Section */
     .admin-section {
         padding: 12px 10px;
+        margin-top: 20px;
     }
 
     /* Admin Header */

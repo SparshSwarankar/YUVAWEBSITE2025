@@ -47,6 +47,24 @@
         .college-fields {
             display: none;
         }
+
+        /* ===== NEW RESPONSIVE FIX ===== */
+        /* Fixes stacking on mobile by overriding Unitstyle.css */
+        @media (max-width: 768px) {
+            .site-header .header-content {
+                flex-direction: row !important;
+                /* Force to be a row */
+                justify-content: flex-start !important;
+                /* Align items to the start */
+                align-items: center !important;
+                gap: 1rem !important;
+                /* Add space between logo and title */
+            }
+            .page-title {
+                font-size: 0.99rem !important;
+                /* Adjust title size */
+            }
+        }
     </style>
 </head>
 
@@ -115,12 +133,12 @@
 
                 <button type="submit" class="btn primary" style="width: 100%;">Register</button>
             </form>
-            <div class="auth-divider">
+            <!-- <div class="auth-divider">
                 <span>or</span>
             </div>
             <button id="google-register-btn" class="btn google-btn">
                 <i class="fab fa-google"></i> Register with Google
-            </button>
+            </button> -->
         </div>
     </div>
 

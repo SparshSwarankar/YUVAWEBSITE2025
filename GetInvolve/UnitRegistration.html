@@ -13,7 +13,38 @@
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        /* This media query makes these styles ONLY apply to desktop screens */
+        /* This style block fixes the responsive header stacking on this page
+           by overriding Unitstyle.css. It no longer hides any buttons.
+        */
+
+        /* FIX 1: Fix the mobile layout (768px and below).
+           Unitstyle.css forces the header to stack, so we force it back into a row.
+        */
+        @media (max-width: 768px) {
+
+            /* Force header content to be a single row */
+            .site-header .header-content {
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                gap: 1rem !important;
+            }
+
+            /* Force the actions block (title + button) to be a row */
+            .site-header .header-main-actions {
+                flex-direction: row !important;
+                align-items: center !important;
+                width: auto !important;
+                gap: 0.75rem !important;
+            }
+
+            /* Tweak button padding for small screens */
+            .header-actions .header-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* FIX 2: Define the desktop layout (769px and up) */
         @media (min-width: 769px) {
             .site-header .header-content {
                 display: flex;
@@ -22,7 +53,7 @@
                 width: 100%;
             }
 
-            .header-main-actions {
+            .site-header .header-main-actions {
                 display: flex;
                 align-items: center;
                 gap: 1.5rem;
@@ -161,16 +192,22 @@
                     </div>
                     <div class="form-group">
                         <label for="login-password">Password:</label>
-                        <input type="password" id="login-password" required>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="login-password" required>
+                            <button type="button" class="password-toggle" id="password-toggle"
+                                onclick="togglePasswordVisibility()">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
                     <button type="submit" class="btn primary">Login</button>
                 </form>
-                <div class="auth-divider">
+                <!-- <div class="auth-divider">
                     <span>or</span>
                 </div>
                 <button id="google-login-btn" class="btn google-btn">
                     <i class="fab fa-google"></i> Login with Google
-                </button>
+                </button> -->
             </div>
         </div>
 
@@ -200,7 +237,7 @@
         <section id="zone-section" class="admin-section" style="display: none;">
             <div class="admin-header">
                 <div class="admin-info">
-                    <h2>YUVA Delhi Admin Dashboard</h2>
+                    <h2>YUVA Admin Dashboard</h2>
                     <p>Welcome, <span id="admin-name">Admin</span> | Role: <span id="admin-role">Super Admin</span></p>
                 </div>
                 <div class="admin-actions">

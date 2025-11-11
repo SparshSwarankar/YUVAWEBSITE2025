@@ -158,8 +158,8 @@ function doGet(e) {
         return handleEvents(e, method || e.parameter.method);
       case 'reports':
         return handleReports(e, method || e.parameter.method);
-      case 'super_admin':
-        return handleSuperAdmin(e, method || e.parameter.method);
+      // case 'super_admin':
+      //   return handleSuperAdmin(e, method || e.parameter.method);
       case 'public-stats':
         return getHomepageStats(); // This is the new function we will create
       default:
@@ -1735,6 +1735,7 @@ function getHomepageStats() {
     return createResponse({ error: 'Internal server error' }, 500);
   }
 }
+
 function testSupabaseConnection() {
   Logger.log("Testing Supabase connection...");
   var response = makeSupabaseRequest('zones?limit=1'); // Fetches just one zone
