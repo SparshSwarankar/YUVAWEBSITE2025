@@ -8,7 +8,7 @@
     <meta name="description"
         content="Register now for Vimarsh 2025 — the premier youth conference by YUVA India. Secure your spot to be part of inspiring talks, cultural events, and leadership sessions.">
     <meta name="keywords"
-        content="Vimarsh 2025 registration, YUVA India registration, youth conference India, register Vimarsh, event registration, join Vimarsh 2025, youth leadership event">
+        content="YUVA, Yuva, yuva, India Yuva India, Yuva Ind, Vimarsh 2K25, YUVA India youth conference, Annual student summit Delhi, Youth leadership conclave, Youth United for Vision and Action, Vimarsh cultural festival, National youth conference India, Youth empowerment event, Academic excellence programs, Patriotism and civil society event, Social reform workshops, Youth engagement initiative, Nation-building conference, Leadership workshops for students, Panel discussions for youth, Innovative youth summit, Youth mentorship in India, Voice of youth event, Youth intellectual conclave, Bharat-centric academic discourse, Networking platform for students, Changemakers' youth forum, Visionary leaders in youth events, Viksit Bharat@2047 conference, Student cultural showcase Delhi, Youth research seminar, Student intellectual summit Delhi NCR, Youth changemakers national event, Annual youth leadership retreat India, Future of Bharat youth conference, Skills development workshops 2025, Talks by eminent scholars, Inspirational speakers youth India, YUVA Delhi, Yuva.ind.in, Vimarsh annual summit, Youth empowerment India, Cultural exchange festival Delhi, Patriotic youth event India, Workshops for young leaders, Bharat-centric academic programs, Vimarsh 2K25 Delhi, YUVA Youth Conference 2025 India, Patriotism youth summit, Visionary leadership workshops, Social innovation by youth">
     <meta name="robots" content="index, follow">
 
     <!-- ✅ Bing Webmaster Verification -->
@@ -71,9 +71,10 @@
       </script>
 
     <link rel="shortcut icon" href="/Images/Vimarsh2025_logo.jpg" type="image/x-icon">
-    <link rel="stylesheet" href="/Our.Initiative/style.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="/Mobile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     <style>
         /* Style for select field */
         #college {
@@ -111,6 +112,40 @@
             /* ✅ dropdown will not extend out */
             box-sizing: border-box;
         }
+
+        /* ===== Custom Styles for Searchable College Dropdown (Choices.js) ===== */
+        .choices {
+            margin-bottom: 0;
+        }
+
+        .choices__inner {
+            background-color: #fff;
+            border-radius: 12px !important;
+            border: 2px solid #ccc !important;
+            padding: 6px 15px !important;
+            font-size: 1rem;
+            min-height: auto;
+        }
+
+        .choices.is-focused .choices__inner {
+            border-color: #8b0000 !important;
+        }
+
+        .choices__list--dropdown {
+            border-radius: 12px !important;
+            border: 2px solid #8b0000 !important;
+        }
+
+        .choices__list--dropdown .choices__item--selectable.is-highlighted {
+            background-color: #8b0000 !important;
+            color: white;
+        }
+
+        .choices__input {
+            font-size: 1rem !important;
+            background-color: #fff !important;
+            margin-bottom: 0 !important;
+        }
     </style>
 </head>
 
@@ -140,8 +175,8 @@
                         <div class="error-message" id="firstNameError"></div>
                     </div>
                     <div class="form-group">
-                        <label for="lastName">Last Name <span>*</span></label>
-                        <input type="text" id="lastName" name="lastName" required>
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName">
                         <div class="error-message" id="lastNameError"></div>
                     </div>
                 </div>
@@ -172,6 +207,8 @@
                             <option value="O-">O-</option>
                             <option value="AB+">AB+</option>
                             <option value="AB-">AB-</option>
+                            <option value="Don't know">Don't know about my blood group</option>
+                            <option value="Don't want to share">Don't want to share</option>
                         </select>
                         <div class="error-message" id="bloodGroupError"></div>
                     </div>
@@ -183,13 +220,14 @@
 
                             <select id="college" name="college" required>
                                 <option value="">--Select a College--</option>
+                                <option value="Other">Other</option>
                                 <option value="5 Year Intergrated Law, DU">5 Year Intergrated Law, DU</option>
                                 <option value="Acharya-narendra-dev-college">Acharya Narendra Dev College</option>
                                 <option value="Aditi-mahavidyalaya">Aditi Mahavidyalaya</option>
                                 <option value="Ahilyabai-college-of-nursing">Ahilyabai College Of Nursing</option>
                                 <option value="All-india-institute-of-medical-science-aiims">All India Institute Of
                                     Medical
-                                    Science-Aiims</option>
+                                    Science-AIIMS</option>
                                 <option value="All-yavar-jung-institute-of-hearing-handicapped">All Yavar Jung Institute
                                     Of
                                     Hearing Handicapped</option>
@@ -200,8 +238,10 @@
                                     value="Ambedkar-institute-of-advanced-communication-technologies-and-research-geeta-colony">
                                     Ambedkar Institute Of Advanced Communication Technologies And Research Geeta Colony
                                 </option>
+                                <option value="ambedkar-university">Ambedkar University</option>
                                 <option value="Ambedkar-institute-of-technology">Ambedkar Institute Of Technology
                                 </option>
+
                                 <option value="Ambedkar-institute-of-technology-shakarpur">Ambedkar Institute Of
                                     Technology
                                     Shakarpur</option>
@@ -361,6 +401,7 @@
                                 <option value="Fairfield-institute-of-management-and-technology-kapashera">Fairfield
                                     Institute Of Management AGd Technology Kapashera</option>
                                 <option value="Fore-school-of-management">Fore School Of Management</option>
+                                <option value="Gandharv-Mahavidyalay">Gandharv Mahavidyalay</option>
                                 <option value="Gargi-college">Gargi College</option>
                                 <option value="Gautam-buddha-university">Gautam Buddha University</option>
                                 <option value="Gb-pant-government-engineering-college-okhla">Gb Pant Government
@@ -418,6 +459,8 @@
                                     Gandhi Institute Of Physical Education & Sports Sciences</option>
                                 <option value="Indira-gandhi-national-open-university-ignou">Indira Gandhi National Open
                                     University-Ignou</option>
+                                <option value="Indira Gandhi Delhi Technical University-for-Women">Indira Gandhi Delhi
+                                    Technical University for Women</option>
                                 <option value="Indraprastha-college-for-women">Indraprastha College For Women</option>
                                 <option value="Indraprastha-institute-of-information-technology-delhi-(iiit-delhi)">
                                     Indraprastha Institute Of Information Technology Delhi (Iiit-Delhi)</option>
@@ -652,6 +695,7 @@
                                 <option value="Shyama-prasad-mukherjee-college">Shyama Prasad Mukherjee College</option>
                                 <option value="Sirifort-college-of-computer-technology-&-management">Sirifort College Of
                                     Computer Technology & Management</option>
+                                <option value="South Asian University">South Asian University</option>
                                 <option value="Special-art-school-madhuban-chowk">Special Art School Madhuban Chowk
                                 </option>
                                 <option value="Sri-aurobindo-college">Sri Aurobindo College</option>
@@ -809,8 +853,8 @@
                             <option value="Vimarsh'19, UoD">Vimarsh'19, UoD</option>
                             <option value="Vimarsh'22, UoD">Vimarsh'22, UoD</option>
                             <option value="Vimarsh'23, Satyawati College">Vimarsh'23, Satyawati College</option>
-                            <option value="Vimarsh'24, Shyama-prasad-mukherjee-college">Vimarsh'24,
-                                Shyama-prasad-mukherjee-college</option>
+                            <option value="Vimarsh'24, Shyama Prasad Mukherjee College">Vimarsh'24,
+                                Shyama Prasad Mukherjee College</option>
                             <option value="It's going to be my 1st Vimarsh">It's going to be my 1st Vimarsh</option>
                         </select>
                         <div class="error-message" id="previousVimarshError"></div>
@@ -836,8 +880,9 @@
                         <select id="paymentCategory" name="paymentCategory" required>
                             <option value="">Select Category</option>
                             <option value="Student" data-amount="300">Student - ₹300</option>
-                            <option value="Teacher" data-amount="1000">Teacher - ₹1000</option>
-                            <option value="Other" data-amount="1000">Other - ₹1000</option>
+                            <option value="Teacher" data-amount="1200">Faculty - ₹1200</option>
+                            <option value="Research Scholar" data-amount="500">Research Scholar - ₹500</option>
+                            <option value="Other" data-amount="1200">Other - ₹1200</option>
                         </select>
                         <div class="error-message" id="paymentCategoryError"></div>
                     </div>
@@ -879,14 +924,25 @@
     </div>
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
     <script>
+        // ✅ Initialize the searchable college dropdown
+        const collegeElement = document.getElementById('college');
+        const collegeChoices = new Choices(collegeElement, {
+            searchEnabled: true,
+            shouldSort: false, // Keep your original order
+            itemSelectText: 'Press to select',
+            placeholder: true,
+            placeholderValue: 'Type to search for your college',
+        });
         // Configuration - Replace with your actual values
         const CONFIG = {
-            APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwAgAm80kX2vARQC4aeaFyZbmBquPTsVYaIyRReEmHi4N4XEFUOg3zQvENiB01uKE4p/exec', // Replace with your Apps Script Web App URL
+            APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxzBKvHPeT8CvWVhVQOoQGhbdtAm5XpKwHbmz0-kCu3aNJydWbIDZktyQZI5tnW1iZY/exec', // Replace with your Apps Script Web App URL
             RAZORPAY_KEY_ID: 'rzp_live_RCnlaKffG5VeY0', // Replace with your Razorpay Key ID
             REGISTRATION_AMOUNT: 30000 // Amount in paise (₹300 = 30000 paise) - default student amount
         };
+
 
         // Handle payment category selection and fee display
         const paymentCategorySelect = document.getElementById('paymentCategory');
@@ -941,15 +997,9 @@
                 isValid = false;
             }
 
-            // Validate Last Name
-            const lastName = document.getElementById('lastName').value.trim();
-            if (!lastName) {
-                showError('lastNameError', 'Last name is required');
-                isValid = false;
-            } else if (!/^[A-Z][a-zA-Z\s]*$/.test(lastName)) {
-                showError('lastNameError', 'Last name must start with a capital letter and contain only letters');
-                isValid = false;
-            }
+            // Validate Last Name (FIELD IS NOW OPTIONAL)
+            // Validate Last Name (FIELD IS NOW OPTIONAL - NO VALIDATION)
+            // const lastName = document.getElementById('lastName').value.trim();
 
             // Validate Age
             const age = document.getElementById('age').value;
@@ -1098,7 +1148,7 @@
                     contact: formData.mobile
                 },
                 theme: {
-                    color: '#667eea'
+                    color: '#8b0000'
                 },
                 handler: function (response) {
                     // Payment successful

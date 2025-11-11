@@ -457,6 +457,85 @@
 }
 
 /* =================================================================== */
+/* ===== DYNAMIC GALLERY STYLES (REVISED) ===== */
+/* =================================================================== */
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.photo-item {
+    position: relative;
+    /* This clips the image to the rounded corners */
+    overflow: hidden;
+    /* This adds the modern rounded look */
+    border-radius: var(--radius-xl);
+    /* This adds a subtle shadow */
+    box-shadow: var(--shadow-md);
+    background-color: #333;
+    /* Placeholder for image load */
+    /* This forces all items to be the same height */
+    aspect-ratio: 4 / 3;
+}
+
+.photo-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Slower, smoother transition */
+    transition: transform 0.4s ease;
+}
+
+/* Slightly more zoom on hover */
+.photo-item:hover img {
+    transform: scale(1.1);
+}
+
+.photo-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0));
+    color: white;
+    padding: 20px 15px 15px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    text-align: left;
+}
+
+.photo-item:hover .photo-caption {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.photo-caption strong {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    line-height: 1.3;
+}
+
+.photo-caption span {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+/* Fallback for the "No images" message */
+#photo-grid-dynamic p {
+    color: var(--white-warm);
+    grid-column: 1 / -1;
+    /* Span entire grid */
+    text-align: center;
+    padding: 20px;
+}
+
+/* =================================================================== */
 /* ===== ADVANCED RESPONSIVE STYLES FOR VERTICALS PAGE ===== */
 /* =================================================================== */
 

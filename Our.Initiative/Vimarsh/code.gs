@@ -6,15 +6,15 @@ const CONFIG = {
   SPREADSHEET_ID: '1CZehhqMkgJegEm6uTZH0iMP08LGfEIraA0_jIj2QBnY',
   RAZORPAY_KEY_ID: 'rzp_live_RCnlaKffG5VeY0',
   RAZORPAY_KEY_SECRET: 'XmdiZBFSi7z0FzUCVxIi7jjc',
-  REGISTRATION_AMOUNT: 100, // paise (₹300 = 30000 paise) - default student amount
+  REGISTRATION_AMOUNT: 30000, // paise (₹300 = 30000 paise) - default student amount
   EVENT_NAME: 'Vimarsh 2025',
   ORGANIZATION_NAME: 'YUVA-Youth United For Vision & Action',
   SUPPORT_EMAIL: 'yuvavimarsh.helpdesk@gmail.com',
-  WEBHOOK_SECRET: 'vimarsh_2025_webhook_secret_key_12345',
+  WEBHOOK_SECRET: 'RajDeep7354',
   ADMIN_KEY: 'Vimarsh0987'
 };
 
-const ADMIN_EMAILS = ['yuvavimarsh.helpdesk@gmail.com'];
+const ADMIN_EMAILS = ['yuva.vision.action@gmail.com'];
 
 function isAdmin() {
   try {
@@ -250,7 +250,9 @@ function handleCreateOrder(data) {
     // Determine amount based on payment category
     let amount = CONFIG.REGISTRATION_AMOUNT; // Default student amount
     if (data.paymentCategory === 'Teacher' || data.paymentCategory === 'Other') {
-      amount = 100000; // ₹1000 = 100000 paise
+      amount = 120000; // ₹1200 in paise
+    } else if (data.paymentCategory === 'Research Scholar') {
+      amount = 50000;  // ₹500 in paise
     }
 
     const orderData = {
@@ -640,7 +642,9 @@ function sendPaymentConfirmationEmail(registrationDetails, paymentId) {
     // Determine amount based on payment category
     let amount = 300; // Default student amount
     if (registrationDetails.paymentCategory === 'Teacher' || registrationDetails.paymentCategory === 'Other') {
-      amount = 1000;
+      amount = 1200;
+    } else if (registrationDetails.paymentCategory === 'Research Scholar') {
+      amount = 500;
     }
 
     const htmlBody = `
@@ -670,6 +674,16 @@ function sendPaymentConfirmationEmail(registrationDetails, paymentId) {
             <p style="color: #666; font-size: 14px; margin-top: 10px;">Show this QR code at the event for quick check-in</p>
           </div>
           ` : ''}
+          <!-- WhatsApp Join Button -->
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="https://whatsapp.com/channel/0029Vb6mApvDzgTCSKtAAb2y" target="_blank" 
+              style="display: inline-block; background-color: #25D366; color: white; padding: 12px 24px; 
+              font-size: 16px; font-weight: bold; text-decoration: none; border-radius: 6px; 
+              box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+              Join WhatsApp Group
+            </a>
+            <p style="color: #666; font-size: 13px; margin-top: 8px;">Stay updated with all event announcements</p>
+          </div>
           <div style="background: #e7f3ff; padding: 15px; border-radius: 8px; border: 1px solid #b3d9ff; margin: 20px 0;">
             <h4 style="color: #0056b3; margin-top: 0;">Need Help?</h4>
             <p style="color: #0056b3; margin-bottom: 0;">If you have any questions, contact: <a href="mailto:${CONFIG.SUPPORT_EMAIL}" style="color: #0056b3;">${CONFIG.SUPPORT_EMAIL}</a></p>

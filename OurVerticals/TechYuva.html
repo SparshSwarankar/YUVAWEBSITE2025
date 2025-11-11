@@ -60,7 +60,7 @@
                 <div class="dropdown-content">
                     <a href="/OurVerticals/MedicoYuva.html">Medico YUVA</a>
                     <a href="/OurVerticals/MediaManthan.html">Media Manthan</a>
-                    <a href="/OurVerticals/NitiManthan.html">Nidhi Manthan</a>
+                    <a href="/OurVerticals/NitiManthan.html">Niti Manthan</a>
                     <a href="/OurVerticals/TechYuva.html">Tech YUVA</a>
                     <a href="/OurVerticals/YDL.html">YUVA Distance Learning</a>
                 </div>
@@ -123,7 +123,9 @@
     <div class="main">
         <div class="vertical-page">
             <div class="vertical-hero">
-                <div class="hero-background"><div class="hero-particles"></div></div>
+                <div class="hero-background">
+                    <div class="hero-particles"></div>
+                </div>
                 <div class="vertical-hero-content">
                     <div class="hero-badge"><i class="fas fa-microchip"></i><span>Our Vertical</span></div>
                     <h1 class="hero-title">Tech <span class="yuva-accent-text">YUVA</span></h1>
@@ -134,8 +136,12 @@
             <div class="vertical-content-wrapper">
                 <section class="content-section">
                     <h2><span class="icon"><i class="fas fa-rocket"></i></span> Introduction & Vision</h2>
-                    <p>Tech <span class="yuva-accent-text">YUVA</span> is an initiative aimed at fostering innovation and technological development among youth. The platform offers resources, training, and opportunities for young minds to explore emerging technologies such as Artificial Intelligence, Blockchain, and IoT.</p>
-                    <p><strong>Vision:</strong> To inspire and equip the next generation of innovators and technologists who can drive India’s future in technology and digital transformation.</p>
+                    <p>Tech <span class="yuva-accent-text">YUVA</span> is an initiative aimed at fostering innovation
+                        and technological development among youth. The platform offers resources, training, and
+                        opportunities for young minds to explore emerging technologies such as Artificial Intelligence,
+                        Blockchain, and IoT.</p>
+                    <p><strong>Vision:</strong> To inspire and equip the next generation of innovators and technologists
+                        who can drive India’s future in technology and digital transformation.</p>
                 </section>
 
                 <section class="content-section">
@@ -151,24 +157,28 @@
                 <section class="content-section dual-section">
                     <div class="info-block">
                         <h3>Working Model</h3>
-                        <p>Tech <span class="yuva-accent-text">YUVA</span> hosts regular tech bootcamps, coding competitions, and innovation labs. The initiative works closely with tech startups, academic institutions, and government bodies to identify technological gaps and provide young innovators with the tools to bridge them.</p>
+                        <p>Tech <span class="yuva-accent-text">YUVA</span> hosts regular tech bootcamps, coding
+                            competitions, and innovation labs. The initiative works closely with tech startups, academic
+                            institutions, and government bodies to identify technological gaps and provide young
+                            innovators with the tools to bridge them.</p>
                     </div>
                     <div class="info-block">
                         <h3>Major Events</h3>
                         <ul>
-                            <li><strong>Hackathons and Coding Competitions:</strong> National-level events where students and young professionals compete to solve real-world problems using technology.</li>
-                            <li><strong>Technology Bootcamps:</strong> Short-term intensive courses on topics such as AI, Cloud Computing, and Cybersecurity.</li>
-                            <li><strong>Innovation Showcases:</strong> Opportunities for students to present their projects to potential investors and industry leaders.</li>
+                            <li><strong>Hackathons and Coding Competitions:</strong> National-level events where
+                                students and young professionals compete to solve real-world problems using technology.
+                            </li>
+                            <li><strong>Technology Bootcamps:</strong> Short-term intensive courses on topics such as
+                                AI, Cloud Computing, and Cybersecurity.</li>
+                            <li><strong>Innovation Showcases:</strong> Opportunities for students to present their
+                                projects to potential investors and industry leaders.</li>
                         </ul>
                     </div>
                 </section>
 
-                <section class="gallery-section">
+                <section class="gallery-section" data-vertical="TechYuva">
                     <h2><span class="icon"><i class="fas fa-images"></i></span> Gallery</h2>
-                    <div class="photo-grid">
-                        <div class="photo-item"><img src="/Images/placeholder10.jpg" alt="Hackathon"></div>
-                        <div class="photo-item"><img src="/Images/placeholder11.jpg" alt="AI Bootcamp"></div>
-                        <div class="photo-item"><img src="/Images/placeholder12.jpg" alt="Innovation Showcase"></div>
+                    <div class="photo-grid" id="photo-grid-dynamic">
                     </div>
                 </section>
             </div>
@@ -176,6 +186,62 @@
     </div>
     <script src="/script.js"></script>
     <script src="verticals.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // --- Initialize Supabase ---
+        const SUPABASE_URL = 'https://jgsrsjwmywiirtibofth.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_5KtvO0cEHfnECBoyp2CQnw_RC3_x2me';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // --- Fetch and Display Gallery Images ---
+        document.addEventListener('DOMContentLoaded', async () => {
+            const gallerySection = document.querySelector('.gallery-section');
+            const photoGrid = document.getElementById('photo-grid-dynamic');
+
+            if (!gallerySection || !photoGrid) return;
+            const verticalName = gallerySection.getAttribute('data-vertical');
+            if (!verticalName) return;
+
+            // Fetch images for THIS vertical
+            const { data: images, error } = await supabase
+                .from('vertical_events')
+                .select('image_url, event_name, event_date, event_location')
+                .eq('vertical_name', verticalName)
+                .order('event_date', { ascending: false })
+                .limit(10); // <-- THIS IS THE NEW LIMIT
+
+            if (error) {
+                console.error('Error fetching gallery:', error);
+                photoGrid.innerHTML = '<p style="color: white;">Could not load gallery at this time.</p>';
+                return;
+            }
+
+            if (images && images.length > 0) {
+                photoGrid.innerHTML = ''; // Clear placeholders
+                images.forEach(image => {
+                    const photoItem = document.createElement('div');
+                    photoItem.className = 'photo-item';
+
+                    const date = new Date(image.event_date).toLocaleDateString('en-IN', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    });
+
+                    photoItem.innerHTML = `
+                        <img src="${image.image_url}" alt="${image.event_name}">
+                        <div class="photo-caption">
+                            <strong>${image.event_name}</strong>
+                            <span>${date} - ${image.event_location}</span>
+                        </div>
+                    `;
+                    photoGrid.appendChild(photoItem);
+                });
+            } else {
+                photoGrid.innerHTML = '<p style="color: white;">No event photos have been uploaded for this vertical yet.</p>';
+            }
+        });
+    </script>
 </body>
 
 </html>

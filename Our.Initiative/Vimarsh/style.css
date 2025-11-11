@@ -201,6 +201,77 @@ nav ul li a:hover {
   color: #8b0000;
 }
 
+/* ===== NEW REGISTRATION NOTICE (COMMENT BOX) ===== */
+.registration-notice {
+  position: relative;
+  flex-basis: 100%;
+  /* Make it take full width on its own line */
+  margin-top: 30px;
+  /* Space from buttons above */
+  padding: 12px 20px;
+  background: rgba(245, 233, 218, 0.2);
+  /* Semi-transparent cream from theme */
+  border: 1px solid rgba(245, 233, 218, 0.3);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  /* White text */
+  font-weight: 500;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  animation: fadeInNotice 1s ease-out 0.5s;
+  /* Add a little fade-in */
+  animation-fill-mode: backwards;
+  /* Start invisible */
+  width: fit-content;
+  /* Make it only as wide as its content */
+  max-width: 100%;
+}
+
+/* Speech bubble pointer */
+.registration-notice::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  /* Position on top of the box */
+  left: 50%;
+  /* Center it */
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  /* Match the semi-transparent background of the box */
+  border-bottom: 10px solid rgba(245, 233, 218, 0.2);
+}
+
+/* Animation for the notice */
+@keyframes fadeInNotice {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== MOBILE HERO FIX (Registration Notice) ===== */
+@media (max-width: 768px) {
+  .registration-notice {
+    /* Override 'width: fit-content' to be full-width on mobile */
+    width: 100%;
+
+    /* Center the text inside the new full-width box */
+    text-align: center;
+
+    /* Use a slightly smaller margin on mobile */
+    margin-top: 20px;
+  }
+}
 
 /* ===== ABOUT ===== */
 .about {
@@ -360,10 +431,88 @@ nav ul li a:hover {
   opacity: 0.95;
 }
 
+/* Styling for the social media link on the back of the card */
+.speaker-socials {
+  margin-top: 15px;
+  /* Adds space above the link */
+}
+
+.speaker-socials a {
+  display: inline-block;
+  padding: 8px 20px;
+  background-color: #f5e9da;
+  color: #8b0000;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect for the link */
+.speaker-socials a:hover {
+  background-color: #8b0000;
+  color: #f5e9da;
+  transform: scale(1.05);
+}
+
 /* Accessibility focus */
 .speaker-card:focus-visible {
   box-shadow: 0 0 0 3px #f5e9da, 0 0 0 6px #8b0000;
   outline: none;
+}
+
+/* =====================scroll bar modern=================== */
+
+/* 1. Apply custom scrollbar and enable scrolling */
+.speakers-slider,
+.gallery .slider-container {
+  overflow-x: auto !important;
+  /* Enable scrolling */
+
+  /* Modern scrollbar for Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #8b0000 #f5e9da;
+}
+
+/* 2. Custom scrollbar for Webkit (Chrome, Safari, Edge) */
+.speakers-slider::-webkit-scrollbar,
+.gallery .slider-container::-webkit-scrollbar {
+  height: 12px;
+}
+
+.speakers-slider::-webkit-scrollbar-track,
+.gallery .slider-container::-webkit-scrollbar-track {
+  background: #f5e9da;
+  /* Cream background */
+  border-radius: 10px;
+}
+
+.speakers-slider::-webkit-scrollbar-thumb,
+.gallery .slider-container::-webkit-scrollbar-thumb {
+  background-color: #8b0000;
+  /* Maroon thumb */
+  border-radius: 10px;
+  border: 3px solid #f5e9da;
+  /* Cream border */
+}
+
+.speakers-slider::-webkit-scrollbar-thumb:hover,
+.gallery .slider-container::-webkit-scrollbar-thumb:hover {
+  background-color: #a10000;
+  /* Darker maroon on hover */
+}
+
+/* 3. Override old animation properties */
+.gallery .slider-track {
+  animation: none !important;
+  /* Disable old CSS animation */
+}
+
+.speakers-track {
+  /* Remove transform properties; let scrollLeft handle it */
+  transform: none !important;
+  will-change: auto !important;
 }
 
 /* ===== GALLERY BASE ===== */
@@ -1664,7 +1813,7 @@ a {
   /* keep shadows smooth */
   will-change: transform;
   /* hint browser for GPU acceleration */
-  
+
 }
 
 /* Shine layer */
@@ -1739,5 +1888,139 @@ a {
   }
 }
 
+/* ===== "Coming Soon" Alert Modal (Modern Blur Style) ===== */
+.custom-alert {
+  position: fixed;
+  inset: 0;
+  /* Adjust background color for a better blur effect */
+  background: rgba(10, 10, 10, 0.4);
+  /* The magic property for the modern blur effect */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  /* For Safari browser compatibility */
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: fadeIn 0.4s ease;
+}
 
+.custom-alert .alert-content {
+  background: #fffaf5;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+}
 
+.custom-alert h3 {
+  margin-bottom: 10px;
+  color: #8b0000;
+}
+
+.custom-alert p {
+  color: #555;
+  font-size: 1rem;
+}
+
+.custom-alert button {
+  margin-top: 20px;
+  padding: 10px 24px;
+  background: #8b0000;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.custom-alert button:hover {
+  background: #a30000;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ===== VOLUNTEER PAGE MODAL STYLES (ADD TO END OF style.css) ===== */
+.form-modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.3s;
+}
+
+.form-modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 450px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.4s;
+}
+
+.form-modal-content .icon {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+.form-modal-content .icon.success {
+  color: #28a745;
+}
+
+.form-modal-content .icon.error {
+  color: #dc3545;
+}
+
+.form-modal-content h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.form-modal-content p {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.form-modal-content .close-btn {
+  background: #8b0000;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.form-modal-content .close-btn:hover {
+  background: #a10000;
+}
+
+/* Spinner inside button */
+form button.btn-primary .fa-spinner {
+  margin-left: 8px;
+}

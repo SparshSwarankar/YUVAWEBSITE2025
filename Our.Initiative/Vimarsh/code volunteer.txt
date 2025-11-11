@@ -1,0 +1,237 @@
+/**
+ * =================================================================
+ * Vimarsh 2K25 Volunteer Registration API (v5.0 - Server-Side Payments)
+ *
+ * This version implements a full server-side payment flow to enable
+ * automatic payment capture.
+ * 1. Creates a Razorpay Order on the backend.
+ * 2. Verifies the payment signature on the backend.
+ * =================================================================
+ */
+
+// --- CONFIGURATION ---
+const CONFIG = {
+  SPREADSHEET_ID: "1lWOnRqKTjtB5tQ2Vo3FlsjnLztrLc9cpqtA7dj67yFM",
+  SHEET_NAME: "Volunteers",
+  EVENT_NAME: "Vimarsh 2K25",
+  ORGANIZATION_NAME: "YUVA - Youth United For Vision & Action",
+  SUPPORT_EMAIL: "yuvavimarsh.helpdesk@gmail.com",
+  // ✨ NEW: Razorpay keys for server-side communication
+  RAZORPAY_KEY_ID: "rzp_live_RCnlaKffG5VeY0", // From your main registration script [cite: 1]
+  RAZORPAY_KEY_SECRET: "XmdiZBFSi7z0FzUCVxIi7jjc" // From your main registration script [cite: 1]
+};
+
+// --- HEADERS DEFINITION ---
+const HEADERS = [
+  'Timestamp', 'Name', 'Email', 'Phone', 'College', 'Year',
+  'Department', 'VolunteerDomain', 'PaymentID', 'OrderID', 'PaymentStatus'
+];
+
+// --- MAIN ROUTER ---
+function doPost(e) {
+  try {
+    const data = JSON.parse(e.postData.contents);
+    switch (data.action) {
+      case 'createOrder':
+        return handleCreateOrder(data);
+      case 'confirmPayment':
+        return handleConfirmPayment(data);
+      default:
+        return createApiResponse({ status: 'error', message: 'Invalid action' });
+    }
+  } catch (error) {
+    Logger.log(`Error in doPost: ${error.toString()}`);
+    return createApiResponse({ status: 'error', message: 'Server Error: ' + error.message });
+  }
+}
+
+
+// --- NEW: ORDER CREATION ---
+function handleCreateOrder(data) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+  try {
+    const spreadsheet = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+    let sheet = spreadsheet.getSheetByName(CONFIG.SHEET_NAME);
+    if (!sheet) {
+      sheet = spreadsheet.insertSheet(CONFIG.SHEET_NAME);
+    }
+    initializeSheet(sheet);
+
+    // Create Razorpay Order
+    const orderOptions = {
+      method: 'post',
+      headers: {
+        'Authorization': 'Basic ' + Utilities.base64Encode(`${CONFIG.RAZORPAY_KEY_ID}:${CONFIG.RAZORPAY_KEY_SECRET}`)
+      },
+      contentType: 'application/json',
+      payload: JSON.stringify({
+        amount: 30000, // 300 INR in paise
+        currency: "INR",
+        receipt: `VOL-${Date.now()}`
+      }),
+      muteHttpExceptions: true
+    };
+    const response = UrlFetchApp.fetch('https://api.razorpay.com/v1/orders', orderOptions);
+    const order = JSON.parse(response.getContentText());
+
+    if (response.getResponseCode() !== 200) {
+      throw new Error("Razorpay order creation failed: " + order.error.description);
+    }
+    
+    // Save initial data to sheet with "Pending" status
+    const newRow = [
+      new Date(), data.name, data.email, data.phone, data.college, data.year,
+      data.department, data.volunteerDomain, '', order.id, 'Pending'
+    ];
+    sheet.appendRow(newRow);
+
+    return createApiResponse({ status: 'success', orderId: order.id });
+  } catch(e) {
+    Logger.log(`Error in handleCreateOrder: ${e.toString()}`);
+    return createApiResponse({ status: 'error', message: e.message });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// --- PAYMENT CONFIRMATION (CORRECTED) ---
+// --- PAYMENT CONFIRMATION (CORRECTED) ---
+function handleConfirmPayment(data) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+  try {
+    const { orderId, paymentId, signature } = data;
+    const signaturePayload = orderId + '|' + paymentId;
+    const expectedSignature = Utilities.computeHmacSha256Signature(signaturePayload, CONFIG.RAZORPAY_KEY_SECRET);
+    const expectedSignatureHex = expectedSignature.map(byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
+
+    if (expectedSignatureHex !== signature) {
+      throw new Error("Payment verification failed. Signature mismatch.");
+    }
+    
+    // --- Update the spreadsheet ---
+    const sheet = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID).getSheetByName(CONFIG.SHEET_NAME);
+    const range = sheet.getDataRange();
+    const values = range.getValues();
+    let rowToUpdate = -1;
+
+    const orderIdColumnIndex = HEADERS.indexOf('OrderID');
+    for (let i = 1; i < values.length; i++) {
+      if (values[i][orderIdColumnIndex] === orderId) {
+        rowToUpdate = i + 1;
+        break;
+      }
+    }
+
+    if (rowToUpdate === -1) {
+      throw new Error("Registration record not found for this order.");
+    }
+
+    const paymentIdColumnIndex = HEADERS.indexOf('PaymentID');
+    const statusColumnIndex = HEADERS.indexOf('PaymentStatus');
+    sheet.getRange(rowToUpdate, paymentIdColumnIndex + 1).setValue(paymentId);
+    sheet.getRange(rowToUpdate, statusColumnIndex + 1).setValue('Completed');
+
+    // ✨ --- CORRECTED EMAIL DATA HANDLING --- ✨
+    // Use the original form data passed from the browser for the email.
+    const dataForEmail = data.formData;
+    // Add the confirmed Payment ID to this object.
+    dataForEmail.paymentId = paymentId;
+
+    // Send the confirmation email with the correct data.
+    sendConfirmationEmail(dataForEmail);
+    
+    // ✨ FIX: Corrected function name from createTextApiResponse to createApiResponse
+    return createApiResponse({ status: 'success', message: 'Payment confirmed successfully.' });
+
+  } catch(e) {
+    Logger.log(`Error in handleConfirmPayment: ${e.toString()}`);
+    // ✨ FIX: Corrected function name from createTextApiResponse to createApiResponse
+    return createApiResponse({ status: 'error', message: e.message });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+
+// --- HELPER FUNCTIONS ---
+function initializeSheet(sheet) {
+  if (sheet.getRange("A1").getValue() === "") {
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+    sheet.setFrozenRows(1);
+    SpreadsheetApp.flush();
+  }
+}
+
+function createApiResponse(payload) {
+  return ContentService.createTextOutput(JSON.stringify(payload))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function sendConfirmationEmail(data) {
+  try {
+    const subject = `✅ Registration Confirmed - ${CONFIG.EVENT_NAME} Volunteer`;
+    const htmlBody = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #ddd; border-radius: 12px;">
+        <div style="background-color: #8b0000; color: white; padding: 25px; text-align: center; border-radius: 12px 12px 0 0;">
+          <h1 style="margin: 0; font-size: 24px;">Volunteer Registration Confirmed!</h1>
+        </div>
+        <div style="padding: 25px;">
+          <h2 style="color: #333;">Hi ${data.name},</h2>
+          <p style="color: #555; line-height: 1.6;">Thank you for registering to be a volunteer for <strong>${CONFIG.EVENT_NAME}</strong>! We are thrilled to have you on the team.</p>
+          <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #8b0000;">
+            <h3 style="margin-top: 0; color: #333;">Your Details:</h3>
+            <ul style="list-style: none; padding: 0;">
+              <li style="padding: 4px 0;"><strong>Name:</strong> ${data.name}</li>
+              <li style="padding: 4px 0;"><strong>Email:</strong> ${data.email}</li>
+              <li style="padding: 4px 0;"><strong>Phone:</strong> ${data.phone}</li>
+              <li style="padding: 4px 0;"><strong>College:</strong> ${data.college}</li>
+              <li style="padding: 4px 0;"><strong>Payment ID:</strong> ${data.paymentId}</li>
+            </ul>
+          </div>
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="https://whatsapp.com/channel/0029Vb6mApvDzgTCSKtAAb2y" target="_blank" style="display: inline-block; background-color: #25D366; color: #ffffff; padding: 12px 25px; font-size: 16px; font-weight: bold; text-decoration: none; border-radius: 8px;">Join our WhatsApp Channel</a>
+            <p style="font-size: 14px; color: #888; margin-top: 10px;">Stay updated with all event announcements!</p>
+          </div>
+          <p style="color: #555;">We will be in touch soon with more details. If you have any questions, please contact us at <a href="mailto:${CONFIG.SUPPORT_EMAIL}" style="color: #8b0000;">${CONFIG.SUPPORT_EMAIL}</a>.</p>
+          <p style="color: #555;">Best regards,<br><strong>The ${CONFIG.ORGANIZATION_NAME} Team</strong></p>
+        </div>
+      </div>
+    `;
+    GmailApp.sendEmail(data.email, subject, "", { htmlBody: htmlBody, name: CONFIG.ORGANIZATION_NAME });
+  } catch (error) {
+    Logger.log(`Failed to send email to ${data.email}. Error: ${error.toString()}`);
+  }
+}
+
+// --- SETUP FUNCTION (RUN MANUALLY FROM EDITOR) ---
+/**
+ * You can run this function directly from the editor to prepare your spreadsheet.
+ * Confirmation is shown in the Execution Log instead of a popup.
+ */
+function setupVolunteerSheet() {
+  try {
+    const spreadsheet = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+    let sheet = spreadsheet.getSheetByName(CONFIG.SHEET_NAME);
+
+    if (!sheet) {
+      sheet = spreadsheet.insertSheet(CONFIG.SHEET_NAME);
+      Logger.log(`Sheet tab named '${CONFIG.SHEET_NAME}' was created successfully.`);
+    }
+
+    if (sheet.getRange("A1").getValue() === "") {
+      sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+      sheet.setFrozenRows(1);
+      sheet.getRange("A1:K1").setFontWeight("bold");
+      Logger.log("Headers were added to the sheet.");
+    } else {
+      Logger.log("Headers already exist.");
+    }
+
+    Logger.log(`✅ Setup Complete! The '${CONFIG.SHEET_NAME}' sheet is ready.`);
+
+  } catch (e) {
+    Logger.log(`❌ An Error Occurred during setup: ${e.message}`);
+  }
+}
