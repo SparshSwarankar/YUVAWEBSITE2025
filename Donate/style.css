@@ -849,64 +849,6 @@ textarea.form-input {
     opacity: 1;
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 768px) {
-
-    .donate-hero-content {
-        padding: 0 16px;
-    }
-
-    .hero-title {
-        font-size: 2.5rem;
-    }
-
-    .donation-form-container {
-        margin: -60px auto 0;
-        padding: 0 16px;
-    }
-
-    .form-card {
-        padding: 24px;
-    }
-
-    .donation-type-selector {
-        grid-template-columns: 1fr;
-    }
-
-    .amount-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .donor-info-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .flash-container {
-        top: 10px;
-        right: 10px;
-        left: 10px;
-    }
-
-    .flash-notification {
-        min-width: auto;
-        max-width: none;
-    }
-}
-
-@media (max-width: 480px) {
-    .amount-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .donate-impact {
-        grid-template-columns: 1fr;
-    }
-
-    .donate-impact-item {
-        flex-direction: column;
-        text-align: center;
-    }
-}
 
 /* ===== ANIMATIONS ===== */
 @keyframes fadeInUp {
@@ -959,16 +901,1275 @@ textarea.form-input {
     /* Mapped */
     outline-offset: 2px;
 }
+/* ===== MOBILE MEDIA QUERIES FOR DONATE PAGE - 2025 ===== */
 
-/* High contrast mode support */
-@media (prefers-contrast: high) {
+/* ===== Tablets and Small Laptops (1024px and below) ===== */
+@media screen and (max-width: 1024px) {
     .donate-hero {
-        background: var(--text-primary);
-        /* Mapped */
+        min-height: 85vh;
+        padding: 70px 20px 100px;
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 4.5vw, 3.5rem);
+    }
+
+    .donation-form-container {
+        margin-top: -80px;
+        padding: 0 20px;
     }
 
     .form-card {
-        border: 2px solid var(--text-primary);
-        /* Mapped */
+        padding: 36px 28px;
+    }
+
+    .donor-info-grid {
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 18px;
     }
 }
+
+/* ===== Large Mobile / Small Tablets (768px and below) ===== */
+@media screen and (max-width: 768px) {
+    /* Flash Notifications */
+    .flash-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: 100%;
+        gap: 10px;
+    }
+
+    .flash-notification {
+        min-width: auto;
+        max-width: 100%;
+        padding: 14px 16px;
+    }
+
+    .flash-title {
+        font-size: 13px;
+    }
+
+    .flash-message {
+        font-size: 12px;
+    }
+
+    .flash-icon {
+        width: 22px;
+        height: 22px;
+        font-size: 12px;
+    }
+
+    /* Donate Page Layout */
+    .donate-page {
+        top: calc(60px + 0.5rem * 4);
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    }
+
+    /* Hero Section */
+    .donate-hero {
+        min-height: 80vh;
+        padding: 60px 16px 80px;
+    }
+
+    .hero-chakra-bg {
+        width: 350px;
+        height: 350px;
+        opacity: 0.06;
+    }
+
+    .donate-hero-content {
+        max-width: 100%;
+        padding: 0 12px;
+    }
+
+    .hero-badge {
+        font-size: 13px;
+        padding: 7px 14px;
+        margin-bottom: 20px;
+        gap: 7px;
+    }
+
+    .hero-badge i {
+        font-size: 13px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.85rem, 5.5vw, 2.75rem);
+        margin-bottom: 20px;
+        line-height: 1.15;
+    }
+
+    .hero-description {
+        font-size: 16px;
+        line-height: 1.5;
+        margin-bottom: 32px;
+        padding: 0 8px;
+    }
+
+    /* Donate Impact */
+    .donate-impact {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .donate-impact-item {
+        padding: 20px;
+        border-radius: var(--radius-xl);
+    }
+
+    .impact-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+    }
+
+    .donate-impact-number {
+        font-size: 22px;
+    }
+
+    .donate-impact-label {
+        font-size: 13px;
+    }
+
+    /* Form Container */
+    .donation-form-container {
+        margin-top: -60px;
+        padding: 0 16px 60px;
+    }
+
+    .form-card {
+        padding: 28px 20px;
+        border-radius: var(--radius-xl);
+    }
+
+    .form-card::before {
+        height: 3px;
+    }
+
+    /* Form Header */
+    .form-icon {
+        width: 58px;
+        height: 58px;
+        font-size: 22px;
+        margin-bottom: 14px;
+    }
+
+    .form-header h2 {
+        font-size: 24px;
+        margin-bottom: 7px;
+    }
+
+    .form-header p {
+        font-size: 15px;
+    }
+
+    /* Form Sections */
+    .form-section {
+        margin-bottom: 28px;
+    }
+
+    .section-label {
+        font-size: 15px;
+        margin-bottom: 14px;
+    }
+
+    /* Donation Type Selector */
+    .donation-type-selector {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .type-label {
+        padding: 18px;
+        border-radius: var(--radius-lg);
+    }
+
+    .type-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 15px;
+    }
+
+    .type-title {
+        font-size: 15px;
+    }
+
+    .type-subtitle {
+        font-size: 13px;
+    }
+
+    /* Amount Grid */
+    .amount-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 18px;
+    }
+
+    .amount-label {
+        padding: 14px 10px;
+        border-radius: var(--radius-lg);
+    }
+
+    .amount-currency {
+        font-size: 13px;
+    }
+
+    .amount-value {
+        font-size: 17px;
+    }
+
+    .custom-amount-input {
+        padding: 14px 14px 14px 38px;
+        font-size: 15px;
+        border-radius: var(--radius-lg);
+    }
+
+    .currency-symbol {
+        left: 14px;
+        font-size: 15px;
+    }
+
+    .amount-display {
+        font-size: 22px;
+        margin-top: 14px;
+    }
+
+    /* Donor Info Grid */
+    .donor-info-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .form-label {
+        font-size: 13px;
+        margin-bottom: 7px;
+    }
+
+    .form-label i {
+        font-size: 11px;
+    }
+
+    .form-input {
+        padding: 14px;
+        font-size: 15px;
+        border-radius: var(--radius-lg);
+    }
+
+    textarea.form-input {
+        min-height: 75px;
+    }
+
+    /* Tax Exemption Fields */
+    .tax-exemption-fields {
+        padding: 14px;
+        margin-top: 14px;
+        border-radius: var(--radius-lg);
+    }
+
+    /* Terms Checkbox */
+    .terms-checkbox-container {
+        margin-top: 20px;
+        gap: 9px;
+    }
+
+    .terms-checkbox-container label {
+        font-size: 13px;
+    }
+
+    .terms-checkbox-container input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* Donate Button */
+    .donate-button {
+        padding: 18px;
+        font-size: 17px;
+        margin-top: 28px;
+        border-radius: var(--radius-lg);
+    }
+
+    .button-content {
+        gap: 10px;
+    }
+
+    .button-loading {
+        gap: 7px;
+    }
+
+    /* Error Message */
+    .error-message {
+        font-size: 11px;
+        padding: 7px 11px;
+        margin-top: 3px;
+    }
+}
+
+/* ===== Medium Mobile (480px - 600px) ===== */
+@media screen and (max-width: 600px) {
+    .donate-hero {
+        min-height: 75vh;
+        padding: 50px 12px 70px;
+    }
+
+    .hero-chakra-bg {
+        width: 300px;
+        height: 300px;
+        opacity: 0.05;
+    }
+
+    .hero-badge {
+        font-size: 12px;
+        padding: 6px 12px;
+        margin-bottom: 18px;
+        gap: 6px;
+    }
+
+    .hero-badge i {
+        font-size: 12px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.65rem, 5vw, 2.25rem);
+        margin-bottom: 18px;
+    }
+
+    .hero-description {
+        font-size: 15px;
+        margin-bottom: 28px;
+        padding: 0 4px;
+    }
+
+    .donate-impact {
+        gap: 14px;
+    }
+
+    .donate-impact-item {
+        padding: 18px 16px;
+        gap: 14px;
+    }
+
+    .impact-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .donate-impact-number {
+        font-size: 20px;
+    }
+
+    .donate-impact-label {
+        font-size: 12px;
+    }
+
+    .donation-form-container {
+        margin-top: -50px;
+        padding: 0 12px 50px;
+    }
+
+    .form-card {
+        padding: 24px 18px;
+    }
+
+    .form-icon {
+        width: 54px;
+        height: 54px;
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
+
+    .form-header h2 {
+        font-size: 22px;
+        margin-bottom: 6px;
+    }
+
+    .form-header p {
+        font-size: 14px;
+    }
+
+    .form-section {
+        margin-bottom: 24px;
+    }
+
+    .section-label {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+
+    .type-label {
+        padding: 16px;
+    }
+
+    .type-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 14px;
+    }
+
+    .type-title {
+        font-size: 14px;
+    }
+
+    .type-subtitle {
+        font-size: 12px;
+    }
+
+    .amount-grid {
+        gap: 9px;
+        margin-bottom: 16px;
+    }
+
+    .amount-label {
+        padding: 12px 9px;
+    }
+
+    .amount-currency {
+        font-size: 12px;
+    }
+
+    .amount-value {
+        font-size: 16px;
+    }
+
+    .custom-amount-input {
+        padding: 13px 13px 13px 36px;
+        font-size: 14px;
+    }
+
+    .currency-symbol {
+        left: 13px;
+        font-size: 14px;
+    }
+
+    .amount-display {
+        font-size: 20px;
+        margin-top: 12px;
+    }
+
+    .donor-info-grid {
+        gap: 14px;
+    }
+
+    .form-label {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    .form-input {
+        padding: 13px;
+        font-size: 14px;
+    }
+
+    textarea.form-input {
+        min-height: 70px;
+    }
+
+    .tax-exemption-fields {
+        padding: 12px;
+    }
+
+    .terms-checkbox-container {
+        margin-top: 18px;
+        gap: 8px;
+    }
+
+    .terms-checkbox-container label {
+        font-size: 12px;
+    }
+
+    .terms-checkbox-container input[type="checkbox"] {
+        width: 17px;
+        height: 17px;
+    }
+
+    .donate-button {
+        padding: 16px;
+        font-size: 16px;
+        margin-top: 24px;
+    }
+
+    .error-message {
+        font-size: 10px;
+        padding: 6px 10px;
+    }
+}
+
+/* ===== Small Mobile (320px - 480px) ===== */
+@media screen and (max-width: 480px) {
+    /* Flash Notifications */
+    .flash-notification {
+        padding: 12px 14px;
+        border-radius: var(--radius-lg);
+    }
+
+    .flash-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 11px;
+    }
+
+    .flash-title {
+        font-size: 12px;
+        margin-bottom: 2px;
+    }
+
+    .flash-message {
+        font-size: 11px;
+    }
+
+    .flash-close {
+        padding: 2px;
+        font-size: 12px;
+        min-width: 28px;
+        min-height: 28px;
+    }
+
+    /* Donate Page */
+    .donate-page {
+        top: calc(60px + 0.25rem * 6);
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    /* Hero Section */
+    .donate-hero {
+        min-height: 70vh;
+        padding: 40px 10px 60px;
+    }
+
+    .hero-chakra-bg {
+        width: 250px;
+        height: 250px;
+        opacity: 0.04;
+    }
+
+    .donate-hero-content {
+        padding: 0 6px;
+    }
+
+    .hero-badge {
+        font-size: 11px;
+        padding: 5px 10px;
+        margin-bottom: 16px;
+        gap: 5px;
+    }
+
+    .hero-badge i {
+        font-size: 11px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.45rem, 4.5vw, 1.95rem);
+        margin-bottom: 16px;
+        line-height: 1.2;
+    }
+
+    .hero-description {
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 24px;
+        padding: 0;
+    }
+
+    .donate-impact {
+        gap: 12px;
+    }
+
+    .donate-impact-item {
+        padding: 16px 14px;
+        gap: 12px;
+        border-radius: var(--radius-lg);
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .impact-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 15px;
+    }
+
+    .impact-content {
+        text-align: center;
+    }
+
+    .donate-impact-number {
+        font-size: 18px;
+        margin-bottom: 2px;
+    }
+
+    .donate-impact-label {
+        font-size: 11px;
+    }
+
+    /* Form Container */
+    .donation-form-container {
+        margin-top: -45px;
+        padding: 0 10px 40px;
+    }
+
+    .form-card {
+        padding: 20px 16px;
+        border-radius: var(--radius-lg);
+    }
+
+    .form-card::before {
+        height: 3px;
+    }
+
+    /* Form Header */
+    .form-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .form-header {
+        margin-bottom: 32px;
+    }
+
+    .form-header h2 {
+        font-size: 20px;
+        margin-bottom: 5px;
+    }
+
+    .form-header p {
+        font-size: 13px;
+    }
+
+    /* Form Sections */
+    .form-section {
+        margin-bottom: 20px;
+    }
+
+    .section-label {
+        font-size: 13px;
+        margin-bottom: 10px;
+        gap: 6px;
+    }
+
+    .section-label i {
+        font-size: 12px;
+    }
+
+    /* Donation Type Selector */
+    .donation-type-selector {
+        gap: 12px;
+    }
+
+    .type-label {
+        padding: 14px;
+        gap: 10px;
+        border-radius: var(--radius-lg);
+    }
+
+    .type-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+    }
+
+    .type-title {
+        font-size: 13px;
+        margin-bottom: 2px;
+    }
+
+    .type-subtitle {
+        font-size: 11px;
+    }
+
+    /* Amount Selector */
+    .amount-selector {
+        margin-top: 14px;
+    }
+
+    .amount-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    .amount-label {
+        padding: 11px 8px;
+        border-radius: var(--radius-lg);
+    }
+
+    .amount-currency {
+        font-size: 11px;
+    }
+
+    .amount-value {
+        font-size: 15px;
+        margin-top: 3px;
+    }
+
+    .custom-label {
+        gap: 7px;
+    }
+
+    .custom-label i {
+        font-size: 14px;
+    }
+
+    .custom-label span {
+        font-size: 15px;
+    }
+
+    .custom-amount-container {
+        margin-top: 14px;
+    }
+
+    .custom-amount-input-wrapper {
+        max-width: 180px;
+    }
+
+    .custom-amount-input {
+        padding: 12px 12px 12px 34px;
+        font-size: 13px;
+        border-radius: var(--radius-lg);
+    }
+
+    .currency-symbol {
+        left: 12px;
+        font-size: 13px;
+    }
+
+    .amount-display {
+        font-size: 18px;
+        margin-top: 10px;
+    }
+
+    /* Donor Information */
+    .donor-info-grid {
+        gap: 12px;
+    }
+
+    .form-group {
+        position: relative;
+    }
+
+    .form-label {
+        font-size: 11px;
+        margin-bottom: 5px;
+        gap: 5px;
+    }
+
+    .form-label i {
+        font-size: 10px;
+    }
+
+    .form-input {
+        padding: 12px;
+        font-size: 13px;
+        border-radius: var(--radius-lg);
+    }
+
+    textarea.form-input {
+        min-height: 65px;
+        resize: vertical;
+    }
+
+    /* Tax Exemption */
+    .tax-exemption-fields {
+        padding: 10px;
+        margin-top: 12px;
+        border-radius: var(--radius-lg);
+    }
+
+    /* Terms Checkbox */
+    .terms-checkbox-container {
+        margin-top: 16px;
+        gap: 7px;
+    }
+
+    .terms-checkbox-container label {
+        font-size: 11px;
+        line-height: 1.4;
+    }
+
+    .terms-checkbox-container input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+    }
+
+    /* Donate Button */
+    .donate-button {
+        padding: 14px;
+        font-size: 15px;
+        margin-top: 20px;
+        border-radius: var(--radius-lg);
+    }
+
+    .button-content {
+        gap: 8px;
+    }
+
+    .button-content i {
+        font-size: 14px;
+    }
+
+    .button-loading {
+        gap: 6px;
+        font-size: 14px;
+    }
+
+    .button-loading i {
+        font-size: 14px;
+    }
+
+    /* Error Message */
+    .error-message {
+        font-size: 10px;
+        padding: 6px 9px;
+        margin-top: 3px;
+        border-radius: var(--radius-sm);
+    }
+}
+
+/* ===== Extra Small Mobile (320px - 375px) ===== */
+@media screen and (max-width: 375px) {
+    .donate-hero {
+        min-height: 68vh;
+        padding: 36px 9px 55px;
+    }
+
+    .hero-chakra-bg {
+        width: 220px;
+        height: 220px;
+    }
+
+    .hero-badge {
+        font-size: 10px;
+        padding: 4px 9px;
+        margin-bottom: 14px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.35rem, 4vw, 1.75rem);
+        margin-bottom: 14px;
+    }
+
+    .hero-description {
+        font-size: 13px;
+        margin-bottom: 22px;
+    }
+
+    .donate-impact {
+        gap: 11px;
+    }
+
+    .donate-impact-item {
+        padding: 14px 12px;
+    }
+
+    .impact-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 14px;
+    }
+
+    .donate-impact-number {
+        font-size: 17px;
+    }
+
+    .donate-impact-label {
+        font-size: 10px;
+    }
+
+    .donation-form-container {
+        margin-top: -42px;
+        padding: 0 9px 36px;
+    }
+
+    .form-card {
+        padding: 18px 14px;
+    }
+
+    .form-icon {
+        width: 46px;
+        height: 46px;
+        font-size: 17px;
+        margin-bottom: 9px;
+    }
+
+    .form-header {
+        margin-bottom: 28px;
+    }
+
+    .form-header h2 {
+        font-size: 19px;
+        margin-bottom: 4px;
+    }
+
+    .form-header p {
+        font-size: 12px;
+    }
+
+    .form-section {
+        margin-bottom: 18px;
+    }
+
+    .section-label {
+        font-size: 12px;
+        margin-bottom: 9px;
+    }
+
+    .type-label {
+        padding: 13px;
+    }
+
+    .type-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+    }
+
+    .type-title {
+        font-size: 12px;
+    }
+
+    .type-subtitle {
+        font-size: 10px;
+    }
+
+    .amount-grid {
+        gap: 7px;
+        margin-bottom: 12px;
+    }
+
+    .amount-label {
+        padding: 10px 7px;
+    }
+
+    .amount-currency {
+        font-size: 10px;
+    }
+
+    .amount-value {
+        font-size: 14px;
+    }
+
+    .custom-label span {
+        font-size: 14px;
+    }
+
+    .custom-amount-input-wrapper {
+        max-width: 170px;
+    }
+
+    .custom-amount-input {
+        padding: 11px 11px 11px 32px;
+        font-size: 12px;
+    }
+
+    .currency-symbol {
+        left: 11px;
+        font-size: 12px;
+    }
+
+    .amount-display {
+        font-size: 17px;
+    }
+
+    .donor-info-grid {
+        gap: 11px;
+    }
+
+    .form-label {
+        font-size: 10px;
+        margin-bottom: 4px;
+    }
+
+    .form-input {
+        padding: 11px;
+        font-size: 12px;
+    }
+
+    textarea.form-input {
+        min-height: 60px;
+    }
+
+    .tax-exemption-fields {
+        padding: 9px;
+    }
+
+    .terms-checkbox-container {
+        margin-top: 14px;
+    }
+
+    .terms-checkbox-container label {
+        font-size: 10px;
+    }
+
+    .terms-checkbox-container input[type="checkbox"] {
+        width: 15px;
+        height: 15px;
+    }
+
+    .donate-button {
+        padding: 13px;
+        font-size: 14px;
+        margin-top: 18px;
+    }
+
+    .error-message {
+        font-size: 9px;
+        padding: 5px 8px;
+    }
+}
+
+/* ===== Ultra Small Mobile (320px and below) ===== */
+@media screen and (max-width: 320px) {
+    .donate-page {
+        top: calc(60px);
+    }
+
+    .donate-hero {
+        min-height: 66vh;
+        padding: 32px 8px 50px;
+    }
+
+    .hero-chakra-bg {
+        width: 200px;
+        height: 200px;
+        opacity: 0.03;
+    }
+
+    .hero-badge {
+        font-size: 9px;
+        padding: 4px 8px;
+        margin-bottom: 12px;
+    }
+
+    .hero-title {
+        font-size: 1.25rem;
+        margin-bottom: 12px;
+    }
+
+    .hero-description {
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+
+    .donate-impact {
+        gap: 10px;
+    }
+
+    .donate-impact-item {
+        padding: 12px 10px;
+        gap: 10px;
+    }
+
+    .impact-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+    }
+
+    .donate-impact-number {
+        font-size: 16px;
+    }
+
+    .donate-impact-label {
+        font-size: 9px;
+    }
+
+    .donation-form-container {
+        margin-top: -38px;
+        padding: 0 8px 32px;
+    }
+
+    .form-card {
+        padding: 16px 12px;
+    }
+
+    .form-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    .form-header {
+        margin-bottom: 24px;
+    }
+
+    .form-header h2 {
+        font-size: 18px;
+        margin-bottom: 4px;
+    }
+
+    .form-header p {
+        font-size: 11px;
+    }
+
+    .form-section {
+        margin-bottom: 16px;
+    }
+
+    .section-label {
+        font-size: 11px;
+        margin-bottom: 8px;
+        gap: 5px;
+    }
+
+    .section-label i {
+        font-size: 10px;
+    }
+
+    .donation-type-selector {
+        gap: 10px;
+    }
+
+    .type-label {
+        padding: 12px;
+        gap: 8px;
+    }
+
+    .type-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 11px;
+    }
+
+    .type-title {
+        font-size: 11px;
+        margin-bottom: 1px;
+    }
+
+    .type-subtitle {
+        font-size: 9px;
+    }
+
+    .amount-selector {
+        margin-top: 12px;
+    }
+
+    .amount-grid {
+        gap: 6px;
+        margin-bottom: 10px;
+    }
+
+    .amount-label {
+        padding: 9px 6px;
+    }
+
+    .amount-currency {
+        font-size: 9px;
+    }
+
+    .amount-value {
+        font-size: 13px;
+        margin-top: 2px;
+    }
+
+    .custom-label {
+        gap: 6px;
+    }
+
+    .custom-label i {
+        font-size: 12px;
+    }
+
+    .custom-label span {
+        font-size: 13px;
+    }
+
+    .custom-amount-container {
+        margin-top: 12px;
+    }
+
+    .custom-amount-input-wrapper {
+        max-width: 160px;
+    }
+
+    .custom-amount-input {
+        padding: 10px 10px 10px 30px;
+        font-size: 11px;
+    }
+
+    .currency-symbol {
+        left: 10px;
+        font-size: 11px;
+    }
+
+    .amount-display {
+        font-size: 16px;
+        margin-top: 9px;
+    }
+
+    .donor-info-grid {
+        gap: 10px;
+    }
+
+    .form-label {
+        font-size: 9px;
+        margin-bottom: 4px;
+        gap: 4px;
+    }
+
+    .form-label i {
+        font-size: 9px;
+    }
+
+    .form-input {
+        padding: 10px;
+        font-size: 11px;
+    }
+
+    textarea.form-input {
+        min-height: 55px;
+    }
+
+    .tax-exemption-fields {
+        padding: 8px;
+        margin-top: 10px;
+    }
+
+    .terms-checkbox-container {
+        margin-top: 12px;
+        gap: 6px;
+    }
+
+    .terms-checkbox-container label {
+        font-size: 9px;
+    }
+
+    .terms-checkbox-container input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+    }
+
+    .donate-button {
+        padding: 12px;
+        font-size: 13px;
+        margin-top: 16px;
+    }
+
+    .button-content {
+        gap: 7px;
+    }
+
+    .button-content i {
+        font-size: 12px;
+    }
+
+    .button-loading {
+        gap: 5px;
+        font-size: 12px;
+    }
+
+    .error-message {
+        font-size: 8px;
+        padding: 5px 7px;
+    }
+
+    .flash-notification {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+}
+

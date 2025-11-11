@@ -9,16 +9,110 @@
     <link rel="stylesheet" href="/Mobile.css">
     <link rel="stylesheet" href="media-styles.css">
     <link rel="shortcut icon" href="/Images/YUVA logo.png" type="image/x-icon">
-    <!-- ✅ Bing Webmaster Verification -->
     <meta name="msvalidate.01" content="762998E140200B5AFB94E40845B01499" />
 
-    <!-- Modern Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
 
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        /* Custom placeholder for news cards without images */
+        .news-image-placeholder {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, var(--primary-light-alpha), var(--primary-lighter-alpha));
+            /* Lighter, subtle gradient */
+            border-bottom: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            /* Match card border-radius */
+            box-shadow: inset 0 -3px 8px rgba(0, 0, 0, 0.05);
+            /* Inner shadow for depth */
+        }
+
+        .news-image-placeholder i {
+            font-size: 5rem;
+            /* Larger icon */
+            color: var(--primary);
+            /* Primary brand color for the icon */
+            opacity: 0.7;
+            /* Slightly more opaque */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for the icon */
+            transition: transform 0.3s ease;
+        }
+
+        .news-card:hover .news-image-placeholder i {
+            transform: scale(1.05);
+            /* Slight scale on hover for interactivity */
+        }
+
+        /* Reposition the category tag to work with the placeholder */
+        .news-image-placeholder .news-category {
+            position: absolute;
+            top: 16px;
+            /* Slightly more padding */
+            left: 16px;
+            /* Slightly more padding */
+            background: var(--color-primary);
+            color: var(--white-primary);
+            padding: 6px 14px;
+            /* Slightly larger padding */
+            border-radius: 50px;
+            font-size: 13px;
+            /* Slightly larger font */
+            font-weight: 700;
+            /* Bolder font */
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            /* More letter spacing */
+            box-shadow: var(--shadow-sm);
+            /* Small shadow for the category tag */
+        }
+
+        /* Responsive height for placeholder */
+        @media screen and (max-width: 768px) {
+            .news-image-placeholder {
+                height: 180px;
+            }
+
+            .news-image-placeholder i {
+                font-size: 4.5rem;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .news-image-placeholder {
+                height: 160px;
+            }
+
+            .news-image-placeholder i {
+                font-size: 4rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .news-image-placeholder {
+                height: 140px;
+            }
+
+            .news-image-placeholder i {
+                font-size: 3.5rem;
+            }
+
+            .news-image-placeholder .news-category {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -65,17 +159,11 @@
             <div class="dropdown">
                 <a class="dropdown-btn">Our Initiatives ▾</a>
                 <div class="dropdown-content">
-                    <!-- <a href="/Our.Initiative/vimarsh2025.html">Vimarsh</a> -->
                     <a href="/coming-soon.html">Vimarsh</a>
-                    <!-- <a href="/Our.Initiative/Bharatparv.html">Bharat Parv</a> -->
                     <a href="/coming-soon.html">Bharat Parv</a>
-                    <!-- <a href="/Our.Initiative/ritam.html">Ritam</a> -->
                     <a href="/coming-soon.html">Ritam</a>
-                    <!-- <a href="/Our.Initiative/ims.html">Indraprasth Media Sambad</a> -->
                     <a href="/coming-soon.html">Indraprasth Media Sambad</a>
-                    <!-- <a href="/Our.Initiative/Samarpan.html">Samarpan</a> -->
                     <a href="/coming-soon.html">Samarpan</a>
-                    <!-- <a href="/Our.Initiative/NatyaTarang.html">Natya Tarang</a> -->
                     <a href="/coming-soon.html">Natya Tarang</a>
                 </div>
             </div>
@@ -136,7 +224,6 @@
 
     <div class="main">
         <div class="media-page">
-            <!-- Hero Section -->
             <div class="media-hero">
                 <div class="hero-background">
                     <div class="hero-particles"></div>
@@ -239,7 +326,7 @@
                     </g>
                     <g transform="rotate(345 50 50)">
                         <path d="M50 12 V 48" stroke-width="2" />
-                        <circle cx="50" cy="10" r="2.5" fill="currentColor" />
+                        <circle cx="50" cy="1g" fill="currentColor" />
                     </g>
                 </svg>
                 <div class="media-hero-content">
@@ -259,7 +346,6 @@
             </div>
 
 
-            <!-- Content Section -->
             <div class="content-section">
                 <div class="content-card">
                     <div class="newspaper-gallery-container">
@@ -305,193 +391,191 @@
                             </div>
                         </div>
                     </div>
-                    <!-- News Filters -->
                     <div class="news-filters">
                         <button class="filter-btn active" data-filter="all">All News</button>
-                        <button class="filter-btn" data-filter="awards">Awards & Recognition</button>
-                        <button class="filter-btn" data-filter="events">Events Coverage</button>
-                        <button class="filter-btn" data-filter="interviews">Interviews</button>
+                        <button class="filter-btn" data-filter="events">Events</button>
                         <button class="filter-btn" data-filter="features">Features</button>
+                        <button class="filter-btn" data-filter="interviews">Interviews</button>
                     </div>
 
-                    <!-- News Grid -->
                     <div class="news-grid">
-                        <!-- News Article 1 -->
-                        <div class="news-card" data-category="awards">
-                            <div class="news-image">
-                                <img src="/Images/2024.JPG" alt="YUVA Award Ceremony">
-                                <div class="news-category">Awards</div>
-                            </div>
-                            <div class="news-content">
-                                <h3 class="news-title">YUVA Delhi Receives National Youth Excellence Award 2024</h3>
-                                <p class="news-excerpt">
-                                    Recognized for outstanding contribution to youth development and community service
-                                    across India.
-                                </p>
-                                <div class="news-meta">
-                                    <div class="news-date">
-                                        <i class="fas fa-calendar"></i>
-                                        <span>March 15, 2024</span>
-                                    </div>
-                                    <div class="news-source">
-                                        <i class="fas fa-newspaper"></i>
-                                        <span>The Times of India</span>
-                                    </div>
-                                </div>
-                                <a href="#" class="news-link">
-                                    Read Full Article
-                                    <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- News Article 2 -->
                         <div class="news-card" data-category="events">
-                            <div class="news-image">
-                                <img src="/Images/2023.JPG" alt="Vimarsh 2023 Event">
+                            <div class="news-image-placeholder">
+                                <i class="fas fa-newspaper"></i>
                                 <div class="news-category">Events</div>
                             </div>
                             <div class="news-content">
-                                <h3 class="news-title">Vimarsh 2023: A Grand Success with 5000+ Participants</h3>
+                                <h3 class="news-title">DU: Discussion on the importance of the Constitution begins at
+                                    Yuva Samvad</h3>
                                 <p class="news-excerpt">
-                                    The annual youth summit brought together students, professionals, and thought
-                                    leaders for meaningful discussions.
+                                    Amidst the debate on the Constitution, the three-day annual Yuva Samvad Vimarsh 2025
+                                    began on Friday at Kamla Nehru College, DU...
                                 </p>
                                 <div class="news-meta">
                                     <div class="news-date">
                                         <i class="fas fa-calendar"></i>
-                                        <span>December 10, 2023</span>
+                                        <span>November 7, 2025</span>
                                     </div>
                                     <div class="news-source">
                                         <i class="fas fa-newspaper"></i>
-                                        <span>Hindustan Times</span>
+                                        <span>Prabhat Khabar</span>
                                     </div>
                                 </div>
-                                <a href="#" class="news-link">
+                                <a href="https://www.prabhatkhabar.com/national/du-importance-of-the-constitution"
+                                    class="news-link" target="_blank" rel="noopener noreferrer">
                                     Read Full Article
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
                             </div>
                         </div>
 
-                        <!-- News Article 3 -->
-                        <div class="news-card" data-category="interviews">
-                            <div class="news-image">
-                                <img src="/Images/2022.jpeg" alt="YUVA Leadership Interview">
-                                <div class="news-category">Interviews</div>
+                        <div class="news-card" data-category="events">
+                            <div class="news-image-placeholder">
+                                <i class="fas fa-newspaper"></i>
+                                <div class="news-category">Events</div>
                             </div>
                             <div class="news-content">
-                                <h3 class="news-title">Exclusive Interview: YUVA's Vision for India's Youth</h3>
+                                <h3 class="news-title">Protecting India's culture is protecting the Constitution:
+                                    Prafulla Ketkar</h3>
                                 <p class="news-excerpt">
-                                    Our leadership team shares insights on empowering the next generation of Indian
-                                    leaders.
+                                    The three-day national dialogue 'Vimarsh 2025' organized by YUVA concluded with
+                                    fanfare on Sunday at Kamla Nehru College, DU...
                                 </p>
                                 <div class="news-meta">
                                     <div class="news-date">
                                         <i class="fas fa-calendar"></i>
-                                        <span>October 22, 2023</span>
+                                        <span>November 9, 2025</span>
                                     </div>
                                     <div class="news-source">
                                         <i class="fas fa-newspaper"></i>
-                                        <span>India Today</span>
+                                        <span>Hindusthan Samachar</span>
                                     </div>
                                 </div>
-                                <a href="#" class="news-link">
+                                <a href="https://www.hindusthansamachar.in/Encyc/2025/11/9/Protecting-Indias-Culture-is-Protecting-Indias-Con.php"
+                                    class="news-link" target="_blank" rel="noopener noreferrer">
                                     Read Full Article
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
                             </div>
                         </div>
 
-                        <!-- News Article 4 -->
+                        <div class="news-card" data-category="events">
+                            <div class="news-image-placeholder">
+                                <i class="fas fa-newspaper"></i>
+                                <div class="news-category">Events</div>
+                            </div>
+                            <div class="news-content">
+                                <h3 class="news-title">Protecting India's culture is protecting the Constitution:
+                                    Prafulla Ketkar</h3>
+                                <p class="news-excerpt">
+                                    Citing Dr. Bhimrao Ambedkar, he said that India was not unaware of democracy; we
+                                    were well aware of the Parliament and its procedures...
+                                </p>
+                                <div class="news-meta">
+                                    <div class="news-date">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>November 9, 2025</span>
+                                    </div>
+                                    <div class="news-source">
+                                        <i class="fas fa-newspaper"></i>
+                                        <span>Live VNS News</span>
+                                    </div>
+                                </div>
+                                <a href="https://livevns.news/state/delhincr/protecting-indias-culture-is-protecting-indias-conphp/cid17784183.htm"
+                                    class="news-link" target="_blank" rel="noopener noreferrer">
+                                    Read Full Article
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="news-card" data-category="events">
+                            <div class="news-image-placeholder">
+                                <i class="fas fa-newspaper"></i>
+                                <div class="news-category">Events</div>
+                            </div>
+                            <div class="news-content">
+                                <h3 class="news-title">Discussion on Constitution: The Soul of India 2025</h3>
+                                <p class="news-excerpt">
+                                    Justice Goel states 'The Constitution embodies the philosophy of life' in a recent
+                                    discussion. Read the full coverage...
+                                </p>
+                                <div class="news-meta">
+                                    <div class="news-date">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>November 10, 2025</span>
+                                    </div>
+                                    <div class="news-source">
+                                        <i class="fas fa-newspaper"></i>
+                                        <span>News Adda India</span>
+                                    </div>
+                                </div>
+                                <a href="https://newsaddaindia.com/the-discussion-on-constitution-the-soul-of-india-2025-begins-justice-goel-says-the-constitution-embodies-the-philosophy-of-life/"
+                                    class="news-link" target="_blank" rel="noopener noreferrer">
+                                    Read Full Article
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+
                         <div class="news-card" data-category="features">
-                            <div class="news-image">
-                                <img src="/Images/2019.jpg" alt="YUVA Community Impact">
+                            <div class="news-image-placeholder">
+                                <i class="fas fa-newspaper"></i>
                                 <div class="news-category">Features</div>
                             </div>
                             <div class="news-content">
-                                <h3 class="news-title">How YUVA is Transforming Lives Through Education</h3>
+                                <h3 class="news-title">Haribhoomi E-Paper: New Delhi Main Edition</h3>
                                 <p class="news-excerpt">
-                                    A deep dive into our educational initiatives and their impact on thousands of
-                                    students nationwide.
+                                    Read the full coverage of YUVA's events and mentions in the New Delhi main edition
+                                    of the Haribhoomi e-paper.
                                 </p>
                                 <div class="news-meta">
                                     <div class="news-date">
                                         <i class="fas fa-calendar"></i>
-                                        <span>August 30, 2023</span>
+                                        <span>November 8, 2025</span>
                                     </div>
                                     <div class="news-source">
                                         <i class="fas fa-newspaper"></i>
-                                        <span>Economic Times</span>
+                                        <span>Haribhoomi</span>
                                     </div>
                                 </div>
-                                <a href="#" class="news-link">
+                                <a href="https://epaper.haribhoomi.com/view/43249/new-delhi-main-edition/1"
+                                    class="news-link" target="_blank" rel="noopener noreferrer">
                                     Read Full Article
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
                             </div>
                         </div>
 
-                        <!-- News Article 5 -->
-                        <div class="news-card" data-category="events">
-                            <div class="news-image">
-                                <img src="/Images/Card Image 1.jpeg" alt="Bharat Parv Event">
-                                <div class="news-category">Events</div>
+                        <div class="news-card" data-category="features">
+                            <div class="news-image-placeholder">
+                                <i class="fas fa-share-alt"></i>
+                                <div class="news-category">Features</div>
                             </div>
                             <div class="news-content">
-                                <h3 class="news-title">Bharat Parv 2023: Celebrating India's Cultural Heritage</h3>
+                                <h3 class="news-title">YUVA Coverage (Shared Link)</h3>
                                 <p class="news-excerpt">
-                                    A spectacular celebration of Indian culture and traditions with performances from
-                                    across the country.
+                                    View the latest news and updates about YUVA's initiatives and events, as shared
+                                    through this secure link.
                                 </p>
                                 <div class="news-meta">
                                     <div class="news-date">
                                         <i class="fas fa-calendar"></i>
-                                        <span>July 15, 2023</span>
+                                        <span>November 10, 2025</span>
                                     </div>
                                     <div class="news-source">
                                         <i class="fas fa-newspaper"></i>
-                                        <span>NDTV</span>
+                                        <span>Google Share</span>
                                     </div>
                                 </div>
-                                <a href="#" class="news-link">
-                                    Read Full Article
-                                    <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- News Article 6 -->
-                        <div class="news-card" data-category="awards">
-                            <div class="news-image">
-                                <img src="/Images/Card Image 2.jpg" alt="YUVA Recognition">
-                                <div class="news-category">Awards</div>
-                            </div>
-                            <div class="news-content">
-                                <h3 class="news-title">YUVA Delhi Honored with Best NGO Award 2023</h3>
-                                <p class="news-excerpt">
-                                    Recognized by the Delhi Government for exceptional contribution to youth development
-                                    and social welfare.
-                                </p>
-                                <div class="news-meta">
-                                    <div class="news-date">
-                                        <i class="fas fa-calendar"></i>
-                                        <span>June 8, 2023</span>
-                                    </div>
-                                    <div class="news-source">
-                                        <i class="fas fa-newspaper"></i>
-                                        <span>Delhi Times</span>
-                                    </div>
-                                </div>
-                                <a href="#" class="news-link">
+                                <a href="https://share.google/QwttrFSCeJZ1X4WTg" class="news-link" target="_blank"
+                                    rel="noopener noreferrer">
                                     Read Full Article
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Media Coverage Stats -->
                     <div
                         style="margin-top: 40px; padding: 32px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: var(--radius-xl);">
                         <h3
