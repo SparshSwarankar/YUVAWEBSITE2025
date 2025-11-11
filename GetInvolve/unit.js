@@ -18,7 +18,7 @@ const GAS_WEB_APP_URL = (() => {
         if (overrideRaw) console.warn('Ignoring invalid GAS_WEB_APP_URL override:', overrideRaw);
     } catch (_) { }
     // Fallback: use a known-good exec URL; sanitize in case of accidental concatenation
-    const fallbackRaw = 'https://script.google.com/macros/s/AKfycbzkOBsj6PS_ncTAy3I_hTJV4TWzup322AdUkCjpZZ1M1_RD1EHrLRQjgzdkKdNTR3-I/exec';
+    const fallbackRaw = 'https://script.google.com/macros/s/AKfycbw2JrsmaHHjOIht30EP3qEvgu9cD574L2A-Q7sew_nql4t7jhfU1qz6eLCWLckerrHY/exec';
     const m2 = fallbackRaw.match(execRegex);
     return m2 ? m2[0] : fallbackRaw;
 })();
@@ -771,15 +771,17 @@ class AuthManager {
         // Get header elements
         const loginBtn = document.getElementById('login-btn');
         const pageTitle = document.querySelector('.page-title');
-        const toggles = document.querySelectorAll('.toggle-btn, .hamburger-menu');
 
         // Logged-in state: Hide login, HIDE title, show toggles
         if (loginBtn) loginBtn.style.display = 'none';
-        if (pageTitle) pageTitle.style.display = 'none'; // <-- THIS LINE IS UPDATED
+        if (pageTitle) pageTitle.style.display = 'none';
 
-        // Show toggles. The main style.css will handle their responsive display.
-        toggles.forEach(el => el.style.display = 'block');
-        // --- END NEW CODE ---
+        // --- THIS IS THE FIX ---
+        // Show ONLY the admin toggle button (the "—" icon)
+        document.querySelectorAll('.toggle-btn').forEach(el => el.style.display = 'block');
+        // HIDE the main site hamburger menu to prevent the "extra bar"
+        document.querySelectorAll('.hamburger-menu').forEach(el => el.style.display = 'none');
+        // --- END THE FIX ---
 
         // Update user info
         if (this.currentUser) {
