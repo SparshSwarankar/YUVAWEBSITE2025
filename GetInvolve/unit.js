@@ -18,7 +18,7 @@ const GAS_WEB_APP_URL = (() => {
         if (overrideRaw) console.warn('Ignoring invalid GAS_WEB_APP_URL override:', overrideRaw);
     } catch (_) { }
     // Fallback: use a known-good exec URL; sanitize in case of accidental concatenation
-    const fallbackRaw = 'https://script.google.com/macros/s/AKfycbylgSA1DhWnRKaG_w1NCcZxJLVtv78aYCurVOY9mKI8AYi5W6oJzWabtYHRKmKY8o6A/exec';
+    const fallbackRaw = 'https://script.google.com/macros/s/AKfycbxMi-HPbck3OYUUrS5I8APqA20_tgiwh5vb8uGr06dhuYI9B1oKUEfR0jnx_z8doQgh/exec';
     const m2 = fallbackRaw.match(execRegex);
     return m2 ? m2[0] : fallbackRaw;
 })();
@@ -229,14 +229,15 @@ class SupabaseService {
         }
     }
     // ===== NEW: Method to notify Super Admin =====
-    static async notifyAdminForCollege(requesterName, requesterRole, requesterContext) {
+    static async notifyAdminForCollege(requesterName, requesterRole, requesterContext, collegeName) {
         try {
             const params = new URLSearchParams({
                 action: 'notify',
                 method: 'requestCollege',
                 requesterName: requesterName,
                 requesterRole: requesterRole,
-                requesterContext: requesterContext
+                requesterContext: requesterContext,
+                collegeName: collegeName // <--- Added: Sends college name to backend
             }).toString();
 
             const response = await fetch(`${GAS_WEB_APP_URL}?${params}`);
@@ -1351,29 +1352,27 @@ class ZoneManager {
         }
     }
 
+    // ===== REPLACE THIS ENTIRE METHOD INSIDE ZoneManager CLASS =====
     bindEvents() {
         if (this._eventsBound) return;
 
-        // --- REFINED SEARCH LOGIC ---
+        // --- SEARCH LOGIC ---
         const searchInput = document.getElementById('college-search-input');
         const searchBtn = document.getElementById('college-search-btn');
         const suggestionsContainer = document.getElementById('search-suggestions');
         const noResultsMessage = document.getElementById('no-results-message');
 
         if (searchInput) {
-            // This listener now ONLY builds the suggestions dropdown, without filtering the cards.
             searchInput.addEventListener('input', () => {
                 const searchTerm = searchInput.value.trim().toLowerCase();
-                suggestionsContainer.innerHTML = ''; // Clear previous suggestions
+                suggestionsContainer.innerHTML = '';
 
-                // Hide suggestions if search is empty
                 if (searchTerm === '') {
                     suggestionsContainer.style.display = 'none';
                     noResultsMessage.style.display = 'none';
                     return;
                 }
 
-                // Find all colleges matching the search term
                 const matchingColleges = this.colleges.filter(college =>
                     college.college_name.toLowerCase().includes(searchTerm) ||
                     college.college_code.toLowerCase().includes(searchTerm)
@@ -1385,12 +1384,11 @@ class ZoneManager {
                         item.className = 'suggestion-item';
                         item.textContent = `${college.college_name} (${college.college_code})`;
 
-                        // When a suggestion is clicked:
                         item.addEventListener('click', () => {
-                            searchInput.value = college.college_name; // Set input text
-                            suggestionsContainer.style.display = 'none'; // Hide suggestions
+                            searchInput.value = college.college_name;
+                            suggestionsContainer.style.display = 'none';
                             noResultsMessage.style.display = 'none';
-                            this.findAndHighlightCollege(college.college_name); // Scroll and highlight
+                            this.findAndHighlightCollege(college.college_name);
                         });
                         suggestionsContainer.appendChild(item);
                     });
@@ -1398,21 +1396,19 @@ class ZoneManager {
                     noResultsMessage.style.display = 'none';
                 } else {
                     suggestionsContainer.style.display = 'none';
-                    noResultsMessage.style.display = 'block'; // Show "No colleges found"
+                    noResultsMessage.style.display = 'block';
                 }
             });
 
-            // Hide suggestions when clicking away from the search bar
             document.addEventListener('click', (e) => {
                 if (!searchInput.contains(e.target)) {
                     suggestionsContainer.style.display = 'none';
                 }
             });
 
-            // Handle "Enter" key press to trigger scroll and highlight
             searchInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
-                    e.preventDefault(); // Prevent any default form submission
+                    e.preventDefault();
                     this.findAndHighlightCollege(searchInput.value);
                     suggestionsContainer.style.display = 'none';
                     noResultsMessage.style.display = 'none';
@@ -1420,7 +1416,6 @@ class ZoneManager {
             });
         }
 
-        // Handle search button click to trigger scroll and highlight
         if (searchBtn) {
             searchBtn.addEventListener('click', () => {
                 this.findAndHighlightCollege(searchInput.value);
@@ -1428,9 +1423,8 @@ class ZoneManager {
                 noResultsMessage.style.display = 'none';
             });
         }
-        // --- END OF REFINED SEARCH LOGIC ---
 
-        // (All your other button event listeners remain unchanged)
+        // --- EXPORT BUTTONS ---
         const exportAllBtn = document.getElementById('export-all-btn');
         if (exportAllBtn) {
             exportAllBtn.addEventListener('click', () => this.exportAllData());
@@ -1443,6 +1437,7 @@ class ZoneManager {
             generateReportBtn.addEventListener('click', () => this.generateReport());
         }
 
+        // --- DELETE COLLEGE BUTTON ---
         const addMemberGlobal = document.getElementById('add-member-btn-global');
         if (addMemberGlobal) {
             addMemberGlobal.textContent = 'Delete College';
@@ -1450,10 +1445,12 @@ class ZoneManager {
             addMemberGlobal.addEventListener('click', async (e) => {
                 e.preventDefault();
                 const collegeId = window.__yuvaActiveCollegeId;
+
                 if (!collegeId) {
-                    flashNotification.showInfo('Select a college', 'Select a zone, then click a college card to enable deletion.');
+                    flashNotification.showInfo('Action Required', 'Please click on a college card to select it first.');
                     return;
                 }
+
                 const ok = await showConfirmDialog({
                     title: 'Delete college',
                     message: 'Are you sure you want to delete this college? This action cannot be undone.',
@@ -1494,35 +1491,62 @@ class ZoneManager {
             addCollegeBtn.addEventListener('click', () => openCollegeModal());
         }
 
+        // --- NOTIFICATION BUTTON (SINGLE LISTENER NOW) ---
         const notifyAdminBtn = document.getElementById('notify-admin-btn');
         if (notifyAdminBtn) {
-            notifyAdminBtn.addEventListener('click', async () => {
+            // Remove any old listeners if possible (though replacing the function handles it better)
+            const newBtn = notifyAdminBtn.cloneNode(true);
+            notifyAdminBtn.parentNode.replaceChild(newBtn, notifyAdminBtn);
+
+            newBtn.addEventListener('click', () => {
+                const modal = document.getElementById('request-college-modal');
+                if (modal) {
+                    const form = document.getElementById('request-college-form');
+                    if (form) form.reset();
+                    modal.style.display = 'block';
+                    document.body.classList.add('modal-open');
+                }
+            });
+        }
+
+        // --- REQUEST FORM SUBMISSION ---
+        const requestForm = document.getElementById('request-college-form');
+        if (requestForm) {
+            // Use cloneNode to strip old listeners here too, just in case
+            const newForm = requestForm.cloneNode(true);
+            requestForm.parentNode.replaceChild(newForm, requestForm);
+
+            newForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
                 const user = authManager.currentUser;
+                const nameInput = document.getElementById('req-college-name');
+                const collegeName = nameInput.value.trim();
+                // We must re-query the button since we cloned the form
+                const btn = newForm.querySelector('button[type="submit"]');
+
                 if (!user) {
-                    flashNotification.showError('Error', 'Could not identify current user.');
+                    flashNotification.showError('Error', 'User session not found.');
                     return;
                 }
-                const ok = await showConfirmDialog({
-                    title: 'Confirm Request',
-                    message: 'This will send an email to the Super Admin requesting them to add a new college. Do you want to proceed?',
-                    confirmText: 'Send Notification',
-                    cancelText: 'Cancel'
-                });
-                if (!ok) return;
-                const originalContent = notifyAdminBtn.innerHTML;
-                notifyAdminBtn.disabled = true;
-                notifyAdminBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending...';
+
+                const originalText = btn.innerHTML;
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending...';
+
                 try {
-                    const context = zoneManager.currentZone ? `Zone: ${zoneManager.currentZone.zone_name}` : 'the main dashboard';
-                    const response = await SupabaseService.notifyAdminForCollege(user.full_name, user.role, context);
+                    const context = zoneManager.currentZone ? `Zone: ${zoneManager.currentZone.zone_name}` : 'Dashboard';
+                    const response = await SupabaseService.notifyAdminForCollege(user.full_name, user.role, context, collegeName);
+
                     if (response.success) {
-                        flashNotification.showSuccess('Notification Sent', 'The Super Admin has been notified.');
+                        document.getElementById('request-college-modal').style.display = 'none';
+                        document.body.classList.remove('modal-open');
+                        flashNotification.showSuccess('Request Sent', `Admin notified to add "${collegeName}".`);
                     } else {
                         flashNotification.showError('Failed', response.error || 'Could not send notification.');
                     }
                 } finally {
-                    notifyAdminBtn.disabled = false;
-                    notifyAdminBtn.innerHTML = originalContent;
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
                 }
             });
         }
@@ -1959,10 +1983,8 @@ async function loadCollegeMembers(collegeId) {
                 s.innerHTML = `<div class="cd-skeleton cd-avatar"></div><div class="cd-skeleton cd-line"></div>`;
                 return s;
             };
-            // two for leads
             skelLeads.appendChild(makeSkel());
             skelLeads.appendChild(makeSkel());
-            // three for team
             for (let i = 0; i < 3; i++) skelTeam.appendChild(makeSkel());
         }
         let { data, error } = await supa
@@ -1973,11 +1995,9 @@ async function loadCollegeMembers(collegeId) {
             flashNotification.showError('Load failed', error.message || 'Unable to fetch members');
             return;
         }
-        // Guard: if user switched colleges while request in-flight, ignore results
+
         if (window.__yuvaActiveCollegeId !== collegeId) return;
 
-        // no fallback needed per schema
-        let usedFallback = false; // no fallback needed now
         const dataMapped = (data || []).map(r => ({
             id: r.id,
             full_name: r.applicant_name,
@@ -1989,7 +2009,7 @@ async function loadCollegeMembers(collegeId) {
             status: r.status || 'pending',
             avatar_url: null
         }));
-        // Sort to feature Mentor and Co-Mentor in the front-center
+
         const normalize = v => (v || '').toLowerCase();
         const isMentor = p => /\bmentor\b/.test(normalize(p)) && !/co[- ]?mentor/.test(normalize(p));
         const isCoMentor = p => /co[- ]?mentor/.test(normalize(p));
@@ -1999,8 +2019,6 @@ async function loadCollegeMembers(collegeId) {
         const rest = dataMapped.filter(m => !featured.includes(m));
         const ordered = [...featured, ...rest].slice(0, 12);
 
-        // Replace skeletons with actual content
-        // container already assigned above
         container.innerHTML = '';
         container.dataset.collegeId = String(collegeId);
 
@@ -2012,7 +2030,6 @@ async function loadCollegeMembers(collegeId) {
             return;
         }
 
-        // Split into leads (mentor + co-mentor) and team
         const leadsWrap = document.createElement('div');
         leadsWrap.className = 'cd-leads';
         const teamWrap = document.createElement('div');
@@ -2029,8 +2046,13 @@ async function loadCollegeMembers(collegeId) {
             const initials = dispName.split(' ').map(x => x[0]).slice(0, 2).join('').toUpperCase();
             const hasPhoto = !!(m.avatar_url && String(m.avatar_url).trim());
             const avatar = hasPhoto ? `<img src="${m.avatar_url}" alt="${dispName}">` : `<span class="cd-ph">${initials}</span>`;
-            const isSuper = authManager && authManager.currentUser && authManager.currentUser.role === 'super_admin';
-            card.innerHTML = `<div class=\"cd-member-avatar${hasPhoto ? '' : ' placeholder'}\">${avatar}</div><div class=\"cd-member-info\"><h4>${dispName}</h4><p>${m.email || '—'}<br>${m.post || 'member'}${m.unit_name ? ' · <span class=\\"cd-unit\\">' + m.unit_name + '</span>' : ''}</p></div><div class=\"cd-member-actions\"><button class=\"cd-action-btn cd-edit\" title=\"Edit\"><i class=\"fas fa-edit\"></i></button><button class=\"cd-action-btn cd-delete\" title=\"Delete\"><i class=\"fas fa-trash\"></i></button>${isSuper ? '<button class=\"cd-action-btn cd-approve\" title=\"Approve\"><i class=\"fas fa-check\"></i></button><button class=\"cd-action-btn cd-reject\" title=\"Reject\"><i class=\"fas fa-times\"></i></button>' : ''}</div>`;
+
+            // Fix #3: Allow Super Admin OR Zone Convener to approve
+            const currentUserRole = (authManager.currentUser && authManager.currentUser.role) || 'viewer';
+            const canApprove = currentUserRole === 'super_admin' || currentUserRole === 'zone_convener';
+
+            card.innerHTML = `<div class=\"cd-member-avatar${hasPhoto ? '' : ' placeholder'}\">${avatar}</div><div class=\"cd-member-info\"><h4>${dispName}</h4><p>${m.email || '—'}<br>${m.post || 'member'}${m.unit_name ? ' · <span class=\\"cd-unit\\">' + m.unit_name + '</span>' : ''}</p></div><div class=\"cd-member-actions\"><button class=\"cd-action-btn cd-edit\" title=\"Edit\"><i class=\"fas fa-edit\"></i></button><button class=\"cd-action-btn cd-delete\" title=\"Delete\"><i class=\"fas fa-trash\"></i></button>${canApprove ? '<button class=\"cd-action-btn cd-approve\" title=\"Approve\"><i class=\"fas fa-check\"></i></button><button class=\"cd-action-btn cd-reject\" title=\"Reject\"><i class=\"fas fa-times\"></i></button>' : ''}</div>`;
+
             if (idx < featured.length) {
                 leadsWrap.appendChild(card);
             } else {
@@ -2038,7 +2060,6 @@ async function loadCollegeMembers(collegeId) {
             }
             setTimeout(() => card.classList.add('show'), 30 + idx * 20);
 
-            // wire actions
             card.querySelector('.cd-edit')?.addEventListener('click', () => {
                 openMemberModal({
                     id: m.id,
@@ -2063,7 +2084,9 @@ async function loadCollegeMembers(collegeId) {
                 if (!ok) return;
                 await deleteMember(m.id, collegeId);
             });
-            if (isSuper) {
+
+            // Attach listeners if the user has permission
+            if (canApprove) {
                 card.querySelector('.cd-approve')?.addEventListener('click', async () => {
                     await approveRegistration(m.id, true, collegeId);
                 });
@@ -2073,7 +2096,6 @@ async function loadCollegeMembers(collegeId) {
             }
         });
 
-        // No fallback message; registrations is the primary source
     } catch (e) {
         flashNotification.showError('Error', 'Failed to load members');
     }
@@ -2251,9 +2273,11 @@ async function loadCollegeEvents(collegeId) {
         const past = document.getElementById('cd-past-events');
         if (up) up.innerHTML = '';
         if (past) past.innerHTML = '';
+
         const refreshBtn = document.getElementById('cd-refresh-events');
         const prev = refreshBtn ? { html: refreshBtn.innerHTML, dis: refreshBtn.disabled } : null;
         if (refreshBtn) { refreshBtn.disabled = true; refreshBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Refreshing'; }
+
         const skeleton = () => {
             const s = document.createElement('div');
             s.className = 'cd-skel-card';
@@ -2266,6 +2290,7 @@ async function loadCollegeEvents(collegeId) {
         const qs = new URLSearchParams({ action: 'events', method: 'listByCollege', collegeId: String(collegeId) }).toString();
         const resp = await fetch(`${GAS_WEB_APP_URL}?${qs}`);
         const json = await resp.json();
+
         if (!json || !json.success) {
             if (up) up.innerHTML = '';
             if (past) past.innerHTML = '';
@@ -2273,40 +2298,73 @@ async function loadCollegeEvents(collegeId) {
             if (refreshBtn && prev) { refreshBtn.disabled = prev.dis; refreshBtn.innerHTML = prev.html; }
             return;
         }
-        const now = Date.now();
+
+        const now = new Date().getTime(); // Current timestamp
         const events = Array.isArray(json.events) ? json.events : [];
+
+        // --- NEW LOGIC: Check End Date ---
         const isUpcoming = (ev) => {
             const st = String(ev.status || '').toLowerCase();
-            const t = ev.start_at ? new Date(ev.start_at).getTime() : 0;
+            // 1. If manually cancelled, it's neither upcoming nor past (usually hidden or in past)
             if (st === 'cancelled') return false;
-            if (st === 'upcoming' || st === 'scheduled') return true;
-            if (st === 'completed' || st === 'past') return false;
-            return t >= now; // fallback by time
+
+            // 2. Determine the cutoff time. 
+            //    If 'end_at' exists, use it. If not, use 'start_at'.
+            const compareDate = ev.end_at ? ev.end_at : ev.start_at;
+            const compareTime = compareDate ? new Date(compareDate).getTime() : 0;
+
+            // 3. If the cutoff time is in the future, it is Upcoming
+            return compareTime > now;
         };
+
         const isPast = (ev) => {
             const st = String(ev.status || '').toLowerCase();
-            const t = ev.start_at ? new Date(ev.start_at).getTime() : 0;
-            if (st === 'past' || st === 'completed') return true;
-            if (st === 'upcoming' || st === 'scheduled') return false;
-            return t < now; // fallback by time
+            if (st === 'cancelled') return true; // Move cancelled items to history/past list
+
+            // Determine cutoff time
+            const compareDate = ev.end_at ? ev.end_at : ev.start_at;
+            const compareTime = compareDate ? new Date(compareDate).getTime() : 0;
+
+            // If the cutoff time has passed, it is Past
+            return compareTime <= now;
         };
+        // --------------------------------
+
         const upList = events.filter(isUpcoming);
         const pastList = events.filter(isPast);
+
         const render = (ev, isUpcoming) => {
             const card = document.createElement('div');
             card.className = 'cd-event-card reveal show' + (isUpcoming ? ' upcoming' : ' past');
-            const dateStr = ev.start_at ? new Date(ev.start_at).toLocaleString() : '';
+
+            const startStr = ev.start_at ? new Date(ev.start_at).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : '';
+
+            // Show end time if available
+            let dateDisplay = startStr;
+            if (ev.end_at) {
+                // Check if end date is same day
+                const sDate = new Date(ev.start_at);
+                const eDate = new Date(ev.end_at);
+                const sameDay = sDate.toDateString() === eDate.toDateString();
+                const endStr = sameDay
+                    ? eDate.toLocaleTimeString([], { timeStyle: 'short' })
+                    : eDate.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
+                dateDisplay += ` - ${endStr}`;
+            }
+
             const loc = ev.location ? `<span class="cd-ev-loc"><i class="fas fa-location-dot"></i> ${ev.location}</span>` : '';
+
             card.innerHTML = `
                 <div class="cd-ev-body">
                     <div class="cd-ev-title">${ev.title || 'Event'}</div>
-                    <div class="cd-ev-meta"><span><i class="far fa-clock"></i> ${dateStr}</span> ${loc}</div>
+                    <div class="cd-ev-meta"><span><i class="far fa-clock"></i> ${dateDisplay}</span> ${loc}</div>
                     <div class="cd-ev-desc">${(ev.description || '').slice(0, 160)}</div>
                 </div>
                 <div class="cd-ev-actions">
                     <button class="btn secondary cd-ev-edit"><i class="fas fa-edit"></i></button>
                     <button class="btn secondary cd-ev-delete"><i class="fas fa-trash"></i></button>
                 </div>`;
+
             card.querySelector('.cd-ev-edit')?.addEventListener('click', () => openEventModal({ ...ev }));
             card.querySelector('.cd-ev-delete')?.addEventListener('click', async (e) => {
                 const ok = await showConfirmDialog({ title: 'Delete event', message: `Delete "${ev.title}"?`, confirmText: 'Delete', variant: 'error' });
@@ -2315,14 +2373,17 @@ async function loadCollegeEvents(collegeId) {
                 await deleteEvent(ev.id, collegeId);
                 await loadCollegeEvents(collegeId);
             });
-            // ensure reveal animation completes
+
             setTimeout(() => card.classList.add('show'), 20);
             return card;
         };
+
         if (up) { up.innerHTML = ''; upList.forEach(e => up.appendChild(render(e, true))); if (upList.length === 0) up.innerHTML = '<div class="cd-empty">No upcoming events</div>'; }
         if (past) { past.innerHTML = ''; pastList.forEach(e => past.appendChild(render(e, false))); if (pastList.length === 0) past.innerHTML = '<div class="cd-empty">No past events</div>'; }
+
         if (refreshBtn && prev) { refreshBtn.disabled = prev.dis; refreshBtn.innerHTML = prev.html; }
     } catch (err) {
+        console.error(err);
         flashNotification.showError('Events', 'Failed to load events');
     }
 }
@@ -2340,16 +2401,27 @@ function openEventModal(prefill) {
                 <form id="event-form">
                     <input type="hidden" id="event-id">
                     <input type="hidden" id="event-college-id">
-                    <div class="form-group"><label>College</label><input type="text" id="event-college-display" disabled></div>
-                    <div class="form-group"><label>Zone</label><input type="text" id="event-zone-display" disabled></div>
                     
+                    <div class="form-group"><label>College</label><input type="text" id="event-college-display" disabled></div>
+                    
+                    <div class="form-group">
+                        <label>Event Banner (Max 500KB)</label>
+                        <input type="file" id="event-banner-file" accept="image/*">
+                        <input type="hidden" id="event-banner-url">
+                        <small style="color:var(--text-secondary); display:block; margin-top:4px;">Recommended: 16:9 aspect ratio (e.g., 1280x720)</small>
+                    </div>
+
                     <div class="form-group"><label>Title</label><input type="text" id="event-name" required></div>
                     <div class="form-group"><label>Description</label><textarea id="event-desc" rows="3"></textarea></div>
                     <div class="form-group"><label>Start</label><input type="datetime-local" id="event-start" required></div>
                     <div class="form-group"><label>End</label><input type="datetime-local" id="event-end"></div>
                     <div class="form-group"><label>Location</label><input type="text" id="event-loc"></div>
                     <div class="form-group"><label>Status</label>
-                        <select id="event-status"><option value="upcoming">Upcoming</option><option value="past">Past</option><option value="cancelled">Cancelled</option></select>
+                        <select id="event-status">
+                            <option value="upcoming">Upcoming</option>
+                            <option value="past">Past</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
                     </div>
                     <button type="submit" class="btn primary" id="event-save">Save</button>
                 </form>
@@ -2362,77 +2434,144 @@ function openEventModal(prefill) {
     document.getElementById('event-id').value = prefill.id || '';
     const activeCollegeId = prefill.college_id || window.__yuvaActiveCollegeId || '';
     document.getElementById('event-college-id').value = activeCollegeId;
+
     const cdName = document.getElementById('cd-name')?.textContent || `ID ${activeCollegeId}`;
-    const cdZone = document.getElementById('cd-zone')?.textContent || '';
-    const collegeDisplay = document.getElementById('event-college-display');
-    const zoneDisplay = document.getElementById('event-zone-display');
-    if (collegeDisplay) collegeDisplay.value = cdName;
-    if (zoneDisplay) zoneDisplay.value = cdZone;
-    // College id remains hidden and is taken from the active selection
+    document.getElementById('event-college-display').value = cdName;
+
+    // Reset file input
+    document.getElementById('event-banner-file').value = '';
+    document.getElementById('event-banner-url').value = prefill.banner_url || '';
+
     document.getElementById('event-name').value = prefill.title || '';
     document.getElementById('event-desc').value = prefill.description || '';
     document.getElementById('event-start').value = prefill.start_at ? new Date(prefill.start_at).toISOString().slice(0, 16) : '';
     document.getElementById('event-end').value = prefill.end_at ? new Date(prefill.end_at).toISOString().slice(0, 16) : '';
     document.getElementById('event-loc').value = prefill.location || '';
     document.getElementById('event-status').value = prefill.status || 'upcoming';
+
     modal.style.display = 'block';
     document.body.classList.add('modal-open');
 }
 
 async function saveEventForm(e) {
     e.preventDefault();
-    const toIsoOrEmpty = (val) => {
-        const s = (val || '').trim();
-        if (!s) return '';
-        try {
-            const d = new Date(s);
-            if (isNaN(d.getTime())) return '';
-            return d.toISOString();
-        } catch (_) { return ''; }
-    };
-    const payload = {
-        id: document.getElementById('event-id').value.trim(),
-        college_id: parseInt(document.getElementById('event-college-id').value, 10) || window.__yuvaActiveCollegeId,
-        title: document.getElementById('event-name').value.trim(),
-        description: document.getElementById('event-desc').value.trim(),
-        start_at: toIsoOrEmpty(document.getElementById('event-start').value),
-        end_at: toIsoOrEmpty(document.getElementById('event-end').value),
-        location: document.getElementById('event-loc').value.trim(),
-        status: document.getElementById('event-status').value
-    };
-    if (!payload.college_id || !payload.title || !payload.start_at) {
-        flashNotification.showError('Missing fields', 'Title and Start time are required');
-        return;
-    }
     const saveBtn = document.getElementById('event-save');
-    const setLoading = (on, label) => { if (!saveBtn) return; if (on) { saveBtn.dataset.prev = saveBtn.innerHTML; saveBtn.disabled = true; saveBtn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> ${label || 'Saving'}`; } else { saveBtn.disabled = false; saveBtn.innerHTML = saveBtn.dataset.prev || 'Save'; } };
+
+    // --- Helper to toggle loading state ---
+    const setLoading = (on, label) => {
+        if (!saveBtn) return;
+        if (on) {
+            saveBtn.dataset.prev = saveBtn.innerHTML;
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> ${label || 'Saving'}`;
+        } else {
+            saveBtn.disabled = false;
+            saveBtn.innerHTML = saveBtn.dataset.prev || 'Save';
+        }
+    };
+
     try {
-        setLoading(true, 'Saving');
-        // Send as x-www-form-urlencoded and include action+method in BODY (Apps Script reads e.parameter from body too)
+        setLoading(true, 'Processing...');
+
+        const fileInput = document.getElementById('event-banner-file');
+        const existingUrl = document.getElementById('event-banner-url').value;
+        let bannerUrl = existingUrl;
+
+        // 1. HANDLE IMAGE UPLOAD
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+
+            // Check size (500KB = 500 * 1024 bytes)
+            if (file.size > 500 * 1024) {
+                flashNotification.showError('File too large', 'Image must be less than 500KB.');
+                setLoading(false);
+                return;
+            }
+
+            setLoading(true, 'Uploading Image...');
+
+            // Create unique file name
+            const fileExt = file.name.split('.').pop();
+            const fileName = `event-${Date.now()}.${fileExt}`;
+            const filePath = `${fileName}`;
+
+            // Upload to Supabase Storage
+            const { data, error } = await supabase.storage
+                .from('event-banners')
+                .upload(filePath, file);
+
+            if (error) {
+                throw new Error('Image upload failed: ' + error.message);
+            }
+
+            // Get Public URL
+            const { data: urlData } = supabase.storage
+                .from('event-banners')
+                .getPublicUrl(filePath);
+
+            bannerUrl = urlData.publicUrl;
+        }
+
+        // 2. PREPARE FORM DATA
+        setLoading(true, 'Saving Event...');
+
+        const toIsoOrEmpty = (val) => {
+            const s = (val || '').trim();
+            if (!s) return '';
+            try {
+                const d = new Date(s);
+                if (isNaN(d.getTime())) return '';
+                return d.toISOString();
+            } catch (_) { return ''; }
+        };
+
+        const payload = {
+            id: document.getElementById('event-id').value.trim(),
+            college_id: parseInt(document.getElementById('event-college-id').value, 10) || window.__yuvaActiveCollegeId,
+            title: document.getElementById('event-name').value.trim(),
+            description: document.getElementById('event-desc').value.trim(),
+            start_at: toIsoOrEmpty(document.getElementById('event-start').value),
+            end_at: toIsoOrEmpty(document.getElementById('event-end').value),
+            location: document.getElementById('event-loc').value.trim(),
+            status: document.getElementById('event-status').value,
+            banner_url: bannerUrl // <--- Save the URL here
+        };
+
+        if (!payload.college_id || !payload.title || !payload.start_at) {
+            flashNotification.showError('Missing fields', 'Title and Start time are required');
+            setLoading(false);
+            return;
+        }
+
+        // 3. SEND TO BACKEND
         const methodVar = payload.id ? 'update' : 'create';
         const bodyParams = new URLSearchParams({ action: 'events', method: methodVar });
+
         Object.keys(payload).forEach(k => {
             if (payload[k] !== undefined && payload[k] !== null) bodyParams.append(k, String(payload[k]));
         });
-        // Some environments block cross-origin POST to Apps Script; fall back to GET with query params
+
         const endpointUrl = `${GAS_WEB_APP_URL}?${bodyParams.toString()}`;
         const res = await fetch(endpointUrl, { method: 'GET' });
         const raw = await res.text();
         let json = null; try { json = JSON.parse(raw); } catch (_) { }
+
         if (res.ok && json && json.success) {
             document.getElementById('event-modal').style.display = 'none';
             document.body.classList.remove('modal-open');
             flashNotification.showSuccess('Saved', 'Event saved successfully');
             await loadCollegeEvents(payload.college_id);
         } else {
-            const detail = json && json.error ? json.error : (raw ? raw.slice(0, 240) : 'Unknown error');
-            console.error('Event save failed', { status: res.status, statusText: res.statusText, url: endpointUrl, response: raw });
-            flashNotification.showError('Failed', `Status ${res.status}. ${detail}`);
+            const detail = json && json.error ? json.error : 'Unknown error';
+            flashNotification.showError('Failed', detail);
         }
+
     } catch (err) {
-        flashNotification.showError('Error', 'Network error while saving event');
+        console.error(err);
+        flashNotification.showError('Error', err.message || 'Network error while saving event');
+    } finally {
+        setLoading(false);
     }
-    setLoading(false);
 }
 
 async function deleteEvent(id, collegeId) {

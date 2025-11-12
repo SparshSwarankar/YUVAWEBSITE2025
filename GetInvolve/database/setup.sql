@@ -994,3 +994,28 @@ CREATE POLICY "Allow public insert for subscriptions"
 ON public.subscriptions
 FOR INSERT
 WITH CHECK (true);
+
+-- event upcomming backet in supa base
+-- 1. Create a new storage bucket called 'event-banners'
+INSERT INTO storage.buckets (id, name, public) 
+VALUES ('event-banners', 'event-banners', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- 2. Allow public access to read files (so homepage can display them)
+CREATE POLICY "Public Access" 
+ON storage.objects FOR SELECT 
+USING ( bucket_id = 'event-banners' );
+
+-- 3. Allow authenticated users (admins) to upload files
+CREATE POLICY "Admin Upload Access" 
+ON storage.objects FOR INSERT 
+WITH CHECK ( bucket_id = 'event-banners' );
+
+-- 4. Allow admins to update/delete files
+CREATE POLICY "Admin Update Access" 
+ON storage.objects FOR UPDATE 
+USING ( bucket_id = 'event-banners' );
+
+CREATE POLICY "Admin Delete Access" 
+ON storage.objects FOR DELETE 
+USING ( bucket_id = 'event-banners' );

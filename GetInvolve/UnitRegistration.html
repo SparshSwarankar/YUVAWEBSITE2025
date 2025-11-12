@@ -81,8 +81,10 @@
     </header>
 
 
-    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <button class="toggle-btn">☰</button>
     <button class="hamburger-menu" aria-label="Toggle Menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
         <span class="bar"></span>
     </button>
 
@@ -660,6 +662,23 @@
                     <input type="email" id="forgot-email" required placeholder="e.g. admin@yuva.com">
                 </div>
                 <button type="submit" class="btn primary" style="width: 100%;">Get Password</button>
+            </form>
+        </div>
+    </div>
+    <div id="request-college-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close"
+                onclick="document.getElementById('request-college-modal').style.display='none';document.body.classList.remove('modal-open');">&times;</span>
+            <h2>Request New College</h2>
+            <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">
+                Please provide the name of the college you want to add. The Super Admin will be notified.
+            </p>
+            <form id="request-college-form">
+                <div class="form-group">
+                    <label for="req-college-name">College Name</label>
+                    <input type="text" id="req-college-name" required placeholder="e.g., Deshbandhu College">
+                </div>
+                <button type="submit" class="btn primary" style="width: 100%;">Send Request</button>
             </form>
         </div>
     </div>

@@ -5,7 +5,7 @@ const SUPABASE_URL = 'https://jgsrsjwmywiirtibofth.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impnc3JzandteXdpaXJ0aWJvZnRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkwNzY2NDgsImV4cCI6MjA3NDY1MjY0OH0.qN_GZIIOm6J1-qSY7r-HX8RLMoH7udc_0Jn7izqk8J8';
 // The service key is only used in server-to-server requests, not exposed.
 // However, the current implementation prefers RPC calls with the anon key for security.
-const SUPABASE_SERVICE_KEY = 'sb_secret_DVQha-CsYHFhTp71mFJSlw_9OA_QWNo';
+const SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impnc3JzandteXdpaXJ0aWJvZnRoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1OTA3NjY0OCwiZXhwIjoyMDc0NjUyNjQ4fQ.tQ9aD4OP1okfdgNr8O4LqIkYAF4rUvbRBN4XBW-KrZo';
 
 // ===== SUPABASE HELPER FUNCTIONS =====
 function makeSupabaseRequest(endpoint, method = 'GET', data = null, useServiceKey = false) {
@@ -257,6 +257,10 @@ function handleAuth(e, method) {
       return registerUser(e);
     case 'checkEmail':
       return checkEmailExists(e);
+    // ===== NEW CASE =====
+    case 'recoverPassword':
+      return recoverPassword(e);
+    // ====================
     default:
       return createResponse({ error: 'Invalid auth method' }, 400);
   }
@@ -480,7 +484,44 @@ function checkUserSession(e) {
     return createResponse({ error: 'Session check failed' }, 500);
   }
 }
+function recoverPassword(e) {
+  const email = (e.parameter.email || '').trim().toLowerCase();
 
+  if (!email) return createResponse({ success: false, error: 'Email is required' }, 400);
+
+  // 1. Look up the user to get their password
+  // We select the 'password' field directly
+  const result = makeSupabaseRequest(`admin_users?email=eq.${encodeURIComponent(email)}&select=full_name,password`, 'GET', null, true);
+
+  if (!result.success || !result.data || result.data.length === 0) {
+    // For security, we usually say "If email exists, it was sent", but you can return an error if you prefer.
+    return createResponse({ success: false, error: 'Email not found.' }, 404);
+  }
+
+  const user = result.data[0];
+  const userPass = user.password;
+  const userName = user.full_name || 'Admin';
+
+  // 2. Send the email with the password
+  try {
+    GmailApp.sendEmail(email, 'YUVA Admin: Password Recovery', '', {
+      htmlBody: `
+        <h3>Password Recovery</h3>
+        <p>Hello ${userName},</p>
+        <p>You requested to recover your password for the YUVA Admin Dashboard.</p>
+        <div style="background:#f4f4f4; padding:15px; border-radius:5px; font-size:16px; margin: 10px 0;">
+          <strong>Your Password:</strong> <span style="color:#000080; font-weight:bold;">${userPass}</span>
+        </div>
+        <p>Please keep this secure. You can log in immediately using this password.</p>
+        <p>Regards,<br>YUVA Team</p>
+      `
+    });
+    return createResponse({ success: true, message: 'Password sent to your email.' });
+  } catch (err) {
+    console.error('Email failed:', err);
+    return createResponse({ success: false, error: 'Failed to send email.' }, 500);
+  }
+}
 
 // ===== ZONE HANDLERS =====
 function handleZones(e, method) {

@@ -32,52 +32,59 @@ class HomePageManager {
         if (!grid) return;
 
         try {
-            // 1. Reset UI State
             if (loader) loader.style.display = 'flex';
             grid.style.display = 'none';
             if (emptyState) emptyState.style.display = 'none';
 
-            // 2. Fetch from Supabase 'events' table
-            // Filtering for future events that are 'scheduled'
+            // 1. Fetch recent and future events (fetch a bit more data to filter client-side)
+            // We fetch events starting from "Yesterday" to catch events that started but haven't ended.
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+
             const { data: events, error } = await supabase
                 .from('events')
-                .select('id, title, description, start_at, location, banner_url')
-                .eq('status', 'scheduled')
-                .gte('start_at', new Date().toISOString()) // Only future events
-                .order('start_at', { ascending: true })      // Nearest event first
-                .limit(3);                                   // Limit to 3 for homepage
+                .select('id, title, description, start_at, end_at, location, banner_url, status')
+                .in('status', ['upcoming', 'scheduled'])
+                .gte('start_at', yesterday.toISOString()) // Fetch slightly wider range
+                .order('start_at', { ascending: true })
+                .limit(10); // Fetch 10, then we will filter down to 3
 
             if (error) throw error;
 
-            // 3. Update UI based on results
             if (loader) loader.style.display = 'none';
 
-            if (!events || events.length === 0) {
-                // Show empty state if no events found
+            // 2. Filter in JavaScript using End Date Logic
+            const now = new Date().getTime();
+
+            const activeEvents = (events || []).filter(ev => {
+                // Use End Date if available, otherwise Start Date
+                const cutoff = ev.end_at ? new Date(ev.end_at).getTime() : new Date(ev.start_at).getTime();
+                // Keep if the cutoff time is in the future
+                return cutoff > now;
+            }).slice(0, 3); // Take top 3
+
+            if (activeEvents.length === 0) {
                 if (emptyState) emptyState.style.display = 'block';
                 return;
             }
 
-            // 4. Render Events
+            // 3. Render
             grid.style.display = 'grid';
-            grid.innerHTML = ''; // Clear any existing content
+            grid.innerHTML = '';
 
-            events.forEach(event => {
-                // Format date and time
+            activeEvents.forEach(event => {
                 const startDate = new Date(event.start_at);
                 const day = startDate.getDate();
                 const month = startDate.toLocaleString('default', { month: 'short' }).toUpperCase();
                 const time = startDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-                // Handle banner image (use a fallback gradient if no URL provided)
                 const bannerHtml = event.banner_url
-                    ? `<img src="${event.banner_url}" alt="${event.title}" loading="lazy">`
+                    ? `<img src="${event.banner_url}" alt="${event.title}" loading="lazy" style="width:100%; height:100%; object-fit:cover;">`
                     : `<div style="width:100%; height:100%; background: var(--gradient-navy); display:flex; align-items:center; justify-content:center; color:var(--white-primary); font-size:3rem; opacity:0.8;"><i class="fas fa-calendar-alt"></i></div>`;
 
                 const card = document.createElement('div');
                 card.className = 'event-card';
 
-                // Using your existing CSS classes
                 card.innerHTML = `
                     <div class="event-image">
                         ${bannerHtml}
@@ -101,14 +108,10 @@ class HomePageManager {
         } catch (err) {
             console.error("Error loading upcoming events:", err);
             if (loader) loader.style.display = 'none';
-            // Optionally show an error state in the empty container
-            if (emptyState) {
-                emptyState.innerHTML = '<div style="text-align:center; color:var(--color-error);"><i class="fas fa-exclamation-triangle fa-2x"></i><p>Unable to load events at the moment.</p></div>';
-                emptyState.style.display = 'block';
-            }
+            if (emptyState) emptyState.style.display = 'block';
         }
     }
-
+    
     // --- FETCH & RENDER EXECUTIVE TEAM ---
     async loadExecutiveTeam() {
         const grid = document.getElementById('executives-grid');
