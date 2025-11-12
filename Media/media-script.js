@@ -5,7 +5,7 @@ let currentFilter = 'all';
 let currentYear = 'all';
 let isLoading = false;
 let videoData = []; // Store fetched video data
-let dataSource = 'config'; // 'config' or 'sheets' - shared across pages
+let dataSource = 'sheets'; // 'config' or 'sheets' - shared across pages
 // Initialize from localStorage if present
 try {
     const savedSource = localStorage.getItem('media_data_source');
