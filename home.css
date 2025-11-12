@@ -2044,17 +2044,23 @@
 
     /* ===== Executives Section ===== */
     .executives-section.section-container {
-        padding: 60px 0;
+        padding: 60px 16px;
     }
 
     .executives-grid {
-        padding: 0 16px;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 32px;
+        padding: 0;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        /* Reduced min width */
+        gap: 28px;
+        justify-items: center;
+        /* Centers cards */
     }
 
     .exec-card {
         padding: 40px 28px;
+        max-width: 350px;
+        /* Prevents cards from stretching too wide */
+        width: 100%;
     }
 
     .exec-image {
@@ -2071,6 +2077,14 @@
     .exec-role {
         font-size: 0.85rem;
         padding: 7px 14px;
+    }
+
+    /* Fix tricolor borders on tablet */
+    .exec-card:nth-child(3n+1):hover,
+    .exec-card:nth-child(3n+2):hover,
+    .exec-card:nth-child(3n+3):hover {
+        border-bottom-width: 3px;
+        /* Reduced border */
     }
 
     /* ===== Partners Section (UPDATED) ===== */
@@ -2169,10 +2183,12 @@
         width: 100%;
         justify-content: center;
     }
+
     .newsletter-form .input-group:focus-within {
         border-color: transparent;
         box-shadow: none;
     }
+
     /* 5. Fix autofill for the new rounded input */
     .newsletter-form input:-webkit-autofill,
     .newsletter-form input:-webkit-autofill:hover,
@@ -2339,38 +2355,66 @@
 
     /* ===== Executives Section ===== */
     .executives-section.section-container {
-        padding: 40px 0;
+        padding: 40px 12px;
+        /* Added horizontal padding */
+        background-color: #f9fafb;
+        /* Ensure background is visible */
     }
 
     .executives-grid {
-        padding: 0 12px;
+        padding: 0;
         grid-template-columns: 1fr;
-        gap: 24px;
+        /* Single column */
+        gap: 20px;
+        justify-items: center;
+        /* Centers cards */
     }
 
     .exec-card {
-        padding: 36px 24px;
-        max-width: 400px;
-        margin: 0 auto;
+        padding: 32px 24px;
+        max-width: 100%;
+        /* Full width on mobile */
+        width: 100%;
+        box-sizing: border-box;
+        /* Prevents overflow */
     }
 
     .exec-image {
-        width: 130px;
-        height: 130px;
+        width: 120px;
+        /* Smaller image on mobile */
+        height: 120px;
         margin-bottom: 20px;
         border-width: 3px;
         padding: 3px;
     }
 
     .exec-name {
-        font-size: 1.35rem;
+        font-size: 1.3rem;
+        /* Slightly smaller name */
         margin-bottom: 10px;
+        line-height: 1.2;
+        /* Better line spacing */
     }
 
     .exec-role {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+        /* Smaller role badge */
         padding: 6px 12px;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
+        /* Reduced letter spacing */
+    }
+
+    /* Fix tricolor borders on mobile - make them subtle */
+    .exec-card:nth-child(3n+1):hover {
+        border-bottom: 2px solid var(--saffron-primary);
+    }
+
+    .exec-card:nth-child(3n+2):hover {
+        border-bottom: 2px solid var(--navy-chakra);
+    }
+
+    .exec-card:nth-child(3n+3):hover {
+        border-bottom: 2px solid var(--green-primary);
     }
 
     /* ===== Partners Section ===== */
@@ -2431,7 +2475,8 @@
     .newsletter-form .input-group {
         flex-direction: column;
         overflow: visible;
-        gap: 12px; /* Space between input and button */
+        gap: 12px;
+        /* Space between input and button */
         background: transparent;
         border: none;
         box-shadow: none;
@@ -2445,9 +2490,10 @@
         font-size: 0.95rem;
         background: var(--bg-subtle);
         border: 1px solid var(--border-light);
-        transition: all 0.3s ease; /* ADDED TRANSITION */
+        transition: all 0.3s ease;
+        /* ADDED TRANSITION */
     }
-    
+
     /* 3. THIS IS THE FIX: Add focus style directly to the input */
     .newsletter-form input:focus {
         border-color: var(--saffron-primary);
@@ -2465,10 +2511,12 @@
         justify-content: center;
         gap: 8px;
     }
+
     .newsletter-form .input-group:focus-within {
         border-color: transparent;
         box-shadow: none;
     }
+
     /* 5. Fix autofill for the new rounded input */
     .newsletter-form input:-webkit-autofill,
     .newsletter-form input:-webkit-autofill:hover,
@@ -2569,7 +2617,7 @@
     .section-content-wrapper {
         padding: 0 12px;
     }
-    
+
 }
 
 /* ===== EXTRA SMALL MOBILE - 375px and below ===== */
@@ -2626,26 +2674,30 @@
 
     /* ===== Executives Section ===== */
     .executives-section.section-container {
-        padding: 36px 0;
+        padding: 36px 10px;
+        /* Added horizontal padding */
     }
 
     .exec-card {
-        padding: 32px 20px;
+        padding: 28px 20px;
+        /* Reduced padding */
+        max-width: 100%;
     }
 
     .exec-image {
-        width: 120px;
-        height: 120px;
-        margin-bottom: 18px;
+        width: 110px;
+        /* Even smaller on tiny screens */
+        height: 110px;
+        margin-bottom: 16px;
     }
 
     .exec-name {
-        font-size: 1.25rem;
+        font-size: 1.2rem;
         margin-bottom: 8px;
     }
 
     .exec-role {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         padding: 5px 10px;
     }
 
@@ -2697,7 +2749,8 @@
     .newsletter-form .input-group {
         flex-direction: column;
         overflow: visible;
-        gap: 10px; /* Tighter gap for small screens */
+        gap: 10px;
+        /* Tighter gap for small screens */
         background: transparent;
         border: none;
         box-shadow: none;
@@ -2711,9 +2764,10 @@
         font-size: 0.9rem;
         background: var(--bg-subtle);
         border: 1px solid var(--border-light);
-        transition: all 0.3s ease; /* ADDED TRANSITION */
+        transition: all 0.3s ease;
+        /* ADDED TRANSITION */
     }
-    
+
     /* 3. THIS IS THE FIX: Add focus style directly to the input */
     .newsletter-form input:focus {
         border-color: var(--saffron-primary);
@@ -2730,11 +2784,12 @@
         width: 100%;
         justify-content: center;
     }
+
     .newsletter-form .input-group:focus-within {
         border-color: transparent;
         box-shadow: none;
     }
-    
+
     /* 5. Fix autofill for the new rounded input */
     .newsletter-form input:-webkit-autofill,
     .newsletter-form input:-webkit-autofill:hover,
