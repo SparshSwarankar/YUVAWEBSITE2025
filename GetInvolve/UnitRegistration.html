@@ -199,6 +199,11 @@
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
+                        <div style="text-align: right; margin-top: 8px;">
+                            <a href="#" id="forgot-password-link"
+                                style="color: var(--color-primary); font-size: 13px; text-decoration: none;">Forgot
+                                Password?</a>
+                        </div>
                     </div>
                     <button type="submit" class="btn primary">Login</button>
                 </form>
@@ -640,6 +645,25 @@
 
     <!-- Toast Container -->
     <div id="toast-container" class="toast-container"></div>
+
+    <!-- Forget password model -->
+    <div id="forgot-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('forgot-modal').style.display='none'">&times;</span>
+            <h2>Recover Password</h2>
+            <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">
+                Enter your registered email. We will email your current password to you.
+            </p>
+            <form id="forgot-form">
+                <div class="form-group">
+                    <label for="forgot-email">Email Address</label>
+                    <input type="email" id="forgot-email" required placeholder="e.g. admin@yuva.com">
+                </div>
+                <button type="submit" class="btn primary" style="width: 100%;">Get Password</button>
+            </form>
+        </div>
+    </div>
+
 
     <script src="/script.js"></script>
     <script src="/GetInvolve/unit.js"></script>

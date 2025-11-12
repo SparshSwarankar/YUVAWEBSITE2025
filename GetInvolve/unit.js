@@ -18,7 +18,7 @@ const GAS_WEB_APP_URL = (() => {
         if (overrideRaw) console.warn('Ignoring invalid GAS_WEB_APP_URL override:', overrideRaw);
     } catch (_) { }
     // Fallback: use a known-good exec URL; sanitize in case of accidental concatenation
-    const fallbackRaw = 'https://script.google.com/macros/s/AKfycbw2JrsmaHHjOIht30EP3qEvgu9cD574L2A-Q7sew_nql4t7jhfU1qz6eLCWLckerrHY/exec';
+    const fallbackRaw = 'https://script.google.com/macros/s/AKfycbylgSA1DhWnRKaG_w1NCcZxJLVtv78aYCurVOY9mKI8AYi5W6oJzWabtYHRKmKY8o6A/exec';
     const m2 = fallbackRaw.match(execRegex);
     return m2 ? m2[0] : fallbackRaw;
 })();
@@ -374,6 +374,21 @@ class SupabaseService {
             return { success: false, error: 'A network error occurred.' };
         }
     }
+    static async recoverPassword(email) {
+        try {
+            const params = new URLSearchParams({
+                action: 'auth',
+                method: 'recoverPassword',
+                email: email
+            });
+            // Use GET or POST; GET is fine here since we aren't sending sensitive data, we are requesting it sent to email
+            const response = await fetch(`${GAS_WEB_APP_URL}?${params.toString()}`);
+            return await response.json();
+        } catch (error) {
+            return { success: false, error: 'Network connection error' };
+        }
+    }
+
 }
 
 // ===== UTILITY FUNCTIONS =====
@@ -451,6 +466,48 @@ class AuthManager {
         const logoutBtn = document.getElementById('logout-btn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', () => this.logout());
+        }
+        // 1. Open "Forgot Password" Modal
+        const forgotLink = document.getElementById('forgot-password-link');
+        if (forgotLink) {
+            forgotLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.closeModal('login-modal'); // Close login
+                document.getElementById('forgot-modal').style.display = 'block'; // Open forgot
+            });
+        }
+
+        // 2. Submit "Forgot Password" Form
+        const forgotForm = document.getElementById('forgot-form');
+        if (forgotForm) {
+            forgotForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const emailInput = document.getElementById('forgot-email');
+                const btn = forgotForm.querySelector('button');
+
+                if (!emailInput.value) return;
+
+                // UI Loading State
+                const originalText = btn.innerHTML;
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending...';
+
+                try {
+                    const res = await SupabaseService.recoverPassword(emailInput.value);
+
+                    if (res.success) {
+                        this.closeModal('forgot-modal');
+                        flashNotification.showSuccess('Email Sent', 'Check your inbox for your password.');
+                    } else {
+                        flashNotification.showError('Error', res.error || 'Could not send email.');
+                    }
+                } catch (err) {
+                    flashNotification.showError('Error', 'Something went wrong.');
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }
+            });
         }
     }
     // ===== NEW: Handles visibility of form fields based on role =====
@@ -768,6 +825,9 @@ class AuthManager {
         document.getElementById('zone-section').style.display = 'block';
 
         // --- NEW CODE ---
+        // Remove the logged-out class so buttons behave normally for admins
+        document.body.classList.remove('logged-out-state');
+
         // Get header elements
         const loginBtn = document.getElementById('login-btn');
         const pageTitle = document.querySelector('.page-title');
@@ -776,10 +836,8 @@ class AuthManager {
         if (loginBtn) loginBtn.style.display = 'none';
         if (pageTitle) pageTitle.style.display = 'none';
 
-        // --- THIS IS THE FIX ---
-        // Show ONLY the admin toggle button (the "—" icon)
+        // Show ONLY the admin toggle button
         document.querySelectorAll('.toggle-btn').forEach(el => el.style.display = 'block');
-        // HIDE the main site hamburger menu to prevent the "extra bar"
         document.querySelectorAll('.hamburger-menu').forEach(el => el.style.display = 'none');
         // --- END THE FIX ---
 
@@ -807,15 +865,21 @@ class AuthManager {
         document.getElementById('zone-section').style.display = 'none';
 
         // --- NEW CODE ---
+        // Add the class that triggers the CSS media query we added in Step 1
+        document.body.classList.add('logged-out-state');
+
         // Get header elements
         const loginBtn = document.getElementById('login-btn');
         const pageTitle = document.querySelector('.page-title');
         const toggles = document.querySelectorAll('.toggle-btn, .hamburger-menu');
 
-        // Logged-out state: Show login, hide title, hide toggles
+        // Logged-out state: Show login, hide title
         if (loginBtn) loginBtn.style.display = 'inline-flex';
         if (pageTitle) pageTitle.style.display = 'none';
-        toggles.forEach(el => el.style.display = 'none');
+
+        // *** CHANGED HERE *** // Instead of setting display='none', we clear inline styles 
+        // so the CSS media query can decide whether to hide them or not.
+        toggles.forEach(el => el.style.display = '');
         // --- END NEW CODE ---
     }
 

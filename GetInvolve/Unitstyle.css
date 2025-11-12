@@ -2851,3 +2851,13 @@ body.modal-open {
         font-size: 0.85rem;
     }
 }
+
+/* ===== RESPONSIVE TOGGLE VISIBILITY FOR ACCESS DENIED ===== */
+/* On Mobile: Hide the toggles when logged out */
+@media (max-width: 768px) {
+
+    body.logged-out-state .toggle-btn,
+    body.logged-out-state .hamburger-menu {
+        display: none !important;
+    }
+}
