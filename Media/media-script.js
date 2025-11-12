@@ -63,13 +63,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Initialize page based on current page type
 function initializeMediaPage() {
-    const path = window.location.pathname;
+    const path = window.location.pathname.toLowerCase(); // Convert to lowercase to be safe
 
-    if (path.includes('DigitalMedia.html')) {
+    if (path.includes('digitalmedia')) {
         initializeDigitalMedia();
-    } else if (path.includes('News.html')) {
+    } else if (path.includes('news')) {
         initializeNews();
-    } else if (path.includes('Video.html')) {
+    } else if (path.includes('video')) {  // <--- Changed this line (removed .html)
         initializeVideo();
     }
 }

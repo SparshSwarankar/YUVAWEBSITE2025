@@ -1492,7 +1492,7 @@
     .video-filters {
         gap: 10px;
         margin-bottom: 24px;
-        justify-content: flex-start;
+        justify-content:center;
     }
 
     .filter-btn {
