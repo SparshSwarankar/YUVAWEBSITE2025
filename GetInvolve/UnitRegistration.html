@@ -631,6 +631,175 @@
                 </div>
             </div>
         </div>
+        <!-- Event Display Options Modal (Step 2 after saving event) -->
+        <!-- Event Display Options Modal (Corrected) -->
+        <div id="event-display-options-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeEventDisplayModal()">&times;</span>
+                <div class="modal-icon-header">
+                    <div class="success-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+
+                <!-- THIS IS THE CORRECTED LINE -->
+                <h2 id="display-options-title">Event Action Successful!</h2>
+
+                <p class="modal-subtitle">Where would you like this event to be displayed?</p>
+
+                <form id="display-options-form">
+                    <div class="display-options">
+                        <!-- Home only -->
+                        <label class="option-card">
+                            <input type="radio" name="display-target" value="home" />
+                            <div class="option-content">
+                                <div class="option-icon"><i class="fas fa-home"></i></div>
+                                <div class="option-text">
+                                    <h4>Home Page Only</h4>
+                                    <p>Show basic event details on the main home page.</p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Upcoming only -->
+                        <label class="option-card">
+                            <input type="radio" name="display-target" value="upcoming" />
+                            <div class="option-content">
+                                <div class="option-icon"><i class="fas fa-calendar-alt"></i></div>
+                                <div class="option-text">
+                                    <h4>Upcoming Events Page Only</h4>
+                                    <p>Display full event details with registration.</p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Both -->
+                        <label class="option-card">
+                            <input type="radio" name="display-target" value="both" />
+                            <div class="option-content">
+                                <div class="option-icon"><i class="fas fa-layer-group"></i></div>
+                                <div class="option-text">
+                                    <h4>Both Pages</h4>
+                                    <p>Show on Home (teaser) and Upcoming (full details).</p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </form>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn secondary" onclick="skipEventDisplay()">Skip For Now</button>
+                    <button type="button" class="btn primary" id="continue-display-btn" disabled>Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Event Additional Details Modal (Step 3 for upcoming events page) -->
+        <div id="event-details-modal" class="modal" style="display: none;">
+            <div class="modal-content large">
+                <span class="close" onclick="closeEventDetailsModal()">&times;</span>
+                <h2>Additional Event Information</h2>
+                <p class="modal-subtitle">Provide detailed information for the upcoming events page</p>
+
+                <form id="event-details-form">
+                    <!-- Basic Event Info (Read-only from previous form) -->
+                    <div class="form-section">
+                        <h4 class="section-title">Basic Information</h4>
+                        <div class="info-display">
+                            <p><strong>Event Title:</strong> <span id="detail-event-title">-</span></p>
+                            <p><strong>Date & Time:</strong> <span id="detail-event-datetime">-</span></p>
+                            <p><strong>Location:</strong> <span id="detail-event-location">-</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Extended Details -->
+                    <div class="form-section">
+                        <h4 class="section-title">Extended Details</h4>
+
+                        <div class="form-group">
+                            <label for="event-category">Event Category *</label>
+                            <select id="event-category" required>
+                                <option value="">Select Category</option>
+                                <option value="Debate">Debate</option>
+                                <option value="Workshop">Workshop</option>
+                                <option value="Cultural">Cultural</option>
+                                <option value="Seminar">Seminar</option>
+                                <option value="Webinar">Webinar</option>
+                                <option value="Competition">Competition</option>
+                                <option value="Conference">Conference</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="event-mode">Event Mode *</label>
+                            <select id="event-mode" required>
+                                <option value="offline">Offline (In-person)</option>
+                                <option value="online">Online</option>
+                                <option value="hybrid">Hybrid</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="event-capacity">Expected Capacity</label>
+                            <input type="number" id="event-capacity" min="1" placeholder="e.g., 100">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="event-banner">Event Banner URL</label>
+                            <input type="url" id="event-banner" placeholder="https://example.com/banner.jpg">
+                            <small class="form-hint">Recommended size: 600x400px</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="event-registration-url">Registration Link</label>
+                            <input type="url" id="event-registration-url" placeholder="https://example.com/register">
+                            <small class="form-hint">External registration form URL (optional)</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="event-long-description">Detailed Description *</label>
+                            <textarea id="event-long-description" rows="4" required
+                                placeholder="Provide a comprehensive description for the event page..."></textarea>
+                            <small class="form-hint">This will be shown on the upcoming events page</small>
+                        </div>
+                    </div>
+
+                    <!-- Speakers/Guests Section -->
+                    <div class="form-section">
+                        <h4 class="section-title">Speakers/Guests (Optional)</h4>
+                        <div id="speakers-list">
+                            <div class="speaker-item">
+                                <input type="text" class="speaker-name" placeholder="Speaker Name">
+                                <input type="text" class="speaker-role" placeholder="Role/Designation">
+                                <button type="button" class="btn-icon remove-speaker" onclick="removeSpeaker(this)">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn secondary btn-sm" onclick="addSpeaker()">
+                            <i class="fas fa-plus"></i> Add Speaker
+                        </button>
+                    </div>
+
+                    <!-- Display Options Summary -->
+                    <div class="form-section">
+                        <h4 class="section-title">Display Settings</h4>
+                        <div class="display-summary">
+                            <div id="display-summary-content">
+                                <!-- Will be populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn secondary" onclick="goBackToDisplayOptions()">Back</button>
+                        <button type="submit" class="btn primary">
+                            <i class="fas fa-save"></i> Save & Publish Event
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
 

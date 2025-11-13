@@ -1,33 +1,16 @@
 // ===== YUVA DELHI UNIT REGISTRATION ADMIN SYSTEM - FRONTEND JAVASCRIPT =====
 
-// Supabase Configuration (updated)
+// Supabase Configuration
 const SUPABASE_URL = 'https://jgsrsjwmywiirtibofth.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_5KtvO0cEHfnECBoyp2CQnw_RC3_x2me';
-// Note: Service role keys must not be exposed to the browser.
-// The service key is now kept server-side in code.gs only.
-// Initialize Supabase client
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-// Apps Script backend (server) URL - publish your Google Apps Script as a Web App and paste URL below
-// Guard against accidental overrides like "image.png" from the page. We only accept a valid Apps Script exec URL.
-const GAS_WEB_APP_URL = (() => {
-    const execRegex = /^https:\/\/script\.google\.com\/macros\/s\/[^\s]+\/exec/;
-    try {
-        const overrideRaw = (window.GAS_WEB_APP_URL || '').trim();
-        const match = overrideRaw.match(execRegex);
-        if (match) return match[0];
-        if (overrideRaw) console.warn('Ignoring invalid GAS_WEB_APP_URL override:', overrideRaw);
-    } catch (_) { }
-    // Fallback: use a known-good exec URL; sanitize in case of accidental concatenation
-    const fallbackRaw = 'https://script.google.com/macros/s/AKfycbxMi-HPbck3OYUUrS5I8APqA20_tgiwh5vb8uGr06dhuYI9B1oKUEfR0jnx_z8doQgh/exec';
-    const m2 = fallbackRaw.match(execRegex);
-    return m2 ? m2[0] : fallbackRaw;
-})();
+const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxMi-HPbck3OYUUrS5I8APqA20_tgiwh5vb8uGr06dhuYI9B1oKUEfR0jnx_z8doQgh/exec';
+
 // ===== FLASH NOTIFICATION SYSTEM =====
 class FlashNotification {
     constructor() {
         this.initializeFlashSystem();
     }
-
     initializeFlashSystem() {
         if (!document.getElementById('flash-container')) {
             const flashContainer = document.createElement('div');
@@ -36,40 +19,29 @@ class FlashNotification {
             document.body.appendChild(flashContainer);
         }
     }
-
     showFlashNotification(type, title, message, duration = 5000) {
         const container = document.getElementById('flash-container');
         if (!container) return;
-
         const notification = document.createElement('div');
         notification.className = `flash-notification ${type}`;
-
         const icons = {
             success: 'fas fa-check',
             error: 'fas fa-times',
             warning: 'fas fa-exclamation-triangle',
             info: 'fas fa-info-circle'
         };
-
         notification.innerHTML = `
-            <div class="flash-icon">
-                <i class="${icons[type]}"></i>
-            </div>
+            <div class="flash-icon"><i class="${icons[type]}"></i></div>
             <div class="flash-content">
                 <div class="flash-title">${title}</div>
                 <div class="flash-message">${message}</div>
             </div>
-            <button class="flash-close" onclick="this.parentElement.remove()">
-                <i class="fas fa-times"></i>
-            </button>
+            <button class="flash-close" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
         `;
-
         container.appendChild(notification);
-
         setTimeout(() => {
             notification.classList.add('show');
         }, 100);
-
         if (duration > 0) {
             setTimeout(() => {
                 if (notification.parentNode) {
@@ -78,25 +50,11 @@ class FlashNotification {
             }, duration);
         }
     }
-
-    showSuccess(title, message, duration = 5000) {
-        this.showFlashNotification('success', title, message, duration);
-    }
-
-    showError(title, message, duration = 5000) {
-        this.showFlashNotification('error', title, message, duration);
-    }
-
-    showWarning(title, message, duration = 5000) {
-        this.showFlashNotification('warning', title, message, duration);
-    }
-
-    showInfo(title, message, duration = 5000) {
-        this.showFlashNotification('info', title, message, duration);
-    }
+    showSuccess(title, message, duration = 5000) { this.showFlashNotification('success', title, message, duration); }
+    showError(title, message, duration = 5000) { this.showFlashNotification('error', title, message, duration); }
+    showWarning(title, message, duration = 5000) { this.showFlashNotification('warning', title, message, duration); }
+    showInfo(title, message, duration = 5000) { this.showFlashNotification('info', title, message, duration); }
 }
-
-// Initialize flash notification system
 const flashNotification = new FlashNotification();
 
 
@@ -2401,16 +2359,13 @@ function openEventModal(prefill) {
                 <form id="event-form">
                     <input type="hidden" id="event-id">
                     <input type="hidden" id="event-college-id">
-                    
                     <div class="form-group"><label>College</label><input type="text" id="event-college-display" disabled></div>
-                    
                     <div class="form-group">
                         <label>Event Banner (Max 500KB)</label>
                         <input type="file" id="event-banner-file" accept="image/*">
                         <input type="hidden" id="event-banner-url">
                         <small style="color:var(--text-secondary); display:block; margin-top:4px;">Recommended: 16:9 aspect ratio (e.g., 1280x720)</small>
                     </div>
-
                     <div class="form-group"><label>Title</label><input type="text" id="event-name" required></div>
                     <div class="form-group"><label>Description</label><textarea id="event-desc" rows="3"></textarea></div>
                     <div class="form-group"><label>Start</label><input type="datetime-local" id="event-start" required></div>
@@ -2430,142 +2385,149 @@ function openEventModal(prefill) {
         modal.querySelector('#event-close').onclick = () => { modal.style.display = 'none'; document.body.classList.remove('modal-open'); };
         document.getElementById('event-form').addEventListener('submit', saveEventForm);
     }
+
+    const form = document.getElementById('event-form');
+    if (form) form.reset();
+    const saveBtn = document.getElementById('event-save');
+    if (saveBtn) { saveBtn.disabled = false; saveBtn.innerHTML = 'Save'; }
+
     document.getElementById('event-title').textContent = prefill && prefill.id ? 'Update Event' : 'Add Event';
     document.getElementById('event-id').value = prefill.id || '';
     const activeCollegeId = prefill.college_id || window.__yuvaActiveCollegeId || '';
     document.getElementById('event-college-id').value = activeCollegeId;
-
-    const cdName = document.getElementById('cd-name')?.textContent || `ID ${activeCollegeId}`;
-    document.getElementById('event-college-display').value = cdName;
-
-    // Reset file input
+    document.getElementById('event-college-display').value = document.getElementById('cd-name')?.textContent || `ID ${activeCollegeId}`;
     document.getElementById('event-banner-file').value = '';
     document.getElementById('event-banner-url').value = prefill.banner_url || '';
-
     document.getElementById('event-name').value = prefill.title || '';
     document.getElementById('event-desc').value = prefill.description || '';
-    document.getElementById('event-start').value = prefill.start_at ? new Date(prefill.start_at).toISOString().slice(0, 16) : '';
-    document.getElementById('event-end').value = prefill.end_at ? new Date(prefill.end_at).toISOString().slice(0, 16) : '';
+    const toLocalISOString = (date) => { if (!date) return ''; const d = new Date(date); const tzoffset = d.getTimezoneOffset() * 60000; const localISOTime = (new Date(d - tzoffset)).toISOString().slice(0, -1); return localISOTime.slice(0, 16); };
+    document.getElementById('event-start').value = toLocalISOString(prefill.start_at);
+    document.getElementById('event-end').value = toLocalISOString(prefill.end_at);
     document.getElementById('event-loc').value = prefill.location || '';
     document.getElementById('event-status').value = prefill.status || 'upcoming';
-
     modal.style.display = 'block';
     document.body.classList.add('modal-open');
 }
 
+
+// Global variable to store the newly created/updated event data temporarily
+let tempEventData = null;
+
+// NEW HELPER FUNCTION to populate category dropdowns
+async function populateCategoryDropdown(selectElementId, selectedId = null) {
+    const select = document.getElementById(selectElementId);
+    if (!select) return;
+
+    try {
+        const { data, error } = await supabase
+            .from('event_categories')
+            .select('id, name')
+            .order('name', { ascending: true });
+
+        if (error) throw error;
+
+        select.innerHTML = '<option value="">Select Category</option>'; // Reset
+        data.forEach(category => {
+            const option = document.createElement('option');
+            option.value = category.id; // The value is now the ID
+            option.textContent = category.name; // The text is the name
+            select.appendChild(option);
+        });
+
+        if (selectedId) {
+            select.value = selectedId;
+        }
+
+    } catch (error) {
+        console.error('Failed to populate categories:', error);
+        select.innerHTML = '<option value="">Error loading categories</option>';
+    }
+}
+
+// NEW FUNCTION for the edit flow
+async function manageDisplayForEvent(eventId) {
+    const { data: pub, error } = await supabase
+        .from('event_publications')
+        .select('*')
+        .eq('event_id', eventId)
+        .maybeSingle();
+
+    if (error) {
+        flashNotification.showError('Error', 'Could not fetch event display settings.');
+        return;
+    }
+
+    if (!tempEventData || tempEventData.id !== eventId) {
+        const { data: ev, error: eventError } = await supabase
+            .from('events')
+            .select('*')
+            .eq('id', eventId)
+            .single();
+
+        if (eventError || !ev) {
+            flashNotification.showError('Error', 'Could not load event data.');
+            return;
+        }
+        tempEventData = ev;
+    }
+
+    showEventDisplayOptions(null, pub || null);
+}
+
+// MODIFIED: saveEventForm to handle create vs. update flow
 async function saveEventForm(e) {
     e.preventDefault();
     const saveBtn = document.getElementById('event-save');
-
-    // --- Helper to toggle loading state ---
-    const setLoading = (on, label) => {
-        if (!saveBtn) return;
-        if (on) {
-            saveBtn.dataset.prev = saveBtn.innerHTML;
-            saveBtn.disabled = true;
-            saveBtn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> ${label || 'Saving'}`;
-        } else {
-            saveBtn.disabled = false;
-            saveBtn.innerHTML = saveBtn.dataset.prev || 'Save';
-        }
-    };
+    const setLoading = (on, label) => { if (!saveBtn) return; if (on) { saveBtn.dataset.prev = saveBtn.innerHTML; saveBtn.disabled = true; saveBtn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> ${label || 'Saving'}`; } else { saveBtn.disabled = false; saveBtn.innerHTML = saveBtn.dataset.prev || 'Save'; } };
 
     try {
         setLoading(true, 'Processing...');
-
         const fileInput = document.getElementById('event-banner-file');
-        const existingUrl = document.getElementById('event-banner-url').value;
-        let bannerUrl = existingUrl;
+        let bannerUrl = document.getElementById('event-banner-url').value;
 
-        // 1. HANDLE IMAGE UPLOAD
         if (fileInput.files.length > 0) {
-            const file = fileInput.files[0];
-
-            // Check size (500KB = 500 * 1024 bytes)
-            if (file.size > 500 * 1024) {
-                flashNotification.showError('File too large', 'Image must be less than 500KB.');
-                setLoading(false);
-                return;
-            }
-
             setLoading(true, 'Uploading Image...');
-
-            // Create unique file name
-            const fileExt = file.name.split('.').pop();
-            const fileName = `event-${Date.now()}.${fileExt}`;
-            const filePath = `${fileName}`;
-
-            // Upload to Supabase Storage
-            const { data, error } = await supabase.storage
-                .from('event-banners')
-                .upload(filePath, file);
-
-            if (error) {
-                throw new Error('Image upload failed: ' + error.message);
-            }
-
-            // Get Public URL
-            const { data: urlData } = supabase.storage
-                .from('event-banners')
-                .getPublicUrl(filePath);
-
+            const file = fileInput.files[0];
+            if (file.size > 500 * 1024) { flashNotification.showError('File too large', 'Image must be less than 500KB.'); setLoading(false); return; }
+            const filePath = `event-${Date.now()}.${file.name.split('.').pop()}`;
+            const { error: uploadError } = await supabase.storage.from('event-banners').upload(filePath, file);
+            if (uploadError) throw new Error('Image upload failed: ' + uploadError.message);
+            const { data: urlData } = supabase.storage.from('event-banners').getPublicUrl(filePath);
             bannerUrl = urlData.publicUrl;
         }
 
-        // 2. PREPARE FORM DATA
         setLoading(true, 'Saving Event...');
+        const toIsoOrEmpty = (val) => { try { return val ? new Date(val).toISOString() : ''; } catch (_) { return ''; } };
+        const eventId = document.getElementById('event-id').value.trim();
+        const collegeId = parseInt(document.getElementById('event-college-id').value, 10) || window.__yuvaActiveCollegeId;
 
-        const toIsoOrEmpty = (val) => {
-            const s = (val || '').trim();
-            if (!s) return '';
-            try {
-                const d = new Date(s);
-                if (isNaN(d.getTime())) return '';
-                return d.toISOString();
-            } catch (_) { return ''; }
-        };
+        const eventData = { college_id: collegeId, title: document.getElementById('event-name').value.trim(), description: document.getElementById('event-desc').value.trim(), start_at: toIsoOrEmpty(document.getElementById('event-start').value), end_at: toIsoOrEmpty(document.getElementById('event-end').value), location: document.getElementById('event-loc').value.trim(), status: document.getElementById('event-status').value, banner_url: bannerUrl };
+        if (!eventData.college_id || !eventData.title || !eventData.start_at) { flashNotification.showError('Missing fields', 'Title and Start time are required'); setLoading(false); return; }
 
-        const payload = {
-            id: document.getElementById('event-id').value.trim(),
-            college_id: parseInt(document.getElementById('event-college-id').value, 10) || window.__yuvaActiveCollegeId,
-            title: document.getElementById('event-name').value.trim(),
-            description: document.getElementById('event-desc').value.trim(),
-            start_at: toIsoOrEmpty(document.getElementById('event-start').value),
-            end_at: toIsoOrEmpty(document.getElementById('event-end').value),
-            location: document.getElementById('event-loc').value.trim(),
-            status: document.getElementById('event-status').value,
-            banner_url: bannerUrl // <--- Save the URL here
-        };
-
-        if (!payload.college_id || !payload.title || !payload.start_at) {
-            flashNotification.showError('Missing fields', 'Title and Start time are required');
-            setLoading(false);
-            return;
-        }
-
-        // 3. SEND TO BACKEND
-        const methodVar = payload.id ? 'update' : 'create';
-        const bodyParams = new URLSearchParams({ action: 'events', method: methodVar });
-
-        Object.keys(payload).forEach(k => {
-            if (payload[k] !== undefined && payload[k] !== null) bodyParams.append(k, String(payload[k]));
-        });
-
-        const endpointUrl = `${GAS_WEB_APP_URL}?${bodyParams.toString()}`;
-        const res = await fetch(endpointUrl, { method: 'GET' });
-        const raw = await res.text();
-        let json = null; try { json = JSON.parse(raw); } catch (_) { }
-
-        if (res.ok && json && json.success) {
-            document.getElementById('event-modal').style.display = 'none';
-            document.body.classList.remove('modal-open');
-            flashNotification.showSuccess('Saved', 'Event saved successfully');
-            await loadCollegeEvents(payload.college_id);
+        let savedEvent;
+        if (eventId) {
+            const { data, error } = await supabase.from('events').update(eventData).eq('id', eventId).select().single();
+            if (error) throw error;
+            savedEvent = data;
         } else {
-            const detail = json && json.error ? json.error : 'Unknown error';
-            flashNotification.showError('Failed', detail);
+            const { data, error } = await supabase.from('events').insert([eventData]).select().single();
+            if (error) throw error;
+            savedEvent = data;
         }
 
+        tempEventData = { ...savedEvent };
+        document.getElementById('event-modal').style.display = 'none';
+        document.body.classList.remove('modal-open');
+        flashNotification.showSuccess('Saved', `Event ${eventId ? 'updated' : 'created'} successfully.`);
+
+        const title = eventId ? "Event Updated!" : "Event Created Successfully!";
+        document.getElementById('display-options-title').textContent = title;
+
+        if (eventId) {
+            await manageDisplayForEvent(savedEvent.id);
+        } else {
+            showEventDisplayOptions();
+        }
     } catch (err) {
         console.error(err);
         flashNotification.showError('Error', err.message || 'Network error while saving event');
@@ -2573,6 +2535,164 @@ async function saveEventForm(e) {
         setLoading(false);
     }
 }
+
+// Show Event Display Options Modal (Step 2)
+// MODIFIED: showEventDisplayOptions to handle radio buttons and pre-selection
+function showEventDisplayOptions(preselect = null, existingPublication = null) {
+    const modal = document.getElementById('event-display-options-modal');
+    if (!modal) return;
+    const continueBtn = document.getElementById('continue-display-btn');
+    const form = document.getElementById('display-options-form');
+    form.reset();
+    continueBtn.disabled = true;
+    continueBtn.innerHTML = 'Continue';
+
+    if (existingPublication) {
+        let targetValue = null;
+        if (existingPublication.display_on_home && existingPublication.display_on_upcoming) targetValue = 'both';
+        else if (existingPublication.display_on_home) targetValue = 'home';
+        else if (existingPublication.display_on_upcoming) targetValue = 'upcoming';
+        if (targetValue) { const radio = form.querySelector(`input[value="${targetValue}"]`); if (radio) radio.checked = true; continueBtn.disabled = false; }
+    }
+    modal.style.display = 'block';
+    document.body.classList.add('modal-open');
+    form.onchange = () => { continueBtn.disabled = !form.querySelector('input:checked'); };
+    continueBtn.onclick = async () => { const selected = form.querySelector('input[name="display-target"]:checked'); if (!selected) return; const choice = selected.value; if (choice === 'home') { await saveEventDisplayPreferences(true, false, {}, existingPublication); } else { closeEventDisplayModal(); setTimeout(() => showEventDetailsModal(choice, existingPublication), 200); } };
+}
+
+// MODIFIED: showEventDetailsModal to dynamically populate categories
+async function showEventDetailsModal(choice, existingPublication = null) {
+    const modal = document.getElementById('event-details-modal');
+    if (!modal || !tempEventData) return;
+
+    // Fetch and populate categories, pre-selecting the correct one if it exists
+    await populateCategoryDropdown('event-category', existingPublication?.category_id);
+
+    document.getElementById('detail-event-title').textContent = tempEventData.title;
+    let dateTimeStr = new Date(tempEventData.start_at).toLocaleString();
+    if (tempEventData.end_at) dateTimeStr += ' - ' + new Date(tempEventData.end_at).toLocaleString();
+    document.getElementById('detail-event-datetime').textContent = dateTimeStr;
+    document.getElementById('detail-event-location').textContent = tempEventData.location || 'TBD';
+
+    document.getElementById('event-mode').value = existingPublication?.mode || 'offline';
+    document.getElementById('event-capacity').value = existingPublication?.capacity || '';
+    document.getElementById('event-banner').value = existingPublication?.banner_url || tempEventData.banner_url || '';
+    document.getElementById('event-registration-url').value = existingPublication?.registration_url || '';
+    document.getElementById('event-long-description').value = existingPublication?.long_description || tempEventData.description || '';
+
+    const speakersList = document.getElementById('speakers-list');
+    const speakers = (existingPublication?.speakers && Array.isArray(existingPublication.speakers)) ? existingPublication.speakers : [];
+    speakersList.innerHTML = '';
+    if (speakers.length > 0) {
+        speakers.forEach(s => addSpeaker(s.name, s.role));
+    } else {
+        addSpeaker();
+    }
+    updateDisplaySummary(choice === 'both', choice !== 'home');
+    modal.style.display = 'block';
+    document.body.classList.add('modal-open');
+
+    const form = document.getElementById('event-details-form');
+    form.onsubmit = async (e) => {
+        e.preventDefault();
+        const extendedDetails = {
+            category_id: parseInt(document.getElementById('event-category').value, 10) || null,
+            mode: document.getElementById('event-mode').value || null,
+            capacity: parseInt(document.getElementById('event-capacity').value) || null,
+            banner_url: document.getElementById('event-banner').value || tempEventData.banner_url || null,
+            registration_url: document.getElementById('event-registration-url').value || null,
+            long_description: document.getElementById('event-long-description').value || null,
+            speakers: collectSpeakers()
+        };
+        const showHome = (choice === 'both');
+        const showUpcoming = (choice === 'upcoming' || choice === 'both');
+        await saveEventDisplayPreferences(showHome, showUpcoming, extendedDetails, existingPublication);
+    };
+}
+
+
+// Standalone utility functions
+function closeEventDisplayModal() { const modal = document.getElementById('event-display-options-modal'); if (modal) { modal.style.display = 'none'; document.body.classList.remove('modal-open'); } }
+function skipEventDisplay() { closeEventDisplayModal(); if (tempEventData && tempEventData.college_id) { loadCollegeEvents(tempEventData.college_id); } tempEventData = null; }
+function closeEventDetailsModal() { const modal = document.getElementById('event-details-modal'); if (modal) { modal.style.display = 'none'; document.body.classList.remove('modal-open'); } }
+function goBackToDisplayOptions() { closeEventDetailsModal(); setTimeout(() => showEventDisplayOptions(null, tempEventData.publication), 300); }
+function updateDisplaySummary(displayOnHome, displayOnUpcoming) { const container = document.getElementById('display-summary-content'); container.innerHTML = ''; if (displayOnHome) { container.innerHTML += '<div class="summary-badge"><i class="fas fa-home"></i> Home Page</div>'; } if (displayOnUpcoming) { container.innerHTML += '<div class="summary-badge"><i class="fas fa-calendar-alt"></i> Upcoming Events</div>'; } }
+function addSpeaker(name = '', role = '') { const speakersList = document.getElementById('speakers-list'); const newSpeaker = document.createElement('div'); newSpeaker.className = 'speaker-item'; newSpeaker.innerHTML = `<input type="text" class="speaker-name" placeholder="Speaker Name" value="${name}"><input type="text" class="speaker-role" placeholder="Role/Designation" value="${role}"><button type="button" class="btn-icon remove-speaker" onclick="removeSpeaker(this)"><i class="fas fa-times"></i></button>`; speakersList.appendChild(newSpeaker); }
+function removeSpeaker(button) { const speakerItem = button.closest('.speaker-item'); const speakersList = document.getElementById('speakers-list'); if (speakersList.children.length > 1) { speakerItem.remove(); } else { speakerItem.querySelector('.speaker-name').value = ''; speakerItem.querySelector('.speaker-role').value = ''; } }
+function collectSpeakers() { const speakers = []; const speakerItems = document.querySelectorAll('.speaker-item'); speakerItems.forEach(item => { const name = item.querySelector('.speaker-name').value.trim(); const role = item.querySelector('.speaker-role').value.trim(); if (name) { speakers.push({ name, role: role || 'Speaker' }); } }); return speakers; }
+// MODIFIED: addSpeaker to accept default values for pre-filling
+function addSpeaker(name = '', role = '') {
+    const speakersList = document.getElementById('speakers-list');
+    const newSpeaker = document.createElement('div');
+    newSpeaker.className = 'speaker-item';
+    newSpeaker.innerHTML = `
+        <input type="text" class="speaker-name" placeholder="Speaker Name" value="${name}">
+        <input type="text" class="speaker-role" placeholder="Role/Designation" value="${role}">
+        <button type="button" class="btn-icon remove-speaker" onclick="removeSpeaker(this)"><i class="fas fa-times"></i></button>
+    `;
+    speakersList.appendChild(newSpeaker);
+}
+
+// Save event display preferences to Supabase
+// MODIFIED: saveEventDisplayPreferences to use category_id
+async function saveEventDisplayPreferences(displayOnHome, displayOnUpcoming, extendedDetails = {}, existingPublication = null) {
+    if (!tempEventData) return;
+    const saveBtn = document.querySelector('#event-details-form button[type="submit"]') || document.getElementById('continue-display-btn');
+    const setLoading = (on) => { if (!saveBtn) return; if (on) { saveBtn.dataset.prev = saveBtn.innerHTML; saveBtn.disabled = true; saveBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Publishing...'; } else { saveBtn.disabled = false; saveBtn.innerHTML = saveBtn.dataset.prev || 'Save'; } };
+
+    try {
+        setLoading(true);
+        flashNotification.showInfo('Publishing', 'Saving display preferences...');
+        const currentUserId = authManager?.currentUser?.id || null;
+
+        const mergedDetails = {
+            category_id: extendedDetails.category_id ?? existingPublication?.category_id ?? null,
+            mode: extendedDetails.mode ?? existingPublication?.mode ?? null,
+            capacity: extendedDetails.capacity ?? existingPublication?.capacity ?? null,
+            registration_url: extendedDetails.registration_url ?? existingPublication?.registration_url ?? null,
+            long_description: extendedDetails.long_description ?? existingPublication?.long_description ?? null,
+            banner_url: extendedDetails.banner_url ?? existingPublication?.banner_url ?? tempEventData.banner_url,
+            speakers: extendedDetails.speakers ?? existingPublication?.speakers ?? null
+        };
+
+        const { error } = await supabase.rpc('upsert_event_publication', {
+            p_event_id: tempEventData.id,
+            p_college_id: tempEventData.college_id,
+            p_display_on_home: displayOnHome,
+            p_display_on_upcoming: displayOnUpcoming,
+            p_category_id: mergedDetails.category_id,
+            p_mode: mergedDetails.mode,
+            p_capacity: mergedDetails.capacity,
+            p_registration_url: mergedDetails.registration_url,
+            p_long_description: mergedDetails.long_description,
+            p_speakers: mergedDetails.speakers,
+            p_published_by: currentUserId
+        });
+        if (error) throw error;
+
+        let message = 'Event publication settings saved!';
+        if (displayOnHome && displayOnUpcoming) message = 'Published to Home Page and Upcoming Events Page.';
+        else if (displayOnHome) message = 'Published to Home Page.';
+        else if (displayOnUpcoming) message = 'Published to Upcoming Events Page.';
+        flashNotification.showSuccess('Published!', message);
+
+        closeEventDetailsModal();
+        closeEventDisplayModal();
+        if (tempEventData.college_id) await loadCollegeEvents(tempEventData.college_id);
+        tempEventData = null;
+    } catch (error) {
+        console.error('Error saving display preferences:', error);
+        flashNotification.showError('Error', error.message || 'Failed to publish event');
+    } finally {
+        setLoading(false);
+    }
+}
+
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('Event display workflow initialized with Supabase');
+});
 
 async function deleteEvent(id, collegeId) {
     try {

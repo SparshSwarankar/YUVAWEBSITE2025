@@ -64,7 +64,7 @@
     /* Changed to base bg */
     position: relative;
     overflow: hidden;
-    top: 80px;
+    top: 90px;
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
     /* Matched to home-page */
 }
@@ -76,7 +76,7 @@
     /* Changed to grid */
     place-items: center;
     /* Changed to grid */
-    min-height: 50vh;
+    min-height: 70vh;
     background: var(--gradient-hero);
     /* Applied new theme gradient */
     overflow: hidden;
@@ -700,3 +700,854 @@
     transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
+/* ================================================================ */
+/* ===== PHOTO GALLERY RESPONSIVE MEDIA QUERIES - ULTRA MODERN ===== */
+/* ================================================================ */
+
+/* ===== TABLET - 768px and below ===== */
+@media (max-width: 768px) {
+
+    /* ===== Gallery Page Container ===== */
+    .gallery-page {
+        top: calc(60px + 0.5rem * 4);
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    /* ===== Hero Section ===== */
+    .gallery-hero {
+        padding: 50px 16px 28px;
+        min-height: 50vh;
+    }
+
+    .hero-chakra-bg {
+        width: 300px;
+        height: 300px;
+    }
+
+    .gallery-hero-content {
+        max-width: 90%;
+        padding: 0 16px;
+    }
+
+    .hero-badge {
+        font-size: 11px;
+        padding: 5px 12px;
+        margin-bottom: 16px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.85rem, 5vw, 2.75rem);
+        margin-bottom: 16px;
+    }
+
+    .hero-description {
+        font-size: 15px;
+        margin-bottom: 16px;
+    }
+
+    /* ===== Gallery Impact Cards ===== */
+    .gallery-impact {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 16px;
+    }
+
+    .gallery-impact-item {
+        max-width: 100%;
+        padding: 12px 10px;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .gallery-impact-item .impact-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    .gallery-impact-item .donate-impact-number {
+        font-size: 17px;
+    }
+
+    .gallery-impact-item .donate-impact-label {
+        font-size: 10px;
+    }
+
+    /* ===== Content Section ===== */
+    .content-section {
+        margin-top: -20px;
+        padding: 0 16px 60px;
+    }
+
+    .content-card {
+        padding: 12px;
+        border-radius: var(--radius-xl);
+    }
+
+    .content-card::before {
+        height: 3px;
+    }
+
+    /* ===== Filters ===== */
+    .filters {
+        border-radius: var(--radius-lg);
+    }
+
+    .filters__primary,
+    .filters__secondary {
+        padding: 10px 8px;
+        gap: 6px;
+    }
+
+    .chip {
+        padding: 7px 12px;
+        font-size: 13px;
+        border-width: 1.5px;
+    }
+
+    /* ===== Meta Section ===== */
+    .meta {
+        padding: 8px 8px 10px;
+        font-size: 13px;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .meta__count {
+        font-size: 13px;
+    }
+
+    .meta__active {
+        font-size: 12px;
+    }
+
+    /* ===== Masonry Grid ===== */
+    .masonry {
+        column-count: 3;
+        column-gap: 10px;
+    }
+
+    .card {
+        margin-bottom: 10px;
+        border-radius: 10px;
+    }
+
+    .card__cap {
+        padding: 7px 9px;
+        font-size: 12px;
+    }
+
+    /* ===== Progress Bar ===== */
+    .progress-loader {
+        height: 6px;
+        margin: 12px auto;
+    }
+
+    /* ===== Back to Top Button ===== */
+    .back-to-top {
+        right: 14px;
+        bottom: 14px;
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+    }
+
+    /* ===== Flash Notifications ===== */
+    .flash-container {
+        top: 80px;
+        right: 12px;
+        left: 12px;
+        gap: 10px;
+    }
+
+    .flash-notification {
+        min-width: auto;
+        max-width: none;
+        width: 100%;
+        padding: 14px 16px;
+    }
+
+    .flash-icon {
+        width: 22px;
+        height: 22px;
+    }
+
+    .flash-title {
+        font-size: 13px;
+    }
+
+    .flash-message {
+        font-size: 12px;
+    }
+
+    /* ===== Skeleton Loading ===== */
+    .skeleton {
+        height: 200px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+    }
+}
+
+/* ===== MOBILE - 480px and below ===== */
+@media (max-width: 480px) {
+
+    /* ===== Gallery Page Container ===== */
+    .gallery-page {
+        top: calc(60px + 0.25rem * 6);
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    /* ===== Hero Section ===== */
+    .gallery-hero {
+        padding: 30px 12px 20px;
+    }
+
+    .hero-chakra-bg {
+        width: 200px;
+        height: 200px;
+        opacity: 0.06;
+    }
+
+    .gallery-hero-content {
+        max-width: 100%;
+        padding: 0 12px;
+    }
+
+    .hero-badge {
+        font-size: 10px;
+        padding: 4px 10px;
+        margin-bottom: 10px;
+        gap: 4px;
+    }
+
+    .hero-badge i {
+        font-size: 10px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+        margin-bottom: 10px;
+    }
+
+    .hero-description {
+        font-size: 13px;
+        line-height: 1.4;
+        margin-bottom: 12px;
+    }
+
+    /* ===== Gallery Impact Cards ===== */
+    .gallery-impact {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        margin-top: 12px;
+    }
+
+    .gallery-impact-item {
+        max-width: 100%;
+        padding: 8px 6px;
+        gap: 6px;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .gallery-impact-item .impact-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
+    }
+
+    .gallery-impact-item .donate-impact-number {
+        font-size: 14px;
+    }
+
+    .gallery-impact-item .donate-impact-label {
+        font-size: 9px;
+    }
+
+    /* ===== Content Section ===== */
+    .content-section {
+        margin-top: -15px;
+        padding: 0 12px 50px;
+    }
+
+    .content-card {
+        padding: 10px;
+        border-radius: var(--radius-lg);
+    }
+
+    .content-card::before {
+        height: 3px;
+    }
+
+    /* ===== Filters ===== */
+    .filters {
+        border-radius: var(--radius-lg);
+        border-width: 1px;
+    }
+
+    .filters__primary,
+    .filters__secondary {
+        padding: 8px 6px;
+        gap: 6px;
+    }
+
+    .chip {
+        padding: 6px 10px;
+        font-size: 12px;
+        border-width: 1.5px;
+        gap: 6px;
+    }
+
+    .chip i {
+        font-size: 11px;
+    }
+
+    /* ===== Meta Section ===== */
+    .meta {
+        padding: 6px 6px 8px;
+        font-size: 12px;
+        gap: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .meta__count {
+        font-size: 12px;
+    }
+
+    .meta__active {
+        font-size: 11px;
+        width: 100%;
+    }
+
+    /* ===== Masonry Grid ===== */
+    .masonry {
+        column-count: 2;
+        column-gap: 8px;
+    }
+
+    .card {
+        margin-bottom: 8px;
+        border-radius: 10px;
+    }
+
+    .card__cap {
+        padding: 6px 8px;
+        font-size: 10px;
+    }
+
+    /* ===== Progress Bar ===== */
+    .progress-loader {
+        height: 6px;
+        margin: 10px auto;
+        width: 100%;
+    }
+
+    /* ===== Back to Top Button ===== */
+    .back-to-top {
+        right: 12px;
+        bottom: 12px;
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+
+    /* ===== Flash Notifications ===== */
+    .flash-container {
+        top: 75px;
+        right: 10px;
+        left: 10px;
+        gap: 8px;
+    }
+
+    .flash-notification {
+        padding: 12px 14px;
+        gap: 10px;
+    }
+
+    .flash-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+    }
+
+    .flash-title {
+        font-size: 12px;
+        margin-bottom: 2px;
+    }
+
+    .flash-message {
+        font-size: 11px;
+        line-height: 1.3;
+    }
+
+    .flash-close {
+        width: 20px;
+        height: 20px;
+        padding: 2px;
+    }
+
+    /* ===== Skeleton Loading ===== */
+    .skeleton {
+        height: 220px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+    }
+
+    /* ===== Empty/Placeholder Messages ===== */
+    .masonry>div[style*="column-span"] {
+        padding: 40px 16px !important;
+        border-radius: var(--radius-lg) !important;
+        margin: 0 !important;
+    }
+
+    .masonry>div[style*="column-span"] i {
+        font-size: 3rem !important;
+        margin-bottom: 16px !important;
+    }
+
+    .masonry>div[style*="column-span"] h3 {
+        font-size: 1.25rem !important;
+        margin-bottom: 10px !important;
+    }
+
+    .masonry>div[style*="column-span"] p {
+        font-size: 0.9rem !important;
+    }
+}
+
+/* ===== EXTRA SMALL MOBILE - 375px and below ===== */
+@media (max-width: 375px) {
+
+    /* ===== Gallery Page Container ===== */
+    .gallery-page {
+        top: calc(60px + 0.25rem * 6);
+    }
+
+    /* ===== Hero Section ===== */
+    .gallery-hero {
+        padding: 25px 10px 18px;
+    }
+
+    .hero-chakra-bg {
+        width: 180px;
+        height: 180px;
+        opacity: 0.05;
+    }
+
+    .gallery-hero-content {
+        padding: 0 10px;
+    }
+
+    .hero-badge {
+        font-size: 9px;
+        padding: 4px 8px;
+        margin-bottom: 8px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.35rem, 5vw, 1.85rem);
+        margin-bottom: 8px;
+    }
+
+    .hero-description {
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    /* ===== Gallery Impact Cards ===== */
+    .gallery-impact {
+        gap: 6px;
+        margin-top: 10px;
+    }
+
+    .gallery-impact-item {
+        padding: 6px 4px;
+        gap: 4px;
+    }
+
+    .gallery-impact-item .impact-icon {
+        width: 24px;
+        height: 24px;
+        font-size: 11px;
+    }
+
+    .gallery-impact-item .donate-impact-number {
+        font-size: 12px;
+    }
+
+    .gallery-impact-item .donate-impact-label {
+        font-size: 8px;
+    }
+
+    /* ===== Content Section ===== */
+    .content-section {
+        margin-top: -12px;
+        padding: 0 6px 40px;
+    }
+
+    .content-card {
+        padding: 8px;
+    }
+
+    /* ===== Filters ===== */
+    .filters__primary,
+    .filters__secondary {
+        padding: 8px 4px;
+        gap: 5px;
+    }
+
+    .chip {
+        padding: 5px 8px;
+        font-size: 11px;
+    }
+
+    /* ===== Meta Section ===== */
+    .meta {
+        padding: 6px 4px 8px;
+        font-size: 11px;
+    }
+
+    .meta__count {
+        font-size: 11px;
+    }
+
+    .meta__active {
+        font-size: 10px;
+    }
+
+    /* ===== Masonry Grid ===== */
+    .card {
+        margin-bottom: 8px;
+    }
+
+    .card__cap {
+        padding: 5px 6px;
+        font-size: 9px;
+    }
+
+    /* ===== Progress Bar ===== */
+    .progress-loader {
+        height: 5px;
+        margin: 8px auto;
+    }
+
+    /* ===== Back to Top Button ===== */
+    .back-to-top {
+        right: 10px;
+        bottom: 10px;
+        width: 34px;
+        height: 34px;
+        font-size: 13px;
+    }
+
+    /* ===== Flash Notifications ===== */
+    .flash-container {
+        top: 70px;
+        right: 8px;
+        left: 8px;
+        gap: 6px;
+    }
+
+    .flash-notification {
+        padding: 10px 12px;
+    }
+
+    .flash-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 9px;
+    }
+
+    .flash-title {
+        font-size: 11px;
+    }
+
+    .flash-message {
+        font-size: 10px;
+    }
+
+    .flash-close {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* ===== Skeleton Loading ===== */
+    .skeleton {
+        height: 200px;
+        margin-bottom: 10px;
+    }
+
+    /* ===== Empty/Placeholder Messages ===== */
+    .masonry>div[style*="column-span"] {
+        padding: 36px 12px !important;
+    }
+
+    .masonry>div[style*="column-span"] i {
+        font-size: 2.5rem !important;
+        margin-bottom: 14px !important;
+    }
+
+    .masonry>div[style*="column-span"] h3 {
+        font-size: 1.15rem !important;
+        margin-bottom: 8px !important;
+    }
+
+    .masonry>div[style*="column-span"] p {
+        font-size: 0.85rem !important;
+    }
+}
+
+/* ===== LANDSCAPE MODE (Mobile/Tablet) ===== */
+@media (max-height: 600px) and (orientation: landscape) {
+
+    /* ===== Hero Section ===== */
+    .gallery-hero {
+        padding: 30px 20px 20px;
+        min-height: 35vh;
+    }
+
+    .hero-chakra-bg {
+        width: 220px;
+        height: 220px;
+    }
+
+    .hero-badge {
+        margin-bottom: 12px;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+        margin-bottom: 12px;
+    }
+
+    .hero-description {
+        font-size: 13px;
+        margin-bottom: 12px;
+    }
+
+    /* ===== Gallery Impact Cards ===== */
+    .gallery-impact {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-top: 12px;
+    }
+
+    .gallery-impact-item {
+        padding: 10px;
+    }
+
+    /* ===== Content Section ===== */
+    .content-section {
+        margin-top: -20px;
+        padding: 0 20px 40px;
+    }
+
+    /* ===== Filters ===== */
+    .filters__primary,
+    .filters__secondary {
+        padding: 8px 8px;
+    }
+
+    /* ===== Masonry Grid ===== */
+    @supports (min-width: 560px) {
+        .masonry {
+            column-count: 3;
+        }
+    }
+}
+
+/* ===== VERY LARGE SCREENS - 1920px and above ===== */
+@media (min-width: 1920px) {
+
+    /* ===== Content Section ===== */
+    .content-section {
+        max-width: 1400px;
+    }
+
+    /* ===== Masonry Grid ===== */
+    .masonry {
+        column-count: 5;
+        column-gap: 16px;
+    }
+
+    .card {
+        margin-bottom: 16px;
+    }
+
+    /* ===== Flash Notifications ===== */
+    .flash-notification {
+        min-width: 380px;
+    }
+}
+
+/* ===== TOUCH DEVICE OPTIMIZATIONS ===== */
+@media (hover: none) and (pointer: coarse) {
+
+    /* ===== Increase Touch Targets ===== */
+    .chip {
+        min-height: 44px;
+        padding: 10px 14px;
+    }
+
+    .back-to-top {
+        min-width: 48px;
+        min-height: 48px;
+    }
+
+    .flash-close {
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    /* ===== Simplify Hover Effects ===== */
+    .card:hover {
+        transform: translateY(-1px);
+    }
+
+    .chip:hover {
+        transform: translateY(0);
+    }
+
+    /* ===== Active States ===== */
+    .card:active {
+        transform: scale(0.98);
+    }
+
+    .chip:active {
+        transform: scale(0.95);
+    }
+
+    .back-to-top:active {
+        transform: scale(0.9);
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+
+    /* ===== Hide Interactive Elements ===== */
+    .gallery-hero,
+    .filters,
+    .back-to-top,
+    .flash-container,
+    .progress-loader {
+        display: none !important;
+    }
+
+    /* ===== Print Layout ===== */
+    .gallery-page {
+        background: white !important;
+    }
+
+    .content-section {
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .content-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+
+    /* ===== Masonry Print Layout ===== */
+    .masonry {
+        column-count: 3;
+    }
+
+    .card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .card__img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+
+    /* ===== Disable Animations ===== */
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0ms !important;
+    }
+
+    .hero-chakra-bg {
+        animation: none !important;
+    }
+
+    .hero-badge {
+        animation: none !important;
+    }
+
+    .card {
+        animation: none !important;
+    }
+
+    .skeleton {
+        animation: none !important;
+        background: var(--bg-subtle);
+    }
+
+    /* ===== Immediate Transitions ===== */
+    .card__img {
+        transition: none !important;
+    }
+
+    .back-to-top {
+        transition: none !important;
+    }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+
+    /* ===== Increase Border Contrast ===== */
+    .content-card,
+    .chip,
+    .card {
+        border-width: 2px;
+        border-color: var(--text-primary);
+    }
+
+    /* ===== Text Contrast ===== */
+    .hero-title,
+    .hero-description,
+    .meta,
+    .card__cap {
+        color: var(--text-primary);
+    }
+
+    /* ===== Button Contrast ===== */
+    .chip.active {
+        background: var(--text-primary);
+        color: var(--white-primary);
+    }
+}
+
+/* ===== DARK MODE SUPPORT (Future Enhancement) ===== */
+@media (prefers-color-scheme: dark) {
+    /* Add dark mode styles here if needed in the future */
+}
+
+/* ===== RESPONSIVE IMAGE LOADING ===== */
+@media (max-width: 480px) {
+    .card__img {
+        /* Force smaller aspect ratios on mobile */
+        aspect-ratio: 3 / 4 !important;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .card__img {
+        aspect-ratio: 4 / 3 !important;
+    }
+}
+
+/* ===== END OF RESPONSIVE MEDIA QUERIES ===== */

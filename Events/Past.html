@@ -120,41 +120,32 @@
     </div>
 
 
-    <div class="main">
-        <section class="hero">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Empowering the Youth of India</h1>
-                    <p>Together we grow, together we shine.</p>
-                    <a href="#" class="btn">Join Us</a>
-                </div>
-                <div class="hero-image">
-                    <img src="Images/Card Image 2.jpg" alt="Youth illustration">
-                </div>
-            </div>
+    <div class="main events-page-wrapper">
+
+        <section class="event-hero">
+            <h1>Our Legacy</h1>
+            <p>Explore the milestones, memories, and impact created by the YUVA community over the years.</p>
         </section>
-        <!-- ===== About Section ===== -->
-        <section class="about">
-            <div class="about-content">
-                <div class="about-image">
-                    <img src="Images/Card Image 1.jpeg" alt="Youth working together">
-                </div>
-                <div class="about-text">
-                    <h2>Our Mission</h2>
-                    <p>
-                        We believe in empowering the youth of India through education,
-                        innovation, and collaboration. Our mission is to create a
-                        platform where ideas thrive, voices are heard, and opportunities
-                        are accessible to everyone.
-                    </p>
-                    <a href="#" class="btn">Learn More</a>
-                </div>
+
+        <div class="event-controls">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="event-search" placeholder="Search event history...">
             </div>
-        </section>
+        </div>
+
+        <div class="events-container">
+            <div class="ev-loading" id="event-loader">
+                <div class="ev-spinner"></div>
+            </div>
+
+            <div id="past-events-container" class="events-grid"></div>
+        </div>
 
     </div>
 
     <script src="/script.js"></script>
+    <script src="event.js"></script>
 </body>
 
 </html>

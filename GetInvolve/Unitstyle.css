@@ -1500,6 +1500,7 @@ body.modal-open {
     margin: 0 auto 16px;
 }
 
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -1851,6 +1852,331 @@ body.modal-open {
     font-size: 12px;
     color: var(--text-muted);
     margin-top: 4px;
+}
+
+/* ===== NEW: EVENT DISPLAY WORKFLOW MODALS ===== */
+
+/* Modal Icon Header */
+.modal-icon-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.success-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--green-pale);
+    border: 3px solid var(--green-primary);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: var(--green-primary);
+    animation: successPulse 0.6s ease-out;
+}
+
+@keyframes successPulse {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin: -8px 0 24px 0;
+    text-align: center;
+}
+
+/* Display Options Cards */
+.display-options {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.option-card {
+    position: relative;
+    cursor: pointer;
+    display: block;
+}
+
+.option-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.option-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: var(--bg-subtle);
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    transition: all 0.3s ease;
+}
+
+.option-card:hover .option-content {
+    background: var(--bg-elevated);
+    border-color: var(--border-medium);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.option-card input[type="radio"]:checked+.option-content {
+    background: var(--color-info-pale);
+    border-color: var(--navy-chakra);
+    box-shadow: 0 0 0 3px rgba(0, 0, 128, 0.1);
+}
+
+.option-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--bg-elevated);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.option-card input[type="radio"]:checked+.option-content .option-icon {
+    background: var(--navy-chakra);
+    color: var(--white-primary);
+}
+
+.option-text h4 {
+    margin: 0 0 4px 0;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.option-text p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Modal Actions */
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-light);
+}
+
+.modal-actions .btn {
+    min-width: 120px;
+}
+
+/* Event Details Form Specifics */
+.form-section {
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    color: var(--navy-chakra);
+    font-weight: 700;
+    margin: 0 0 16px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-title::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: var(--gradient-saffron);
+    border-radius: 2px;
+}
+
+.info-display {
+    background: var(--bg-subtle);
+    padding: 16px;
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--navy-chakra);
+}
+
+.info-display p {
+    margin: 8px 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.info-display strong {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+.form-hint {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+#speakers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.speaker-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 12px;
+    align-items: center;
+}
+
+.speaker-name,
+.speaker-role {
+    padding: 10px 14px;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.speaker-name:focus,
+.speaker-role:focus {
+    border-color: var(--navy-chakra);
+    box-shadow: 0 0 0 3px rgba(0, 0, 128, 0.1);
+}
+
+.btn-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light);
+    background: var(--bg-elevated);
+    color: var(--color-error);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+    background: var(--color-error);
+    color: var(--white-primary);
+    border-color: var(--color-error);
+}
+
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+.display-summary {
+    background: var(--bg-subtle);
+    padding: 16px;
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--border-medium);
+}
+
+#display-summary-content {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.summary-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.summary-badge i {
+    color: var(--navy-chakra);
+}
+
+/* Responsive Updates for New Modals */
+@media (max-width: 768px) {
+    .speaker-item {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .speaker-item .btn-icon {
+        justify-self: end;
+        margin-top: -46px;
+        margin-right: 4px;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .modal-actions .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        width: min(94vw, 520px);
+        padding: 22px;
+    }
+
+    .option-content {
+        padding: 14px;
+        gap: 12px;
+    }
+
+    .option-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .option-text h4 {
+        font-size: 1rem;
+    }
+
+    .option-text p {
+        font-size: .85rem;
+    }
 }
 
 /* ================================================================ */
