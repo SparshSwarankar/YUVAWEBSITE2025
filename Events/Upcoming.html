@@ -23,7 +23,7 @@
                 <img src="/Images/YUVA logo.png" alt="YUVA Logo">
                 <h1>YUVA</h1>
             </div>
-            <div class="page-title">Youth United For Vision And Action</div>
+            <div class="page-title">Events</div>
         </div>
     </header>
 
@@ -349,17 +349,132 @@
                 </div>
             </div>
 
-            <!-- ============ CTA SECTION ============ -->
-            <div class="cta-section">
-                <div class="cta-container">
-                    <div class="cta-content">
-                        <h2>Didn't find what you're looking for?</h2>
-                        <p>Explore more opportunities or get involved with YUVA in other ways. From volunteering to
-                            fellowship programs, there's something for everyone.</p>
-                        <div class="cta-buttons">
-                            <a href="/GetInvolve/Volunteer.html" class="btn-primary">Become a Volunteer</a>
-                            <a href="/About/AboutUs.html" class="btn-secondary">Learn About YUVA</a>
+            <!-- ============ EVENTS INSIGHTS SECTION ============ -->
+            <div class="events-insights-section">
+                <div class="insights-container">
+                    <div class="insights-header">
+                        <h2>Event Insights</h2>
+                        <p>Stay informed about YUVA's event ecosystem</p>
+                    </div>
+                    
+                    <div class="insights-grid">
+                        <div class="insight-card">
+                            <div class="insight-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3>Total Events</h3>
+                            <p class="insight-value" id="total-events-count">0</p>
+                            <p class="insight-text">Upcoming events in our calendar</p>
                         </div>
+                        
+                        <div class="insight-card">
+                            <div class="insight-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <h3>Cities Covered</h3>
+                            <p class="insight-value" id="cities-count">0</p>
+                            <p class="insight-text">Across India and online</p>
+                        </div>
+                        
+                        <div class="insight-card">
+                            <div class="insight-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3>Expected Attendees</h3>
+                            <p class="insight-value" id="total-capacity">0+</p>
+                            <p class="insight-text">Join our community</p>
+                        </div>
+                        
+                        <div class="insight-card">
+                            <div class="insight-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <h3>Next Event</h3>
+                            <p class="insight-value" id="next-event-days">Soon</p>
+                            <p class="insight-text">Get ready for our next opportunity</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ FAQ SECTION ============ -->
+            <div class="faq-section">
+                <div class="faq-container">
+                    <div class="faq-header">
+                        <h2>Frequently Asked Questions</h2>
+                        <p>Find answers to common questions about our events</p>
+                    </div>
+                    
+                    <div class="faq-items">
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h4>How do I register for an event?</h4>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer" style="display: none;">
+                                <p>Simply click on any event card to view details and find the registration button. You can register directly through our platform or external links provided.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h4>Can I attend events online?</h4>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer" style="display: none;">
+                                <p>Many of our events offer both in-person and online participation. Check the event details for the specific mode of participation available.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h4>Is there a registration fee?</h4>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer" style="display: none;">
+                                <p>Most YUVA events are free to attend. Some specialized workshops or premium events may have a nominal fee. Check individual event details for pricing information.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h4>How can I get involved as a volunteer?</h4>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer" style="display: none;">
+                                <p>We love volunteers! Visit our <a href="/GetInvolve/Volunteer.html">volunteer page</a> to learn about opportunities and submit your interest. You can also reach out to us directly at events@yuva.org.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <h4>What should I bring to an event?</h4>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer" style="display: none;">
+                                <p>Bring a valid ID, notebook, and pen. For outdoor events, wear comfortable clothing and bring water. Specific requirements are mentioned in individual event details.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ NEWSLETTER SUBSCRIPTION ============ -->
+            <div class="newsletter-cta-section">
+                <div class="newsletter-container">
+                    <div class="newsletter-content">
+                        <h2>Never Miss an Event</h2>
+                        <p>Subscribe to get event updates directly in your inbox</p>
+                        <form class="newsletter-form" id="events-newsletter-form">
+                            <div class="form-group">
+                                <input type="email" placeholder="Enter your email" required>
+                                <button type="submit" class="btn-primary">Subscribe</button>
+                            </div>
+                            <p class="consent-text"><i class="fas fa-lock"></i> We respect your privacy. No spam, ever.</p>
+                        </form>
+                    </div>
+                    <div class="newsletter-illustration">
+                        <i class="fas fa-bell"></i>
                     </div>
                 </div>
             </div>

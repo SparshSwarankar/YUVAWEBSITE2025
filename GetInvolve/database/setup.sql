@@ -1019,3 +1019,310 @@ USING ( bucket_id = 'event-banners' );
 CREATE POLICY "Admin Delete Access" 
 ON storage.objects FOR DELETE 
 USING ( bucket_id = 'event-banners' );
+
+-- ===== EVENT PUBLICATIONS TABLE =====
+-- Stores where events should be displayed (home page, upcoming page, or both)
+CREATE TABLE IF NOT EXISTS public.event_publications (
+    id SERIAL PRIMARY KEY,
+    event_id INTEGER REFERENCES events(id) ON DELETE CASCADE,
+    college_id INTEGER REFERENCES colleges(id) ON DELETE CASCADE,
+    
+    -- Display locations
+    display_on_home BOOLEAN DEFAULT false,
+    display_on_upcoming BOOLEAN DEFAULT false,
+    
+    -- Extended details for upcoming events page
+    category VARCHAR(50), -- Debate, Workshop, Cultural, etc.
+    mode VARCHAR(20), -- online, offline, hybrid
+    capacity INTEGER,
+    registration_url TEXT,
+    long_description TEXT,
+    speakers JSONB, -- Array of {name, role}
+    
+    -- Metadata
+    published_by INTEGER REFERENCES admin_users(id),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Enable RLS
+ALTER TABLE public.event_publications ENABLE ROW LEVEL SECURITY;
+
+-- Allow public read access (for home page and upcoming events page)
+CREATE POLICY "Allow public read access to event publications" 
+ON public.event_publications
+FOR SELECT 
+USING (true);
+
+-- Create indexes for performance
+CREATE INDEX IF NOT EXISTS idx_event_publications_event_id ON event_publications(event_id);
+CREATE INDEX IF NOT EXISTS idx_event_publications_college_id ON event_publications(college_id);
+CREATE INDEX IF NOT EXISTS idx_event_publications_display_home ON event_publications(display_on_home);
+CREATE INDEX IF NOT EXISTS idx_event_publications_display_upcoming ON event_publications(display_on_upcoming);
+
+-- Trigger for updated_at
+CREATE TRIGGER update_event_publications_updated_at 
+BEFORE UPDATE ON event_publications
+FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- RPC function to create/update event publication
+CREATE OR REPLACE FUNCTION upsert_event_publication(
+    p_event_id INTEGER,
+    p_college_id INTEGER,
+    p_display_on_home BOOLEAN,
+    p_display_on_upcoming BOOLEAN,
+    p_category TEXT,
+    p_mode TEXT,
+    p_capacity INTEGER,
+    p_registration_url TEXT,
+    p_long_description TEXT,
+    p_speakers JSONB,
+    p_published_by INTEGER
+)
+RETURNS SETOF event_publications AS $$
+BEGIN
+    RETURN QUERY
+    INSERT INTO event_publications (
+        event_id, college_id, display_on_home, display_on_upcoming,
+        category, mode, capacity, registration_url, long_description,
+        speakers, published_by
+    ) VALUES (
+        p_event_id, p_college_id, p_display_on_home, p_display_on_upcoming,
+        p_category, p_mode, p_capacity, p_registration_url, p_long_description,
+        p_speakers, p_published_by
+    )
+    ON CONFLICT (event_id) DO UPDATE SET
+        display_on_home = EXCLUDED.display_on_home,
+        display_on_upcoming = EXCLUDED.display_on_upcoming,
+        category = EXCLUDED.category,
+        mode = EXCLUDED.mode,
+        capacity = EXCLUDED.capacity,
+        registration_url = EXCLUDED.registration_url,
+        long_description = EXCLUDED.long_description,
+        speakers = EXCLUDED.speakers,
+        updated_at = NOW()
+    RETURNING *;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path=public;
+
+GRANT EXECUTE ON FUNCTION upsert_event_publication(
+    INTEGER, INTEGER, BOOLEAN, BOOLEAN, TEXT, TEXT, INTEGER, TEXT, TEXT, JSONB, INTEGER
+) TO anon, authenticated;
+
+-- Add unique constraint to ensure one publication per event
+ALTER TABLE public.event_publications 
+ADD CONSTRAINT event_publications_event_id_key UNIQUE (event_id);
+
+-- View for complete event data with publication info
+CREATE OR REPLACE VIEW public.published_events AS
+SELECT 
+    e.*,
+    ep.display_on_home,
+    ep.display_on_upcoming,
+    ep.category,
+    ep.mode,
+    ep.capacity,
+    ep.registration_url,
+    ep.long_description,
+    ep.speakers,
+    c.college_name,
+    c.college_code
+FROM events e
+LEFT JOIN event_publications ep ON e.id = ep.event_id
+LEFT JOIN colleges c ON e.college_id = c.id;
+
+-- ===== MORE SECURE RLS POLICIES (ROLE-BASED) =====
+
+-- Drop existing policies
+DROP POLICY IF EXISTS "Allow public read access to events" ON events;
+DROP POLICY IF EXISTS "Allow authenticated users to insert events" ON events;
+DROP POLICY IF EXISTS "Allow authenticated users to update events" ON events;
+DROP POLICY IF EXISTS "Allow authenticated users to delete events" ON events;
+
+-- Public can only READ published events
+CREATE POLICY "Allow public read access to events"
+ON events
+FOR SELECT
+USING (true);
+
+-- Function to check if user is admin
+CREATE OR REPLACE FUNCTION is_admin()
+RETURNS BOOLEAN AS $$
+BEGIN
+  -- For now, allow all authenticated users
+  -- You can modify this to check admin_users table
+  RETURN true;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Only admins can INSERT events
+CREATE POLICY "Allow admins to insert events"
+ON events
+FOR INSERT
+TO authenticated, anon
+WITH CHECK (is_admin());
+
+-- Only admins can UPDATE events
+CREATE POLICY "Allow admins to update events"
+ON events
+FOR UPDATE
+TO authenticated, anon
+USING (is_admin())
+WITH CHECK (is_admin());
+
+-- Only admins can DELETE events
+CREATE POLICY "Allow admins to delete events"
+ON events
+FOR DELETE
+TO authenticated, anon
+USING (is_admin());
+
+-- Same for event_publications
+DROP POLICY IF EXISTS "Allow public read access to event_publications" ON event_publications;
+DROP POLICY IF EXISTS "Allow authenticated users to insert event_publications" ON event_publications;
+DROP POLICY IF EXISTS "Allow authenticated users to update event_publications" ON event_publications;
+DROP POLICY IF EXISTS "Allow authenticated users to delete event_publications" ON event_publications;
+
+CREATE POLICY "Allow public read event_publications"
+ON event_publications FOR SELECT USING (true);
+
+CREATE POLICY "Allow admins to insert event_publications"
+ON event_publications FOR INSERT TO authenticated, anon WITH CHECK (is_admin());
+
+CREATE POLICY "Allow admins to update event_publications"
+ON event_publications FOR UPDATE TO authenticated, anon USING (is_admin()) WITH CHECK (is_admin());
+
+CREATE POLICY "Allow admins to delete event_publications"
+ON event_publications FOR DELETE TO authenticated, anon USING (is_admin());
+
+-- Grant permissions
+GRANT USAGE, SELECT ON SEQUENCE events_id_seq TO anon, authenticated;
+GRANT USAGE, SELECT ON SEQUENCE event_publications_id_seq TO anon, authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON events TO anon, authenticated;
+
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON event_publications TO anon, authenticated;
+
+
+-- 1. DROP the dependent 'published_events' view FIRST
+-- This resolves the error you were seeing.
+DROP VIEW IF EXISTS public.published_events;
+
+
+-- 2. CREATE the event_categories table (if it doesn't exist)
+CREATE TABLE IF NOT EXISTS public.event_categories (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE,
+    display_order SMALLINT DEFAULT 0
+);
+
+-- Allow public read access
+ALTER TABLE public.event_categories ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Allow public read access to categories" ON public.event_categories;
+CREATE POLICY "Allow public read access to categories"
+ON public.event_categories
+FOR SELECT
+USING (true);
+
+
+-- 3. INSERT the categories (single source of truth)
+INSERT INTO public.event_categories (name) VALUES
+('Debate'),
+('Workshop'),
+('Cultural'),
+('Seminar'),
+('Webinar'),
+('Competition'),
+('Conference')
+ON CONFLICT (name) DO NOTHING;
+
+
+-- 4. MODIFY the event_publications table
+-- Add the new integer-based column
+ALTER TABLE public.event_publications ADD COLUMN IF NOT EXISTS category_id INTEGER REFERENCES public.event_categories(id);
+
+-- (Optional) This part migrates your old text data to the new ID-based system.
+-- Run this for each category you were using.
+UPDATE public.event_publications
+SET category_id = (SELECT id FROM public.event_categories WHERE name = 'Debate')
+WHERE category = 'Debate';
+
+UPDATE public.event_publications
+SET category_id = (SELECT id FROM public.event_categories WHERE name = 'Workshop')
+WHERE category = 'Workshop';
+
+-- Add more UPDATE statements here for your other categories...
+
+
+-- Now, SAFELY drop the old text-based column
+-- The IF EXISTS prevents an error if the column is already gone.
+ALTER TABLE public.event_publications DROP COLUMN IF EXISTS category;
+
+
+-- 5. RECREATE the 'published_events' view with the correct structure
+-- This view now joins to the new categories table.
+CREATE OR REPLACE VIEW public.published_events AS
+SELECT 
+    e.*,
+    ep.display_on_home,
+    ep.display_on_upcoming,
+    ec.name AS category, -- Get the category NAME from the new table
+    ep.mode,
+    ep.capacity,
+    ep.registration_url,
+    ep.long_description,
+    ep.speakers,
+    c.college_name,
+    c.college_code,
+    ep.category_id -- Also include category_id for edit pre-filling
+FROM events e
+LEFT JOIN event_publications ep ON e.id = ep.event_id
+LEFT JOIN colleges c ON e.college_id = c.id
+LEFT JOIN event_categories ec ON ep.category_id = ec.id;
+
+
+-- 6. UPDATE your RPC function to accept the new category_id
+-- We drop the old one and create the new one with the correct signature.
+DROP FUNCTION IF EXISTS upsert_event_publication(INTEGER, INTEGER, BOOLEAN, BOOLEAN, TEXT, TEXT, INTEGER, TEXT, TEXT, JSONB, INTEGER);
+CREATE OR REPLACE FUNCTION upsert_event_publication(
+    p_event_id INTEGER,
+    p_college_id INTEGER,
+    p_display_on_home BOOLEAN,
+    p_display_on_upcoming BOOLEAN,
+    p_category_id INTEGER, -- Changed from TEXT to INTEGER
+    p_mode TEXT,
+    p_capacity INTEGER,
+    p_registration_url TEXT,
+    p_long_description TEXT,
+    p_speakers JSONB,
+    p_published_by INTEGER
+)
+RETURNS SETOF event_publications AS $$
+BEGIN
+    RETURN QUERY
+    INSERT INTO event_publications (
+        event_id, college_id, display_on_home, display_on_upcoming,
+        category_id, mode, capacity, registration_url, long_description,
+        speakers, published_by
+    ) VALUES (
+        p_event_id, p_college_id, p_display_on_home, p_display_on_upcoming,
+        p_category_id, p_mode, p_capacity, p_registration_url, p_long_description,
+        p_speakers, p_published_by
+    )
+    ON CONFLICT (event_id) DO UPDATE SET
+        display_on_home = EXCLUDED.display_on_home,
+        display_on_upcoming = EXCLUDED.display_on_upcoming,
+        category_id = EXCLUDED.category_id, -- Use the new column
+        mode = EXCLUDED.mode,
+        capacity = EXCLUDED.capacity,
+        registration_url = EXCLUDED.registration_url,
+        long_description = EXCLUDED.long_description,
+        speakers = EXCLUDED.speakers,
+        updated_at = NOW()
+    RETURNING *;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path=public;
+
+-- Re-grant permission for the updated function
+GRANT EXECUTE ON FUNCTION upsert_event_publication(INTEGER, INTEGER, BOOLEAN, BOOLEAN, INTEGER, TEXT, INTEGER, TEXT, TEXT, JSONB, INTEGER) 
+TO anon, authenticated;

@@ -1164,6 +1164,8 @@
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;
     flex-direction: column;
+    height: 520px;
+    width: 100%;
 }
 
 .event-card:hover {
@@ -1176,6 +1178,8 @@
     height: 220px;
     position: relative;
     overflow: hidden;
+    flex-shrink: 0;
+    width: 100%;
 }
 
 .event-image img {
@@ -1225,6 +1229,8 @@
     display: flex;
     flex-direction: column;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), var(--white-primary));
+    overflow-y: auto;
+    max-height: 280px;
 }
 
 .event-title {
@@ -1302,6 +1308,69 @@
 
 .event-card:nth-child(3n+3) {
     border-top: 6px solid var(--green-primary);
+}
+
+/* ===== MORE EVENTS BUTTON SECTION ===== */
+.events-footer {
+    max-width: 1200px;
+    margin: 60px auto 0;
+    padding: 0 20px;
+    text-align: center;
+    z-index: 2;
+    position: relative;
+}
+
+.btn-more-events {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 48px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white-primary);
+    background: linear-gradient(135deg, var(--navy-chakra) 0%, var(--navy-dark) 100%);
+    border: none;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 128, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-more-events::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+    z-index: -1;
+}
+
+.btn-more-events:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-more-events:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px -5px rgba(0, 0, 128, 0.4);
+}
+
+.btn-more-events i {
+    transition: transform 0.3s ease;
+    font-size: 1rem;
+}
+
+.btn-more-events:hover i {
+    transform: translateX(4px);
 }
 
 
@@ -1990,10 +2059,15 @@
     .event-card {
         max-width: 500px;
         margin: 0 auto;
+        height: 540px;
     }
 
     .event-image {
         height: 200px;
+    }
+
+    .event-details {
+        max-height: 300px;
     }
 
     .event-date-badge {
@@ -2040,6 +2114,18 @@
     .empty-state i {
         font-size: 3.5rem;
         margin-bottom: 20px;
+    }
+
+    /* ===== More Events Button - Tablet ===== */
+    .events-footer {
+        margin: 50px auto 0;
+        padding: 0 16px;
+    }
+
+    .btn-more-events {
+        padding: 14px 40px;
+        font-size: 1rem;
+        gap: 10px;
     }
 
     /* ===== Executives Section ===== */
@@ -2296,10 +2382,15 @@
 
     .event-card {
         max-width: 100%;
+        height: 500px;
     }
 
     .event-image {
         height: 180px;
+    }
+
+    .event-details {
+        max-height: 280px;
     }
 
     .event-date-badge {
@@ -2351,6 +2442,18 @@
     .empty-state i {
         font-size: 3rem;
         margin-bottom: 16px;
+    }
+
+    /* ===== More Events Button - Mobile ===== */
+    .events-footer {
+        margin: 40px auto 0;
+        padding: 0 12px;
+    }
+
+    .btn-more-events {
+        padding: 12px 32px;
+        font-size: 0.95rem;
+        gap: 8px;
     }
 
     /* ===== Executives Section ===== */
@@ -2634,6 +2737,14 @@
         height: 160px;
     }
 
+    .event-card {
+        height: 480px;
+    }
+
+    .event-details {
+        max-height: 280px;
+    }
+
     .event-date-badge {
         padding: 5px 8px;
     }
@@ -2670,6 +2781,18 @@
 
     .empty-state i {
         font-size: 2.5rem;
+    }
+
+    /* ===== More Events Button - Extra Small ===== */
+    .events-footer {
+        margin: 36px auto 0;
+        padding: 0 10px;
+    }
+
+    .btn-more-events {
+        padding: 10px 24px;
+        font-size: 0.9rem;
+        gap: 6px;
     }
 
     /* ===== Executives Section ===== */

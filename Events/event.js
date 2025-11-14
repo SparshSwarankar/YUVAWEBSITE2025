@@ -148,6 +148,8 @@ class EventsPage {
             this.populateFilterDropdowns();
             this.applyFilters();
             this.renderFeatured();
+            // Update event insights
+            updateEventInsights(this.events);
             // Updated call with Title
             this.showNotification('Welcome', 'Events loaded successfully!', 'success');
         } catch (err) {
@@ -250,11 +252,16 @@ class EventsPage {
             if (this.events.length === 0) {
                 // No published events, show empty state
                 this.showNotification('No Events', 'No published events available at the moment.', 'info');
+            } else {
+                // Update stats from fetched events
+                updateEventInsights(this.events);
             }
         } catch (err) {
             console.error('Error fetching events:', err);
             this.showNotification('Error', 'Failed to load events', 'error');
             this.events = [];
+            // Reset stats on error
+            updateEventInsights([]);
         } finally {
             this.isLoading = false;
             this.showLoader(false);
@@ -1286,6 +1293,193 @@ const StorageManager = {
         localStorage.removeItem(key);
     }
 };
+
+/* =================================================================
+   FAQ ACCORDION FUNCTIONALITY
+   ================================================================= */
+function toggleFAQ(element) {
+    const faqItem = element.parentElement;
+    const isActive = faqItem.classList.contains('active');
+
+    // Close all other FAQs
+    document.querySelectorAll('.faq-item').forEach(item => {
+        if (item !== faqItem) {
+            item.classList.remove('active');
+            const answer = item.querySelector('.faq-answer');
+            if (answer) answer.style.display = 'none';
+        }
+    });
+
+    // Toggle current FAQ
+    faqItem.classList.toggle('active');
+    const answer = faqItem.querySelector('.faq-answer');
+    if (answer) {
+        answer.style.display = isActive ? 'none' : 'block';
+    }
+}
+
+/* =================================================================
+   EVENT INSIGHTS CALCULATOR (DYNAMIC FROM DATABASE)
+   ================================================================= */
+function updateEventInsights(events) {
+    if (!events || events.length === 0) {
+        // Set defaults if no events
+        document.getElementById('total-events-count').textContent = '0';
+        document.getElementById('cities-count').textContent = '0';
+        document.getElementById('total-capacity').textContent = '0+';
+        document.getElementById('next-event-days').textContent = 'Soon';
+        return;
+    }
+
+    // 1. Total events (count from database)
+    const totalEvents = events.length;
+    document.getElementById('total-events-count').textContent = totalEvents;
+
+    // 2. Cities covered (unique locations from database)
+    const cities = new Set(
+        events
+            .map(e => e.location)
+            .filter(l => l && l.trim())
+            .map(l => {
+                // Extract city name (before comma if present)
+                const cityName = l.split(',')[0].trim();
+                return cityName;
+            })
+    );
+    document.getElementById('cities-count').textContent = cities.size;
+
+    // 3. Expected attendees (sum of capacity from database)
+    const totalCapacity = events.reduce((sum, e) => {
+        const capacity = parseInt(e.capacity) || 0;
+        return sum + capacity;
+    }, 0);
+    document.getElementById('total-capacity').textContent = totalCapacity > 0 ? totalCapacity + '+' : '500+';
+
+    // 4. Next event (days until - calculate from first event in sorted list)
+    if (events.length > 0) {
+        const nextEvent = events[0]; // Already sorted by start_at in fetchEvents
+        const eventDate = new Date(nextEvent.start_at);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        eventDate.setHours(0, 0, 0, 0);
+
+        const daysUntil = Math.ceil((eventDate - today) / (1000 * 60 * 60 * 24));
+        const nextEventElement = document.getElementById('next-event-days');
+
+        if (daysUntil < 0) {
+            nextEventElement.textContent = 'Ongoing';
+        } else if (daysUntil === 0) {
+            nextEventElement.textContent = 'Today!';
+        } else if (daysUntil === 1) {
+            nextEventElement.textContent = 'Tomorrow';
+        } else {
+            nextEventElement.textContent = `${daysUntil} days`;
+        }
+    }
+
+    console.log(`📊 Stats Updated: ${totalEvents} events, ${cities.size} cities`);
+}
+
+/* =================================================================
+   NEWSLETTER FORM HANDLER (SAVES TO DATABASE)
+   ================================================================= */
+document.addEventListener('DOMContentLoaded', () => {
+    const newsletterForm = document.getElementById('events-newsletter-form');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const emailInput = newsletterForm.querySelector('input[type="email"]');
+            const email = emailInput.value.toLowerCase().trim();
+            const button = newsletterForm.querySelector('button');
+            const originalText = button.textContent;
+
+            if (!email) {
+                alert('Please enter a valid email');
+                return;
+            }
+
+            try {
+                button.disabled = true;
+                button.textContent = 'Subscribing...';
+
+                if (!supabase) {
+                    throw new Error('Supabase not available');
+                }
+
+                // Insert email into subscriptions table (without .select() to avoid RLS issues)
+                const { error } = await supabase
+                    .from('subscriptions')
+                    .insert([{ email: email }]);
+
+                if (error) {
+                    // Check if it's a duplicate email error
+                    if (error.code === '23505') {
+                        throw new Error('This email is already subscribed');
+                    }
+                    throw error;
+                }
+
+                // Success
+                button.textContent = 'Subscribed! ✓';
+                emailInput.value = '';
+
+                // Show success notification
+                if (eventsPageInstance) {
+                    eventsPageInstance.showNotification(
+                        'Newsletter Subscribed',
+                        'Thank you for subscribing to our events newsletter!',
+                        'success'
+                    );
+                }
+
+                console.log('✓ Subscription saved:', email);
+
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }, 3000);
+
+            } catch (err) {
+                // Determine error message
+                let errorMsg = err.message || 'Failed to subscribe. Please try again.';
+
+                // Check if it's a duplicate error (expected case, not a real error)
+                const isDuplicateError = err.code === '23505' ||
+                    err.message?.includes('duplicate') ||
+                    err.message?.includes('already subscribed');
+
+                if (isDuplicateError) {
+                    errorMsg = 'This email is already subscribed';
+                    // Don't log duplicate errors to console (expected behavior)
+                } else {
+                    // Only log unexpected errors
+                    console.error('Newsletter subscription error:', err);
+                }
+
+                button.textContent = 'Subscription Failed';
+                button.style.background = 'var(--color-error, #ef4444)';
+
+                // Show error notification
+                if (eventsPageInstance) {
+                    eventsPageInstance.showNotification(
+                        'Subscription Error',
+                        errorMsg,
+                        'error'
+                    );
+                }
+
+                // Reset button after 4 seconds
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '';
+                    button.disabled = false;
+                }, 4000);
+            }
+        });
+    }
+});
 
 let eventsPageInstance = null;
 
