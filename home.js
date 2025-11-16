@@ -111,59 +111,100 @@ class HomePageManager {
             if (emptyState) emptyState.style.display = 'block';
         }
     }
-    
+
     // --- FETCH & RENDER EXECUTIVE TEAM ---
+    // --- FETCH & RENDER EXECUTIVE TEAM ---
+    // --- Replace your entire loadExecutiveTeam function with this one ---
     async loadExecutiveTeam() {
         const grid = document.getElementById('executives-grid');
         const loader = document.getElementById('executives-loading');
         if (!grid) return;
 
         try {
-            const { data: execs, error } = await supabase
+            const { data: allExecs, error } = await supabase
                 .from('executive_members')
                 .select('member_name, designation, role, photo_url, description, contact_email')
-                .order('display_order', { ascending: true });
+                .order('display_order', { ascending: true, nullsFirst: false })
+                .order('member_name', { ascending: true });
 
             if (error) throw error;
             if (loader) loader.style.display = 'none';
-            if (!execs || execs.length === 0) {
+            if (!allExecs || allExecs.length === 0) {
                 grid.innerHTML = '<p style="text-align:center; color:var(--text-muted); grid-column:1/-1;">Leadership team to be announced.</p>';
                 return;
             }
 
-            execs.forEach((exec, index) => {
-                const initials = exec.member_name
-                    ? exec.member_name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2)
-                    : '??';
+            const heads = [];
+            const regularMembers = [];
 
-                // USE SOLID PASTEL COLORS INSTEAD OF GRADIENTS
-                const themeIndex = index % 3;
-                let fallbackBg = 'var(--color-info-pale)'; // Default pale navy
-                let fallbackColor = 'var(--navy-chakra)';
+            allExecs.forEach(exec => {
+                if (exec.designation && exec.role && exec.designation.trim() === exec.role.trim()) {
+                    heads.push(exec);
+                } else {
+                    regularMembers.push(exec);
+                }
+            });
 
-                if (themeIndex === 0) { // Saffron Theme
+            grid.innerHTML = '';
+
+            // --- Helper function with NEW theme class logic ---
+            const createCard = (exec, isHead = false, themeIndex) => {
+                const initials = exec.member_name ? exec.member_name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2) : '??';
+
+                const card = document.createElement('div');
+                card.className = 'exec-card';
+
+                let fallbackBg;
+                let fallbackColor;
+
+                if (isHead) {
+                    card.classList.add('exec-card--head');
                     fallbackBg = 'var(--saffron-pale)';
                     fallbackColor = 'var(--saffron-dark)';
-                } else if (themeIndex === 2) { // Green Theme
-                    fallbackBg = 'var(--green-pale)';
-                    fallbackColor = 'var(--green-dark)';
+                } else {
+                    // 👇 THIS IS THE NEW, RELIABLE COLOR LOGIC 👇
+                    const colorIndex = themeIndex % 3;
+                    if (colorIndex === 0) { // Orange
+                        card.classList.add('exec-card--theme-saffron');
+                        fallbackBg = 'var(--saffron-pale)';
+                        fallbackColor = 'var(--saffron-dark)';
+                    } else if (colorIndex === 1) { // Blue
+                        card.classList.add('exec-card--theme-navy');
+                        fallbackBg = 'var(--color-info-pale)';
+                        fallbackColor = 'var(--navy-chakra)';
+                    } else { // Green
+                        card.classList.add('exec-card--theme-green');
+                        fallbackBg = 'var(--green-pale)';
+                        fallbackColor = 'var(--green-dark)';
+                    }
                 }
 
-                // Simple, clean fallback with NO GRADIENT
                 const imgHtml = exec.photo_url
                     ? `<img src="${exec.photo_url}" alt="${exec.member_name}" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML='${initials}'; this.parentElement.style.background='${fallbackBg}'; this.parentElement.style.color='${fallbackColor}'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.style.fontSize='2.5rem'; this.parentElement.style.fontWeight='700';">`
                     : `<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:2.5rem; color:${fallbackColor}; font-weight:700; background:${fallbackBg};">${initials}</div>`;
 
-                const card = document.createElement('div');
-                card.className = 'exec-card';
                 card.innerHTML = `
-                    <div class="exec-image">${imgHtml}</div>
-                    <h3 class="exec-name">${exec.member_name}</h3>
-                    <p class="exec-role">${exec.designation || exec.role}</p>
-                `;
-
+                <div class="exec-image">${imgHtml}</div>
+                <h3 class="exec-name">${exec.member_name}</h3>
+                <p class="exec-role">${exec.designation && exec.role && exec.designation !== exec.role ? `${exec.designation} | ${exec.role}` : exec.designation || exec.role || ''}</p>
+            `;
                 card.addEventListener('click', () => this.openExecModal(exec, imgHtml));
-                grid.appendChild(card);
+                return card;
+            };
+
+            // Render heads (unchanged)
+            if (heads.length > 0) {
+                const headWrapper = document.createElement('div');
+                headWrapper.className = 'executives-head-wrapper';
+                heads.forEach(exec => {
+                    headWrapper.appendChild(createCard(exec, true, 0));
+                });
+                grid.appendChild(headWrapper);
+            }
+
+            // Render regular members (unchanged)
+            regularMembers.forEach((exec, index) => {
+                grid.appendChild(createCard(exec, false, index));
             });
 
         } catch (err) {
@@ -274,7 +315,7 @@ class HomePageManager {
             <div class="modal-exec-profile">
                 <div class="modal-exec-img">${imgHtml}</div>
                 <h3 class="modal-exec-name">${exec.member_name}</h3>
-                <p class="modal-exec-role">${exec.designation || exec.role}</p>
+                <p class="modal-exec-role">${exec.designation && exec.role && exec.designation !== exec.role ? `${exec.designation} | ${exec.role}` : exec.designation || exec.role || ''}</p>
                 <div class="modal-exec-bio">
                     ${exec.description ? `<p>${exec.description}</p>` : '<p>No further details available.</p>'}
                 </div>

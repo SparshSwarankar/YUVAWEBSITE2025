@@ -1374,64 +1374,98 @@
 }
 
 
-/* --- 5. MODERN EXECUTIVE LEADERSHIP SECTION (CLEAN SOLID BORDERS) --- */
+/* --- 5. MODERN EXECUTIVE LEADERSHIP SECTION (COMPACT & CENTERED) --- */
+
 .executives-section.section-container {
     max-width: none;
-    padding: 100px 0;
-    margin: 0;
-    background-color: #f9fafb;
-    /* Very clean, almost white gray */
+    padding: 50px 0;
+    /* Reduced padding */
+    margin: 20px 20px;
+    border-radius: var(--radius-2xl);
+    background-color: var(--bg-muted);
     position: relative;
 }
 
 .executives-grid {
-    max-width: 1200px;
+    max-width: 1100px;
+    /* Slightly tighter width to keep cards close */
     margin: 0 auto;
     padding: 0 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 40px;
+
+    /* --- KEY CHANGE: FLEXBOX FOR CENTERING --- */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* This aligns the last row to the center */
+    gap: 20px;
+    /* Compact gap */
+
     position: relative;
     z-index: 2;
 }
 
+/*Wrapper for the Top 2 Leaders (Conveners) */
+.executives-head-wrapper {
+    /* Force this wrapper to take full width so it sits on its own row */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+/* --- CARD STYLING --- */
 .exec-card {
+    /* Flex Sizing: Don't grow too wide, shrink if needed, ideal width 240px */
+    flex: 0 1 240px;
+
     background: var(--white-primary);
-    padding: 48px 32px;
-    border-radius: var(--radius-2xl);
+    padding: 24px 15px;
+    /* Compact padding */
+    border-radius: var(--radius-xl);
     text-align: center;
     transition: all 0.3s ease;
     border: 1px solid var(--border-light);
-    /* Subtle shadow for depth, no heavy gradients */
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     cursor: pointer;
     position: relative;
     overflow: hidden;
 }
 
 .exec-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     border-color: var(--border-medium);
 }
 
-/* === CLEAN PROFILE IMAGE (SOLID BORDER, NO GRADIENT) === */
+/* Specific sizing for the Head/Convener cards (Make them slightly larger) */
+.exec-card--head {
+    flex-basis: 280px;
+    border: 2px solid var(--saffron-primary);
+    background: linear-gradient(145deg, var(--white-primary), #fffaf0);
+}
+
+.exec-card--head:hover {
+    border-color: var(--saffron-dark);
+    box-shadow: 0 10px 20px -5px rgba(245, 166, 35, 0.2);
+}
+
+/* --- IMAGE STYLING (COMPACT) --- */
 .exec-image {
-    width: 160px;
-    height: 160px;
-    margin: 0 auto 28px;
+    width: 100px;
+    /* Smaller image */
+    height: 100px;
+    margin: 0 auto 16px;
     position: relative;
     border-radius: 50%;
-    /* Default solid border */
-    border: 4px solid var(--border-light);
-    padding: 4px;
-    /* Space between border and image */
+    border: 3px solid var(--border-light);
+    padding: 3px;
     background: var(--white-primary);
     transition: all 0.3s ease;
 }
 
 .exec-card:hover .exec-image {
-    /* Slight scale up on hover */
     transform: scale(1.05);
 }
 
@@ -1443,82 +1477,85 @@
     object-fit: cover;
 }
 
-/* === ROLE BADGES & SPECIFIC BORDER COLORS === */
+/* --- TYPOGRAPHY (COMPACT) --- */
 .exec-name {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
+    /* Smaller font */
     font-weight: 800;
-    margin: 0 0 12px 0;
+    margin: 0 0 8px 0;
     color: var(--navy-chakra);
+    line-height: 1.3;
 }
 
 .exec-role {
-    font-size: 0.9rem;
+    font-size: 0.75rem;
+    /* Smaller text */
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
     margin: 0;
     display: inline-block;
-    padding: 8px 16px;
+    padding: 4px 12px;
     border-radius: var(--radius-full);
     background: var(--bg-muted);
     color: var(--text-secondary);
 }
 
-/* Card 1: Saffron Accent */
-.exec-card:nth-child(3n+1):hover {
+/* --- THEME RULES --- */
+
+/* Theme 1: Saffron */
+.exec-card--theme-saffron:hover {
     border-bottom: 4px solid var(--saffron-primary);
 }
 
-.exec-card:nth-child(3n+1) .exec-image {
+.exec-card--theme-saffron .exec-image {
     border-color: var(--saffron-pale);
 }
 
-.exec-card:nth-child(3n+1):hover .exec-image {
+.exec-card--theme-saffron:hover .exec-image {
     border-color: var(--saffron-primary);
 }
 
-.exec-card:nth-child(3n+1) .exec-role {
+.exec-card--theme-saffron .exec-role {
     background: var(--saffron-pale);
     color: var(--saffron-dark);
 }
 
-/* Card 2: Navy Accent */
-.exec-card:nth-child(3n+2):hover {
+/* Theme 2: Navy */
+.exec-card--theme-navy:hover {
     border-bottom: 4px solid var(--navy-chakra);
 }
 
-.exec-card:nth-child(3n+2) .exec-image {
+.exec-card--theme-navy .exec-image {
     border-color: var(--color-info-pale);
 }
 
-.exec-card:nth-child(3n+2):hover .exec-image {
+.exec-card--theme-navy:hover .exec-image {
     border-color: var(--navy-chakra);
 }
 
-.exec-card:nth-child(3n+2) .exec-role {
+.exec-card--theme-navy .exec-role {
     background: var(--color-info-pale);
     color: var(--navy-dark);
 }
 
-/* Card 3: Green Accent */
-.exec-card:nth-child(3n+3):hover {
+/* Theme 3: Green */
+.exec-card--theme-green:hover {
     border-bottom: 4px solid var(--green-primary);
 }
 
-.exec-card:nth-child(3n+3) .exec-image {
+.exec-card--theme-green .exec-image {
     border-color: var(--green-pale);
 }
 
-.exec-card:nth-child(3n+3):hover .exec-image {
+.exec-card--theme-green:hover .exec-image {
     border-color: var(--green-primary);
 }
 
-.exec-card:nth-child(3n+3) .exec-role {
+.exec-card--theme-green .exec-role {
     background: var(--green-pale);
     color: var(--green-dark);
 }
-
-
 
 /* ========================================= */
 /* ===== MODERN GENERIC MODAL STYLES ===== */

@@ -137,38 +137,52 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Sort: Heads (designation === role) come first
+        executives.sort((a, b) => {
+            const isHeadA = a.designation && a.role && a.designation.trim() === a.role.trim();
+            const isHeadB = b.designation && b.role && b.designation.trim() === b.role.trim();
+            return isHeadA === isHeadB ? 0 : isHeadA ? -1 : 1;
+        });
 
-        executives.forEach((exec, index) => {
+        // Extract heads (first 2, or all that match)
+        const heads = executives.filter((exec, index) => index < 2 && exec.designation && exec.role && exec.designation.trim() === exec.role.trim());
+        const members = executives.filter((exec, index) => !(index < 2 && exec.designation && exec.role && exec.designation.trim() === exec.role.trim()));
+
+        // Create container for heads
+        const headsContainer = document.createElement('div');
+        headsContainer.className = 'executive-heads-container';
+
+        const headsGrid = document.createElement('div');
+        headsGrid.className = 'executive-heads-grid';
+
+        // Render heads
+        heads.forEach((exec, index) => {
             const card = document.createElement('div');
-            card.className = 'executive-card';
-            card.style.animationDelay = `${index * 100}ms`;
+            card.className = 'executive-card head-card';
+            card.style.animationDelay = '0ms'; // No delay for heads
 
             const initials = getInitials(exec.member_name || 'NA');
-            console.log('Executive:', exec.member_name, 'Initials:', initials); // Debug
-
-            // Determine theme color based on index
             const themeIndex = index % 3;
             let photoGradient = 'var(--gradient-navy)';
             if (themeIndex === 0) photoGradient = 'var(--gradient-saffron)';
             if (themeIndex === 2) photoGradient = 'var(--gradient-green)';
 
-            // Create the card HTML
+            // Display role: if both exist and are same, show once; else combine
+            const displayRole = exec.designation && exec.role
+                ? (exec.designation.trim() === exec.role.trim() ? exec.designation : `${exec.designation} – ${exec.role}`)
+                : exec.designation || exec.role || 'Member';
+
             card.innerHTML = `
-                <div class="exec-photo" style="background: ${photoGradient};">
-                    <div class="exec-photo-content" style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 2.5rem; font-weight: 700; color: var(--white-primary);">
-                        ${initials}
-                    </div>
-                </div>
-                <div class="exec-info">
-                    <h3 class="exec-name">${exec.member_name || 'N/A'}</h3>
-                    <p class="exec-role">${exec.designation || exec.role || 'Member'}</p>
-                </div>
-            `;
+            <div class="exec-photo" style="background: ${photoGradient};">
+                <div class="exec-photo-content">${initials}</div>
+            </div>
+            <div class="exec-info">
+                <h3 class="exec-name">${exec.member_name || 'N/A'}</h3>
+                <p class="exec-role">${displayRole}</p>
+            </div>
+        `;
 
-            // After adding to DOM, try to load image if photo_url exists
-            executiveGrid.appendChild(card);
-
-            // Handle image loading after card is in DOM
+            // Load image if available
             const photoContent = card.querySelector('.exec-photo-content');
             if (exec.photo_url && exec.photo_url.trim() !== '' && photoContent) {
                 const img = document.createElement('img');
@@ -177,23 +191,79 @@ document.addEventListener('DOMContentLoaded', () => {
                 img.style.cssText = 'width: 100%; height: 100%; object-fit: cover; display: block;';
 
                 img.onload = () => {
-                    // Image loaded successfully - replace initials with image
                     photoContent.innerHTML = '';
                     photoContent.appendChild(img);
-                    // Add loaded class for fade-in effect
                     img.classList.add('loaded');
                 };
 
                 img.onerror = () => {
-                    // Image failed to load - keep initials (already there)
-                    console.log('Failed to load image for:', exec.member_name, 'URL:', exec.photo_url);
+                    console.log('Failed to load image for:', exec.member_name);
                 };
             }
 
-            // Add click handler to show modal with full details (always enable for all executives)
             card.style.cursor = 'pointer';
             card.addEventListener('click', () => openExecutiveModal(exec, index));
+            headsGrid.appendChild(card);
         });
+
+        headsContainer.appendChild(headsGrid);
+        executiveGrid.appendChild(headsContainer);
+
+        // Create container for regular members
+        const membersContainer = document.createElement('div');
+        membersContainer.className = 'executive-members-grid';
+
+        // Render members
+        members.forEach((exec, index) => {
+            const card = document.createElement('div');
+            card.className = 'executive-card';
+            card.style.animationDelay = `${index * 100}ms`;
+
+            const initials = getInitials(exec.member_name || 'NA');
+            const themeIndex = (index + heads.length) % 3; // Offset to avoid color clash
+            let photoGradient = 'var(--gradient-navy)';
+            if (themeIndex === 0) photoGradient = 'var(--gradient-saffron)';
+            if (themeIndex === 2) photoGradient = 'var(--gradient-green)';
+
+            const displayRole = exec.designation && exec.role
+                ? `${exec.designation} – ${exec.role}`
+                : exec.designation || exec.role || 'Member';
+
+            card.innerHTML = `
+            <div class="exec-photo" style="background: ${photoGradient};">
+                <div class="exec-photo-content">${initials}</div>
+            </div>
+            <div class="exec-info">
+                <h3 class="exec-name">${exec.member_name || 'N/A'}</h3>
+                <p class="exec-role">${displayRole}</p>
+            </div>
+        `;
+
+            // Load image
+            const photoContent = card.querySelector('.exec-photo-content');
+            if (exec.photo_url && exec.photo_url.trim() !== '' && photoContent) {
+                const img = document.createElement('img');
+                img.src = exec.photo_url;
+                img.alt = exec.member_name;
+                img.style.cssText = 'width: 100%; height: 100%; object-fit: cover; display: block;';
+
+                img.onload = () => {
+                    photoContent.innerHTML = '';
+                    photoContent.appendChild(img);
+                    img.classList.add('loaded');
+                };
+
+                img.onerror = () => {
+                    console.log('Failed to load image for:', exec.member_name);
+                };
+            }
+
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', () => openExecutiveModal(exec, index + heads.length));
+            membersContainer.appendChild(card);
+        });
+
+        executiveGrid.appendChild(membersContainer);
     }
 
     function openExecutiveModal(exec, index) {
@@ -204,7 +274,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!modalContent || !modalBackdrop) return;
 
         const name = exec.member_name || 'N/A';
-        const designation = exec.designation || exec.role || 'Member';
+
+        // NEW: Combined designation + role display (same as in card)
+        const displayRole = exec.designation && exec.role
+            ? `${exec.designation} – ${exec.role}`
+            : exec.designation || exec.role || 'Member';
+
         const description = exec.description || '';
         const email = exec.contact_email || '';
         const initials = getInitials(name);
@@ -235,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="modal-header-info">
                     <h3>${name}</h3>
-                    <p>${designation}</p>
+                    <p>${displayRole}</p>
                 </div>
             </div>
             <div class="modal-body">
@@ -615,10 +690,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
         modalBackdrop.classList.add('visible');
     }
-
-    // ===== CHANGE =====
-    // These functions are no longer needed, as 'popstate' handles the close logic.
-    // function closeMemberModal() { if (modalBackdrop) modalBackdrop.classList.remove('visible'); }
-    // function closeExecutiveModal() { if (modalBackdrop) modalBackdrop.classList.remove('visible'); }
 
 }); // End DOMContentLoaded
